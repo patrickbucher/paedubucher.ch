@@ -72,9 +72,13 @@ def parse_articles(article_md_dir, article_dir):
 
 
 def normalize(s):
-    s = s.replace(r'\s+', '-')
-    s = re.sub('[^0-9a-zA-Z_-]+', '', s)
+    print(s)
+    s = re.sub(r'\s', '-', s)
+    print(s)
+    s = re.sub('[^-_0-9a-zA-Z]+', '', s)
+    print(s)
     s = s.lower()
+    print(s)
     return s
 
 
