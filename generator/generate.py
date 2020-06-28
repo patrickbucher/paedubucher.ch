@@ -23,8 +23,9 @@ env = Environment(
 
 def main():
     page_dir = get_page_dir()
+    html_dir, article_dir = scaffold(page_dir)
+
     article_md_dir = os.path.join(page_dir, 'articles.md')
-    article_dir = os.path.join(page_dir, 'articles')
     articles = parse_articles(article_md_dir, article_dir)
     articles.sort(key=lambda article: article.date)
     articles.reverse()
@@ -33,21 +34,30 @@ def main():
     article_template = env.get_template('article.jinja2')
 
     index_content = index_template.render(articles=articles)
-    index_html = os.path.join(page_dir, 'index.html')
-    if os.path.exists(index_html) and os.path.isfile(index_html):
-        os.remove(index_html)
+    index_html = os.path.join(html_dir, 'index.html')
     with open(index_html, 'w') as f:
         f.write(index_content)
 
-    if os.path.exists(article_dir) and os.path.isdir(article_dir):
-        shutil.rmtree(article_dir)
-    os.mkdir(article_dir)
-
     for article in articles:
         article_content = article_template.render(article=article)
-        article_file = os.path.join(page_dir, article.href)
+        article_file = os.path.join(html_dir, article.href)
         with open(article_file, 'w') as f:
             f.write(article_content)
+
+
+def scaffold(page_dir):
+    html_dir = os.path.join(page_dir, 'html')
+    if os.path.exists(html_dir) and os.path.isdir(html_dir):
+        shutil.rmtree(html_dir)
+    os.mkdir(html_dir)
+
+    article_dir = os.path.join(html_dir, 'articles')
+    os.mkdir(article_dir)
+    style_from = os.path.join(page_dir, 'style', 'style.css')
+    style_to = os.path.join(html_dir, 'style.css')
+    shutil.copyfile(style_from, style_to)
+
+    return html_dir, article_dir
 
 
 def parse_articles(article_md_dir, article_dir):
@@ -65,7 +75,7 @@ def parse_articles(article_md_dir, article_dir):
             lang=meta_data['lang'],
             content=html_content,
             name=name,
-            href=os.path.join(article_dir, f'{name}.html')
+            href=os.path.join('articles', f'{name}.html')
         )
         articles.append(article)
     return articles
