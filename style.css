@@ -1,10 +1,10 @@
 body {
     font-family: sans-serif;
+    font-size: 16px;
     margin: 0 auto;
     padding: 1em 1em 4em 1em;
-    min-width: 600px;
-    max-width: 800px;
-    hyphens: auto;
+    min-width: 20em;
+    max-width: 45em;
     line-height: 1.5;
 }
 
@@ -16,4 +16,5 @@ ul#articles {
 
 p {
     text-align: justify;
+    hyphens: auto;
 }
