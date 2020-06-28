@@ -27,7 +27,7 @@ def main():
 
     article_md_dir = os.path.join(page_dir, 'articles.md')
     articles = parse_articles(article_md_dir, article_dir)
-    articles.sort(key=lambda article: article.date)
+    articles.sort(key=lambda article: (article.date, article.title))
     articles.reverse()
 
     index_template = env.get_template('index.jinja2')
