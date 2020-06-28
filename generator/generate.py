@@ -2,6 +2,7 @@
 
 from collections import namedtuple
 import os
+import re
 import shutil
 import sys
 
@@ -72,6 +73,7 @@ def parse_articles(article_md_dir, article_dir):
 
 def normalize(s):
     s = s.replace(r'\s+', '-')
+    s = re.sub('[^0-9a-zA-Z_-]+', '', s)
     s = s.lower()
     return s
 
