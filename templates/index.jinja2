@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1>paedubucher.ch</h1>
+        <h2>Articles</h2>
+        <ul>
+            {% for article in articles %}
+            <li>{{ article.date }} <a href="{{article.href}}">{{article.title}}</a> ({{article.lang}})</li>
+            {% endfor }
+        </ul>
+    </body>
+</html>
