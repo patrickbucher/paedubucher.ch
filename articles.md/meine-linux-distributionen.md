@@ -6,17 +6,17 @@ lang: de
 ---
 
 Ich verwende seit 2005 hauptsächlich Linux als Betriebssystem. Dabei habe ich
-schon Erfahrungen mit verschiedenen Distributionen sammeln können. Dabei hatte
-ich immer eine Hauptdistribution, die ich praktisch auf all meinen Rechnern
+schon Erfahrungen mit verschiedenen Distributionen sammeln können. Meistens
+hatte ich eine Hauptdistribution, die ich praktisch auf all meinen Rechnern
 installiert war. Dies ändert sich jetzt vielleicht. Doch der Reihe nach…
 
 ## Mandrake: Wie alles begann
 
 Meine ersten Erfahrungen mit Linux habe ich im Jahr 2004 gemacht. Alles begann
-damit, das eMule (das damals wichtigste File-Sharing-Tool, das damals einen
-Stellenwert hatte, wie es heute BitTorrent hat) auf dem Windows-Rechner der
-Familie nicht mehr richtig funktionierte. Irgendetwas musste ich am
-Betriebssystem kaputt gemacht haben.
+damit, das eMule (das damals wichtigste File-Sharing-Tool, das einen Stellenwert
+hatte, wie es heute BitTorrent hat) auf dem Windows-Rechner der Familie nicht
+mehr richtig funktionierte. Irgendetwas musste ich am Betriebssystem kaputt
+gemacht haben.
 
 Eine mögliche Lösung wäre es gewesen, den Rechner neu mit Windows XP
 aufzusetzen. Das konnte ich aber nicht so einfach tun, da auch andere
@@ -38,8 +38,8 @@ Dateien vom Rechner wegkopieren sollte.
 
 Der USB-Stick (Kapazität: 128 MB), den ich an einem überbetrieblichen Kurs
 (Computer zusammenbauen) erhalten hatte, wurde nicht automatisch erkannt. Und
-das mit dem `mount`-Befehl, was von der Google-Suche ausgespuckt worden ist, war
-mir dann doch noch etwas zu hoch. Der Zugriff auf die Windows-Festplatte (NTFS)
+das mit dem `mount`-Befehl, was von der Google-Suche ausgespuckt worden war,
+überforderte mich dann doch noch. Der Zugriff auf die Windows-Festplatte (NTFS)
 funktionierte (out of the box) leider nur lesend. So werde ich mir wohl die
 heruntergeladenen Dateien auf CDs gebrannt haben, denn die Brennsoftware
 funktionierte problemlos.
@@ -50,7 +50,7 @@ Windows.
 ## SuSE: Linux als neues Zuhause
 
 Es muss wohl Ende 2004 oder Anfang 2005 gewesen sein, als ich mir zum ersten mal
-SuSE installierte. Es könnte Version 9.2 oder 9.3 gewesen sein. Wieder
+SuSE installierte. Wahrshceinlich war es Version 9.2 oder 9.3. Wieder
 installierte ich es auf der zweiten Festplatte neben Windows. Doch dieses mal
 sollte ich dabei bleiben.
 
@@ -59,7 +59,7 @@ Unit AG](https://www.dataunit.ch) in die Softwareentwicklung bei [Bison Schweiz
 AG](https://www.bison-group.ch). Nach zwei eher Microsoft-geprägten Jahren
 sollte ich nun also ein Java-Entwickler werden. In der Schule arbeiteten wir mit
 C#. Doch unser Lehrer in den Programmierfächern, Roland Bucher, der beide
-Programmiersprachen kannte, war so flexibel, dass er uns die Entscheidung der
+Programmiersprachen kannte, war so flexibel, dass er uns die Wahl der
 Programmiersprache frei liess. So rückte ich ab von C# und beschäftigte mich
 bereits im zweiten Lehrjahr, also bevor ich den Arbeitsplatz wechselte, mit
 Java.
@@ -67,35 +67,36 @@ Java.
 Es muss kurz vor diesem Wechsel gewesen sein, als ich auf
 [Heise.de](https://www.heise.de) einen Artikel über die Zukunftsstrategie von
 Microsoft gelesen hatte. Dabei kündigte der damalige CEO Steve Ballmer an, dass
-Microsoft so etwas wie _full spectrum dominance_ in allen Bereichen der IT
-erreichen wollte. Das Forum zu dieser News-Meldung war damals voller ablehnender
-Beiträge. Microsoft wurde zu dieser vom unsympathischen Monopolisten zum
-absoluten Hassobjekt, und das nicht nur für mich. Für mich war es klar, dass ich
-von Microsoft und damit von Windows weg musste.
+Microsoft so etwas wie _full spectrum dominance_ in der IT erreichen wollte. Das
+Forum zu dieser News-Meldung war damals voller ablehnender Beiträge. Microsoft
+wurde zu dieser Zeit vom unsympathischen Monopolisten zum absoluten Hassobjekt,
+und das nicht nur für mich. Für mich war klar, dass ich von Microsoft und damit
+von Windows weg musste.
 
 Es kam dazu, dass ich die Dokumentation [The
 Code](https://www.youtube.com/watch?v=XMm0HsmOTFI) gesehen hatte. Nun
 interessierte ich mich nicht nur für GNU/Linux als Betriebssystem, sondern für
 die Freie-Software-Bewegung als Ganzes. Für mich war eine neue Welt aufgegangen.
+Leute wie Richard Stallman, Linux Torvalds und Alan Cox waren meine neuen Idole.
 
 Im Herbst 2005 hatten wir in der Lehre unsere Zwischenprüfungen (pardon:
 Teilabschlussprüfungen). Hierfür habe ich mit einer Gruppe von fünf
-Klassenkameraden einige Zusammenfassungen geschrieben. (Diese sind immer noch
+Klassenkameraden einige Zusammenfassungen geschrieben. Diese sind immer noch
 in einem [Archiv](https://github.com/patrickbucher/archive/tree/master/pdfs) auf
-GitHub zu finden. Wir nannten uns damals «Team Eichhof». Das würde ich heute
+GitHub zu finden. Wir nannten uns damals «Team Eichhof». (Das würde ich heute
 auch nicht mehr machen…) All diese Dokumente wurden in OpenOffice.org
 geschrieben. Ich war der einzige von uns sechs, der das verwendete. Ich weiss
 nicht einmal mehr genau, wie ich die Beiträge meiner Kollegen eingebunden hatte.
-Wahrscheinlich habe ich sie aus Word-Dokumenten rauskopiert.
+Wahrscheinlich habe ich sie aus den Word-Dokumenten der Kameraden rauskopiert.
 
-Die meiste Zeit war ich nun auf Linux unterwegs, wobei ich diese natürlich auch
-unter Windows hätte bearbeiten können. Wichtig war, dass mein jeweils aktuelles
-Arbeitsverzeichnis nun auf der Linux-Festplatte lag. Beim Dual Boot wählte ich
-nun immer seltener Windows aus.
+Die meiste Zeit war ich nun auf Linux unterwegs, wobei ich diese
+Zusammenfassungen natürlich auch unter Windows hätte bearbeiten können. Wichtig
+war, dass mein jeweils aktuelles Arbeitsverzeichnis nun auf der Linux-Festplatte
+lag. Beim Dual Boot wählte ich nun immer seltener Windows aus.
 
 Sollten die Zwischenprüfungen problemlos ablaufen, und sollte ich alles
 bestehen, wollte ich mir meinen ersten eigenen Computer zur Belohnung kaufen.
-Natürlich würde ich mir den selber zusammenbauen, und bloss die Komponenten
+Natürlich würde ich mir den selber zusammenbauen, und bloss die Komponenten dazu
 kaufen. Wichtig war, dass die Komponenten alle gut von Linux unterstützt wurden.
 Das war damals beispielsweise bei WiFi-Karten gar nicht selbstverständlich. Und
 da der Computer in meinem Zimmer stehen sollte, war ein Ethernet-Kabel leider
@@ -104,17 +105,19 @@ keine Option.
 Ein Berufsschulkollege, der schon seit frühem Jugendalter mit Linux arbeitete,
 und auch bereits seine eigene Firma hatte, war hierfür ein guter
 Ansprechpartner. Ich bestellte die Hardware bei ihm. (Die Prüfungen waren
-übrigens sehr gut gelaufen.)
+übrigens sehr gut gelaufen.) Ich staunte sehr, dass er mir die Komponenten mit
+seinem eigenen Firmenauto lieferte.
 
 Den Computer hatte ich bald zusammengebaut. Doch leider liess sich SuSE Linux
-darauf nicht installieren ‒ oder zumindest funktionierte das WiFi nicht. Also
-habe ich einen Plan B gebraucht.
+darauf nicht installieren ‒ oder zumindest funktionierte das WiFi nicht, so
+genau kann ich mich nicht mehr darain erinnern. Auf jeden Fall gab es ein
+Problem mit SuSE. So habe ich einen Plan B gebraucht.
 
 ## Ubuntu: Ein gelungener Umstieg
 
 Zu dieser Zeit wurde gerade _Ubuntu_ einigermassen populär. Ich war zwar auf
 SuSE ein begeisterter KDE-Benutzer und hätte darum auch zu _Kubuntu_ wechseln
-können. Ich wollte aber doch lieber das «Original» ausprobieren.
+können. Ich wollte aber doch lieber das «Original» einmal ausprobieren.
 
 Ubuntu liess sich problemlos installieren. Ich weiss nicht mehr, ob es _Breezy
 Badger_ (5.10, am 12. Oktober 2005 erschienen) oder die Vorgängerversion _Hoary
@@ -127,14 +130,17 @@ ansonsten eher wenig geblieben.
 
 Ab und zu musste ich wohl auch noch am Windows-Rechner arbeiten, denn in der
 Berufsschule wurde immer noch der Microsoft-Stack unterrichtet. _Microsoft SQL
-Server_ habe ich mit Sicherheit einmal verwenden müssen.
+Server_ habe ich mit Sicherheit einmal verwenden müssen. Geblieben ist mir davon
+wenig. Die gleichen Übungen hätte man auch mit MySQL oder PostgreSQL machen
+können.
 
 2006 kaufte ich mir dann sogar einen eigenen Laptop. Der Lehrlingslohn war ja
 mit dem dritten Lehrjahr bedeutend angestiegen. Das HP-Notebook hatte einen
-verspiegelten Bildschirm. Diesen Fehler würde ich heute nicht mehr machen. Doch
-Ubuntu lief darauf problemlos. Ich konnte den Laptop auch in die Schule
+verspiegelten Bildschirm. (Diesen Fehler würde ich heute nicht mehr machen.)
+Doch Ubuntu lief darauf problemlos. Ich konnte den Laptop auch in die Schule
 mitbringen und darauf arbeiten. Aber ans Netzwerk durfte ich ihn nicht
-anschliessen, aus Sicherheitsgründen, versteht sich.
+anschliessen, aus Sicherheitsgründen, versteht sich. Eine externe USB-Festplatte
+diente zum Dateiaustausch.
 
 So bin ich bis zum Lehrabschluss bei Ubuntu geblieben. Für die
 Lehrabschlussprüfungen haben wir wieder in der gleichen Gruppe wie zwei Jahre
@@ -152,7 +158,7 @@ Studentenrabatt) für mein Informatik-Studium.
 Ich weiss nicht mehr, ob Ubuntu auf einem der beiden Rechnern nicht
 funktionierte. Auf jeden Fall stieg ich in dieser Zeit auf Debian um, das den
 Ruf hatte, schwer installierbar zu sein. Tatsächlich waren es einfach ein paar
-Klicks mehr als bei Ubuntu.
+Klicks mehr im Setup-Menü als bei Ubuntu.
 
 Auf meinem Laptop hatte ich einen Dual Boot eingerichtet, da ich ja im
 Informatikstudium weiterhin würde Windows verwenden müssen. (Daran hat sich bis
@@ -166,7 +172,10 @@ entfallen ist.
 Ich arbeitete nun schon seit etwa fünf Jahren mit Linux, war aber nur ein
 Anwender, und keinesfalls ein Profi. Wenn ich etwas auf der Kommandozeilen
 machen musste, dann kopierte ich mir diese Befehle von einer Webseite, und
-hoffte, dass sie funktionieren würde. Verstanden habe ich davon wenig.
+hoffte, dass sie funktionieren würde. Ich war auch weiterhin in der alten
+Windows-Routine verhaftet, dass ich das Betriebssystem komplett neu
+installierte, wenn etwas grundsätzliches nicht mehr funktionierte. Verstanden
+habe ich vom System sehr wenig.
 
 Zu dieser Zeit verlor ich auch die Lust an der Informatik. Der Grund dafür
 dürfte eine Kombination aus meiner Situation in Beruf und Hochschule gewesen
@@ -199,7 +208,7 @@ Für die Netzwerkverbindung war beispielsweise WICD im Einsatz.
 In der Zwischenzeit war in meinem Leben einiges passiert: Ich absolvierte die
 Passerelle, hatte ein einjähriges Gastspiel in Fribourg, wo ich Slavistik und
 Germanistik studierte ‒ und kehrte 2012 dann doch wieder in die Informatik
-zurück.
+zurück. Meine Lust am Programmieren hatte ich wohl wiederentdeckt.
 
 In diesen Jahren hatte ich mir auch ein Netbook angeschafft: eine Gattung
 Geräte, die von den Tablets verdrängt worden sind. Es muss auf diesem Netbook
@@ -211,9 +220,10 @@ Artikel namens [Lean Debian](https://web.archive.org/web/20150217043316/http://p
 ## Arch: Das vorläufige Ende einer Reise
 
 2016 entschied ich mich dazu, mein Informatik-Studium an der Hochschule Luzern
-doch noch zu beenden. Im Sommer hatte ich eine Aktion entdeckt: einen
-ultraschwachen Acer-Laptop mit 32 GB internem Speicher, der dafür aber extrem
-leicht und energieeffizient war: der ideale Laptop fürs Studium!
+wieder aufzunehmen und also doch noch zu beenden. Im Sommer hatte ich eine
+Aktion entdeckt: einen ultraschwachen Acer-Laptop für 199 Franken mit 32 GB
+internem Speicher, der dafür aber extrem leicht und energieeffizient war: der
+ideale Laptop fürs Studium!
 
 Die Debian-Installation scheiterte dabei leider. Ich stand wieder vor dem
 gleichen Problem, das mich schon früher hat die Distribution wechseln lassen.
@@ -233,14 +243,14 @@ vergessen haben, das Mounten der `/boot`-Partition in `/etc/fstab` festzuhalten,
 sodass sich der Laptop nach dem nächsten Kernel-Update nicht mehr aufstarten
 liess.
 
-Ich verfluchte Linux wie kaum jemals zuvor ‒ und seither niemals wieder. Denn
-der Fehler war ganz klar auf meiner Seite. Endlich lernte ich etwas übers
+Ich verfluchte Linux wie kaum jemals zuvor ‒ und wie seither niemals wieder.
+Denn der Fehler war ganz klar auf meiner Seite. Endlich lernte ich etwas übers
 System. Das Problem löste ich nicht durch eine komplette Neuinstallation,
 sondern indem ich das System mit dem USB-Stick startete und das Mounten der
 `/boot`-Partition korrekt konfigurierte. Für mich war das ein Meilenstein.
 
 Im Studium habe ich mich dann weitgehendst an Linux gehalten. Ausnahmen waren
-Prüfungen mit dem «Safe Exam Browser», der eben nur unter Windows und macOS das
+Prüfungen mit dem _Safe Exam Browser_, der eben nur unter Windows und macOS das
 System komplett blockieren konnte. In den Modulen _C# in Action_ und
 _Microcontroller_ stand auch gezwungenermassen Windows-Einsatz auf dem Programm,
 sodass es kaum ein Zufall ist, dass ich diese beiden Module abgebrochen habe.
@@ -255,16 +265,19 @@ Wenn ich mit Docker-Containern arbeite, ist oft das schlanke _Alpine Linux_
 meine Wahl für das Base-Image. Auf einem Heimrechner oder auf einem Laptop habe
 ich es bisher noch nicht ernsthaft verwendet. Das dürfte wohl mit der etwas
 älteren Kernel-Version zusammenhängen. Auch auf Servern verwende ich es nicht,
-da es von vielen Cloud-Anbietern nicht angeboten wird.
+da es von vielen Cloud-Anbietern nicht angeboten wird. Dort verwende ich Debian
+‒ oder Ubuntu, wenn ich auf neuere Packages angewiesen bin. (Lokal kann man
+schon einmal Debian Testing verwenden, das läuft dermassen stabil.)
 
 Weiter habe ich dieses Jahr einige kleinere Ausflüge in die BSD-Welt
 unternommen. OpenBSD scheint mir wie geschaffen zu sein für meine Ansprüche:
 alles ist minimal, standardmässig sinnvoll konfiguriert und sicher. FreeBSD ist
-mir in der Firma begegnet, wo ein Backup-Server (ZFS) damit läuft.
+mir in der Firma begegnet, wo ein Backup-Server (mit ZFS als Dateisystem) damit
+läuft.
 
 Für meinen privaten Einsatz konnte sich aber noch keines der beiden Systeme
 gegen Arch durchsetzen. Gerade bei Laptops läuft Linux mittlerweile so gut, dass
-die BSDs eher ein Rückschritt in vielerlei Belangen wären.
+die BSDs eher ein Rückschritt in vielerlei Hinsicht wäre.
 
 Seit einigen Monaten betreibe ich einen kleinen Server in der Cloud auf Debian.
 Hier wäre vielleicht OpenBSD eine sinnvolle Alternative, die ich gelegentlich
@@ -277,4 +290,4 @@ ich mich bisher noch nicht begeistern. Es wären wohl beides gewinnbringende
 
 Im Moment stehen für mich aber andere Themen an, z.B. die funktionale
 Programmierung. So bleibe ich vorerst bei Arch Linux, und lasse mich von der
-Zukunft überraschen…
+Zukunft überraschen… OpenBSD und FreeBSD laufen mir ja nicht weg.
