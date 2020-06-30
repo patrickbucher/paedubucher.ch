@@ -14,6 +14,7 @@ body:after {
     display: block;
     content: "❦";
     text-align: center;
+    padding: 2em 0 4em 0;
 }
 
 ul#articles {
