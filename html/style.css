@@ -2,10 +2,18 @@ body {
     font-family: sans-serif;
     font-size: 16px;
     margin: 0 auto;
-    padding: 1em 1em 4em 1em;
+    padding: 1em;
     min-width: 20em;
     max-width: 45em;
     line-height: 1.5;
+    color: #111;
+    background-color: #eee;
+}
+
+body:after {
+    display: block;
+    content: "❦";
+    text-align: center;
 }
 
 ul#articles {
