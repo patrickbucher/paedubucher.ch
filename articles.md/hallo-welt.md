@@ -10,3 +10,6 @@ Dies ist ein Demo-Artikel auf meiner neuen Webseite
 statischen Webseiten-Generators erstellt, der auf
 [GitHub](https://github.com/patrickbucher/paedubucher.ch) verfügbar ist. Wie
 dieser funktioniert, werde ich gerne einmal ausführlicher erklären.
+
+Ich möchte in Zukunft auf meiner Webseite mehr schreiben, auf Deutsch und auf
+Englisch, je nach Lust und Laune ‒ und Thema.
