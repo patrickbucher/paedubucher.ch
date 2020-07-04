@@ -15,7 +15,8 @@ Article = namedtuple('article', [
     'title',
     'subtitle',
     'author',
-    'date',
+    'date_raw',
+    'date_fmt',
     'lang',
     'content',
     'name',
@@ -33,7 +34,7 @@ def main():
 
     article_md_dir = os.path.join(page_dir, 'articles.md')
     articles = parse_articles(article_md_dir, article_dir)
-    articles.sort(key=lambda article: (article.date, article.title))
+    articles.sort(key=lambda article: (article.date_raw, article.title))
     articles.reverse()
 
     index_template = env.get_template('index.jinja2')
@@ -71,15 +72,18 @@ def parse_articles(article_md_dir, article_dir):
     for article_file in os.listdir(article_md_dir):
         article_path = os.path.join(article_md_dir, article_file)
         meta_data, html_content = parse_article(article_path)
-        date_str = meta_data['date'].strftime('%Y-%m-%d')
+        lang = meta_data['lang']
+        date_raw = meta_data['date']
+        date_fmt = format_date(date_raw, lang)
         title = meta_data['title'].strip()
         subtitle = meta_data['subtitle'] if 'subtitle' in meta_data else ''
-        name = normalize(f'{date_str}-{title}')
+        name = normalize(f'{date_raw}-{title}')
         article = Article(
             title=meta_data['title'],
             subtitle=subtitle.strip(),
             author=meta_data['author'],
-            date=date_str,
+            date_raw=date_raw,
+            date_fmt=date_fmt,
             lang=meta_data['lang'],
             content=html_content,
             name=name,
@@ -87,6 +91,16 @@ def parse_articles(article_md_dir, article_dir):
         )
         articles.append(article)
     return articles
+
+
+def format_date(date, lang):
+    lang_formats = {
+        'en': '%Y-%m-%d',
+        'de': '%d.%m.%Y',
+    }
+    if lang not in lang_formats:
+        raise ValueError(f'unknown language "{lang}"')
+    return date.strftime(lang_formats[lang])
 
 
 def normalize(s):

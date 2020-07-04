@@ -11,7 +11,7 @@
         <ul id="articles">
             {% for article in articles %}
             <li>
-                <span class="tt">{{ article.date }}</span>
+                <span class="tt">{{ article.date_raw }}</span>
                 <a href="{{article.href}}">{{article.title}}</a>
                 ({{article.lang}})
             </li>
