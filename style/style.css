@@ -4,18 +4,10 @@ body {
     margin: 0 auto;
     padding: 1em;
     min-width: 20em;
-    max-width: 45em;
+    max-width: 50em;
     line-height: 1.5;
-    color: #111;
-    background-color: #eee;
 }
 
-body:after {
-    display: block;
-    content: "❦";
-    text-align: center;
-    padding: 2em 0 4em 0;
-}
 
 ul#articles {
     list-style-type: none;
@@ -24,6 +16,42 @@ ul#articles {
 }
 
 p {
+    font-family: serif;
     text-align: justify;
     hyphens: auto;
+}
+
+h1.title {
+    text-align: center;
+}
+
+h2.subtitle {
+    text-align: center;
+    font-size: 120%;
+}
+
+h3.author, h3.date {
+    text-align: center;
+    font-size: 100%;
+    font-weight: normal;
+}
+
+div.content {
+    margin-top: 2em;
+}
+
+div.content:after {
+    display: block;
+    content: "❦";
+    text-align: center;
+    padding: 2em 0 4em 0;
+}
+
+.tt {
+    font-family: monospace;
+}
+
+div.backlink {
+    font-size: 80%;
+    margin: 0 0 1em 0;
 }

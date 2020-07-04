@@ -7,9 +7,13 @@
         <link rel="stylesheet" type="text/css" href="../style.css">
     </head>
     <body>
-        <p><a href="../index.html">paedubucher.ch</a></p>
-        <h1>{{ article.title }}</h1>
-        <p><em>{{ article.author }}</em>, {{ article.date }}</p>
-        <div>{{ article.content }}</div>
+        <div class="backlink"><a href="../index.html">paedubucher.ch</a></div>
+        <h1 class="title">{{ article.title }}</h1>
+        {% if article.subtitle %}
+        <h2 class="subtitle">{{ article.subtitle }}</h2>
+        {% endif %}
+        <h3 class="author">{{ article.author }}</h3>
+        <h3 class="date">{{ article.date }}</h3>
+        <div class="content">{{ article.content }}</div>
     </body>
 </html>

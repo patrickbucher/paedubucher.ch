@@ -11,9 +11,15 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 import yaml
 
 
-Article = namedtuple(
-    'article', [
-        'title', 'author', 'date', 'lang', 'content', 'name', 'href'])
+Article = namedtuple('article', [
+    'title',
+    'subtitle',
+    'author',
+    'date',
+    'lang',
+    'content',
+    'name',
+    'href'])
 
 env = Environment(
     loader=PackageLoader('generate', 'templates'),
@@ -67,9 +73,11 @@ def parse_articles(article_md_dir, article_dir):
         meta_data, html_content = parse_article(article_path)
         date_str = meta_data['date'].strftime('%Y-%m-%d')
         title = meta_data['title'].strip()
+        subtitle = meta_data['subtitle'] if 'subtitle' in meta_data else ''
         name = normalize(f'{date_str}-{title}')
         article = Article(
             title=meta_data['title'],
+            subtitle=subtitle.strip(),
             author=meta_data['author'],
             date=date_str,
             lang=meta_data['lang'],

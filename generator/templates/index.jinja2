@@ -10,7 +10,11 @@
         <h1>paedubucher.ch</h1>
         <ul id="articles">
             {% for article in articles %}
-            <li>{{ article.date }} <a href="{{article.href}}">{{article.title}}</a> ({{article.lang}})</li>
+            <li>
+                <span class="tt">{{ article.date }}</span>
+                <a href="{{article.href}}">{{article.title}}</a>
+                ({{article.lang}})
+            </li>
             {% endfor %}
         </ul>
     </body>
