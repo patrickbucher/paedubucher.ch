@@ -15,6 +15,10 @@ ul#articles {
     margin: 0;
 }
 
+ul#articles li {
+    margin: 0.5em 0;
+}
+
 p {
     font-family: serif;
     text-align: justify;
