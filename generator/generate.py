@@ -60,9 +60,16 @@ def scaffold(page_dir):
 
     article_dir = os.path.join(html_dir, 'articles')
     os.mkdir(article_dir)
-    style_from = os.path.join(page_dir, 'style', 'style.css')
+
+    static_dir = os.path.join(page_dir, 'static')
+
+    style_from = os.path.join(static_dir, 'style.css')
     style_to = os.path.join(html_dir, 'style.css')
     shutil.copyfile(style_from, style_to)
+
+    favicon_from = os.path.join(static_dir, 'favicon.ico')
+    favicon_to = os.path.join(html_dir, 'favicon.ico')
+    shutil.copyfile(favicon_from, favicon_to)
 
     return html_dir, article_dir
 
