@@ -6,8 +6,26 @@ body {
     min-width: 20em;
     max-width: 50em;
     line-height: 1.5;
+    color: #23373b;
+    background-color: #fafafa;
 }
 
+a:link, a:active, a:hover {
+    color: #00f;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:active, a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #66f;
+    text-decoration: none;
+}
 
 ul#articles {
     list-style-type: none;
