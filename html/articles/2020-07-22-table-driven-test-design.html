@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Table-Driven Test Design ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <div class="backlink"><a href="../index.html">paedubucher.ch</a></div>
+        <h1 class="title">Table-Driven Test Design</h1>
+        
+        <h2 class="subtitle">With an Example in C</h2>
+        
+        <h3 class="author">Patrick Bucher</h3>
+        <h3 class="date">2020-07-22</h3>
+        <div class="content"><p>Many universities teach programming in Java. Writing unit tests is one of the
+subjects being taught. Many professional Java programmers, but also university
+professors, suggest to build those test cases according to a pattern. <em>Given,
+When, Then</em> is a common pattern, and so is <em>Arrange, Act, Assert</em>. Both patterns
+prescribe the following structure for a test case:</p>
+<ol>
+<li><em>Given</em>/<em>Arrange</em>: An environment (in the broadest sense) is built up.</li>
+<li><em>When</em>/<em>Act</em>: The function or method to be tested is invoked.</li>
+<li><em>Then</em>/<em>Assert</em>: The result of the function or method is checked against some
+   expectation.</li>
+</ol>
+<p>Such a test case might look as follows (Java):</p>
+<pre><code>public void testAddition() {
+    // Given/Arrange
+    Calculator calc = new Calculator();
+    int a = 3;
+    int b = 5;
+
+    // When/Act
+    sum = calc.add(a, b);
+
+    // Then/Assert
+    assertEqual(8, sum);
+}
+</code></pre>
+<p>A rule often taught is the so-called <em>single assert rule</em> from Robert C. Martin,
+<a href="http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt">whom I refuse to call «Uncle
+Bob»</a>. It states,
+that there should be only one assertion per test case. One can argue whether or
+not this rule is useful.</p>
+<h2>Unclean Code</h2>
+<p>However, in my experience this rule leads to a consequence I do not like ‒ and
+which also doesn't fit into the <em>Clean Code</em> philosophy (or <em>cult</em>, I daresay):
+The programming language being used to write test code is a small subset of the
+implementation language, often degenerating into a sheer sequence of statements
+(imperative programming).</p>
+<p>Even though using a subset of a language is often a sensible approach (just
+think about C++, or <code>with</code> and <code>eval</code> in JavaScript, or <code>unsafe</code> in Go, etc.),
+using a subset of a language that doesn't even contain core features from
+structured programming (decisions, loops, data structures) does not sound
+sensible to me, except when programming in a purely functional style.</p>
+<p>How should an additional test case to cover, say, negative numbers, be added to
+the one above? The <em>single assert rule</em> wants us to write an additional test
+case:</p>
+<pre><code>public void testAdditionWithNegativeNumbers() {
+    // Given/Arrange
+    Calculator calc = new Calculator();
+    int a = -1;
+    int b = 3;
+
+    // When/Act
+    sum = calc.add(a, b);
+
+    // Then/Assert
+    assertEqual(2, sum);
+}
+</code></pre>
+<p>Who would <em>type</em> in that code, which is almost identical to the one above? Such
+code is rather <em>copied</em> than written again. (Why don't I hear somebody shouting
+<em>«Clean Code!!!!11»</em> now?)</p>
+<h2>Structured Programming to the Rescue</h2>
+<p>Let's violate the <em>single assert rule</em> for a minute and bring back structured
+programming. Let's write a unit test in C!</p>
+<pre><code>typedef struct {
+    int a;
+    int b;
+    int expected;
+} addition_test_case;
+
+void test_addition()
+{
+    addition_test_case tests[] = {
+        {3, 5, 8},
+        {-1, 3, 2},
+    };
+    int n = sizeof(tests) / sizeof(addition_test_case);
+    for (int i = 0; i &lt; n; i++) {
+        addition_test_case test = tests[i];
+        int actual = add(test.a, test.b);
+        if (actual != test.expected) {
+            printf("add(%d, %d): expected %d, got %d\n",
+                    test.a, test.b, test.expected, actual);
+            exit(1);
+        }
+    }
+    printf("test_addition: %d tests passed\n", n);
+}
+</code></pre>
+<p>This test case, which does not make use of any unit testing framework, was
+designed <em>table-driven</em>. I first got to know the concept of <em>table-driven test
+design</em> when learning go by reading <a href="http://www.gopl.io/">The Go Programming
+Language</a> (p. 306) by Alan A. A. Donovan and the great
+Brian W. Kernighan.</p>
+<p>However, the concept must predate Go, for I can at least remember one article by
+Rob Pike, who later designed Go, mentioning table-driven test design.
+(Ironically ‒ or not so ironically ‒ that article was a critique of
+object-oriented programming, as far as I can remember.)</p>
+<h2>Table-Driven Test Design</h2>
+<p>Let's break down the parts that make up a table-driven test design.</p>
+<p>First, a single test case is defined using a structure that contains all the
+input parameters, and the expected result of the test:</p>
+<pre><code>typedef struct {
+    int a;
+    int b;
+    int expected;
+} addition_test_case;
+</code></pre>
+<p>Second, an array ‒ the test <em>table</em> ‒ containing all the test definitions is
+defined (<em>Given</em>/<em>Arrange</em>):</p>
+<pre><code>addition_test_case tests[] = {
+    {3, 5, 8},
+    {-1, 3, 2},
+};
+</code></pre>
+<p>Third, the test table is processed using a <em>loop</em> (structured programming,
+remember that?):</p>
+<pre><code>int n = sizeof(tests) / sizeof(addition_test_case);
+for (int i = 0; i &lt; n; i++) {
+    // omitted
+}
+</code></pre>
+<p>For every test case, the result is computed (<em>Act</em>/<em>When</em>):</p>
+<pre><code>addition_test_case test = tests[i];
+int actual = add(test.a, test.b);
+</code></pre>
+<p>Fourth, the result is validated against the definition (<em>Then</em>/<em>Assert</em>):</p>
+<pre><code>if (actual != test.expected) {
+    printf("add(%d, %d): expected %d, got %d\n",
+            test.a, test.b, test.expected, actual);
+    exit(1);
+}
+printf("test_addition: %d tests passed\n", n);
+</code></pre>
+<p>Note that this test terminates after the first error. No assertions are used.
+The lack of a test framework is compensated by manually defined error and
+success messages.</p>
+<p>Yes, I'm well aware of the fact that there are unit testing libraries in C. The
+point is that this C code covering two test cases is only slightly longer than
+the Java code to cover the same amount of test cases would be. (Using Python or
+Go rather than C would have shaved off some additional lines.)</p>
+<p>Now let's add a third and a fourth test case:</p>
+<pre><code>addition_test_case tests[] = {
+    {3, 5, 8},
+    {-1, 3, 2},
+    {13, 17, 30}, // new
+    (-100, 100, 0}, // new
+};
+</code></pre>
+<p>No code was copied. No existing code was modified. Only <em>two</em> lines of code were
+added to define <em>two</em> additional test cases. The table-driven test is
+<em>extensible</em>.  Robert C. Martin would love it, wouldn't he?</p>
+<h2>Comparing Apples to Rotten Tomatoes</h2>
+<p>So why isn't everybody writing table-driven tests instead of triple-A copy-paste
+tests?</p>
+<p>First, some programming languages make it harder to define data structures as
+literals. Languages like JavaScript, Python, or Go are quite good at that. Even
+C, as shown above, can be quite concise when it comes to defining static data
+structures. Java recently got better at that, but up to version 8, defining a
+static map structure was done by adding single elements subsequently. (Why don't
+I hear <em>«DRY principle!!!1»</em> now?)</p>
+<p>Second, the unit testing framework plays an important role. In C, (at least as
+shown above), and in Go (as it is done using the standard library), no
+assertions are used. The programmer instead performs the checks manually and
+reacts with a reasonable error message. The programmer is supposed to <em>program</em>
+the tests.</p>
+<p>Some unit testing frameworks that do make use of assertions also allow to add
+custom error messages to every <code>assert</code> call. Other frameworks, such as
+<a href="https://jestjs.io/">Jest</a>, just will tell you <em>on which line</em> an assertion
+failed. This is not very useful when having assertions within a loop, for the
+programmer does not know which test case failed. At least for Jest, writing pure
+sequential assertion code is a necessity, and the <em>single assert rule</em> looks
+quite reasonable from that perspective.</p>
+<p>The <a href="https://docs.pytest.org/en/latest/">PyTest</a> framework, for example, has
+table-driven test design built-in, by providing the static test definitions
+through a decorator, which is basically an annotation in Java lingo. (Check
+<code>@pytest.mark.parametrize</code> for details.) However, this approach makes it
+impossible to include information into the test table that needs prior
+construction within the test function.</p>
+<p>More recent versions of JUnit also allow for parametrized tests (check out the
+<code>@ParametrizedTest</code> and <code>@ValueSource</code> annotations). The restricted stated above
+for PyTest also apply here. Again, the poor programmer is put into
+straightjacket here, for he's not supposed to <em>program</em> here, but only to
+<em>test</em>.</p>
+<p>My favourite test framework is from the Go standard library, which on one hand
+gives the programmer total flexibility, and on the other hand provides an useful
+API to construct small but powerful test runners. Checkout the
+<a href="https://golang.org/pkg/testing/">testing</a> package for details. (And read <a href="https://gopl.io">The
+Go Programming Language</a> by all means, even if you don't need
+to learn Go. You'll pick up a lot about computer science in this book.)</p>
+<h2>Single Assert Rule Revisited</h2>
+<p>The discussion about testing frameworks and programming languages (and text
+editors, and tabs vs. spaces) could be extended here ad nauseam. But let's
+review the <em>single assert rule</em> instead, which could be interpreted from two
+perspectives:</p>
+<ol>
+<li>Runtime: <code>assert</code> should only be called once per execution of every test
+   function/method.</li>
+<li>Code: There should only be one reference to <code>assert</code> in every test
+   function/method.</li>
+</ol>
+<p>While the first interpretation makes table-driven design impossible, the second
+interpretation might be closer to the rule's original intention: Each test case
+should only verify one aspect of the function/method being called.</p>
+<p>I'll therefore continue to happily violate the first interpretation of the rule,
+for the advantages of table-driven test design (extensibility, flexibility, more
+concise code) outhweigh the indiscriminate application of some hand-wavy
+statements about «doing only one thing» by far. Please let me just <em>program</em>
+those tests…</p>
+<p>As an additional example, check out my test cases for some time formatting
+routines
+(<a href="https://github.com/patrickbucher/countdown/blob/master/test_timefmt.c">test_timefmt.c</a>).
+Here, the test table can be used in two directions: One function uses the left
+value as input and the right value as the expected outcome, while the other
+functions does the opposite. Here, <em>two</em> new test cases are defined by adding
+<em>one</em> (very short) line of code.</p>
+<p>Am <em>I</em> allowed to shout <em>«Clean Code!»</em> and <em>«DRY principle!»</em> now, by the way?</p></div>
+    </body>
+</html>

@@ -37,7 +37,7 @@ ul#articles li {
     margin: 0.5em 0;
 }
 
-p {
+p, li {
     font-family: serif;
     text-align: justify;
     hyphens: auto;
