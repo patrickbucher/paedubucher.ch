@@ -104,8 +104,8 @@ programming. Let's write a unit test in C!
     }
 
 This test case, which does not make use of any unit testing framework, was
-designed _table-driven_. I first got to know the concept of _table-driven test
-design_ when learning go by reading [The Go Programming
+designed in a _table-driven_ manner. I first got to know the concept of
+_table-driven test design_ when learning Go by reading [The Go Programming
 Language](http://www.gopl.io/) (p. 306) by Alan A. A. Donovan and the great
 Brian W. Kernighan.
 
