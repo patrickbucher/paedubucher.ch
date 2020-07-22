@@ -148,6 +148,10 @@ int actual = add(test.a, test.b);
 }
 printf("test_addition: %d tests passed\n", n);
 </code></pre>
+<p>An error message is printed if the <code>actual</code> value is not equal to the <code>expected</code>
+value (in case <code>add</code> was implemented incorrectly):</p>
+<pre><code>add(3, 5): exptected 8, got 666
+</code></pre>
 <p>Note that this test terminates after the first error. No assertions are used.
 The lack of a test framework is compensated by manually defined error and
 success messages.</p>

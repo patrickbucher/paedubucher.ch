@@ -157,6 +157,11 @@ Fourth, the result is validated against the definition (_Then_/_Assert_):
     }
     printf("test_addition: %d tests passed\n", n);
 
+An error message is printed if the `actual` value is not equal to the `expected`
+value (in case `add` was implemented incorrectly):
+
+    add(3, 5): exptected 8, got 666
+
 Note that this test terminates after the first error. No assertions are used.
 The lack of a test framework is compensated by manually defined error and
 success messages.
