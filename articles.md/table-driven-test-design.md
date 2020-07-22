@@ -220,8 +220,7 @@ construction within the test function.
 More recent versions of JUnit also allow for parametrized tests (check out the
 `@ParametrizedTest` and `@ValueSource` annotations). The restricted stated above
 for PyTest also apply here. Again, the poor programmer is put into
-straightjacket here, for he's not supposed to _program_ here, but only to
-_test_.
+straightjacket here, for he's not supposed to _program_, but only to _test_.
 
 My favourite test framework is from the Go standard library, which on one hand
 gives the programmer total flexibility, and on the other hand provides an useful
@@ -257,7 +256,7 @@ routines
 ([test_timefmt.c](https://github.com/patrickbucher/countdown/blob/master/test_timefmt.c)).
 Here, the test table can be used in two directions: One function uses the left
 value as input and the right value as the expected outcome, while the other
-functions does the opposite. Here, _two_ new test cases are defined by adding
+function does the opposite. Here, _two_ new test cases are defined by adding
 _one_ (very short) line of code.
 
 Am _I_ allowed to shout _«Clean Code!»_ and _«DRY principle!»_ now, by the way?
