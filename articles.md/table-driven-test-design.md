@@ -34,7 +34,7 @@ Such a test case might look as follows (Java):
 
 A rule often taught is the so-called _single assert rule_ from Robert C. Martin,
 [whom I refuse to call «Uncle
-Bob»](http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt). It states,
+Bob»](http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt). It states
 that there should be only one assertion per test case. One can argue whether or
 not this rule is useful.
 
@@ -218,9 +218,9 @@ impossible to include information into the test table that needs prior
 construction within the test function.
 
 More recent versions of JUnit also allow for parametrized tests (check out the
-`@ParametrizedTest` and `@ValueSource` annotations). The restricted stated above
-for PyTest also apply here. Again, the poor programmer is put into
-straightjacket here, for he's not supposed to _program_, but only to _test_.
+`@ParametrizedTest` and `@ValueSource` annotations). The restrictions stated
+above for PyTest also apply here. Again, the poor programmer is put into
+straightjacket, for he's not supposed to _program_, but only to _test_.
 
 My favourite test framework is from the Go standard library, which on one hand
 gives the programmer total flexibility, and on the other hand provides an useful
