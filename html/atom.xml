@@ -1,0 +1,696 @@
+<?xml version="1.0" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>paedubucher.ch</title>
+    <subtitle>Article Feed</subtitle>
+    <link href="https://paedubucher.ch/atom.xml" rel="self"/>
+    <link href="https://paedubucher.ch/"/>
+    <id>https://paedubucher.ch/</id>
+    <updated>2020-07-24T10:28:32.827328Z</updated>
+    <entry>
+        <title>Table-Driven Test Design</title>
+        <link href="https://paedubucher.ch/articles/2020-07-22-table-driven-test-design.html"/>
+        <author>
+            <name>Patrick Bucher</name>
+        </author>
+        <id>https://paedubucher.ch/articles/2020-07-22-table-driven-test-design.html</id>
+        <updated>2020-07-22T22:00:00Z</updated>
+        <content type="text/markdown; charset=UTF-8">
+Many universities teach programming in Java. Writing unit tests is one of the
+subjects being taught. Many professional Java programmers, but also university
+professors, suggest to build those test cases according to a pattern. _Given,
+When, Then_ is a common pattern, and so is _Arrange, Act, Assert_. Both patterns
+prescribe the following structure for a test case:
+
+1. _Given_/_Arrange_: An environment (in the broadest sense) is built up.
+2. _When_/_Act_: The function or method to be tested is invoked.
+3. _Then_/_Assert_: The result of the function or method is checked against some
+   expectation.
+
+Such a test case might look as follows (Java):
+
+    public void testAddition() {
+        // Given/Arrange
+        Calculator calc = new Calculator();
+        int a = 3;
+        int b = 5;
+
+        // When/Act
+        sum = calc.add(a, b);
+
+        // Then/Assert
+        assertEqual(8, sum);
+    }
+
+A rule often taught is the so-called _single assert rule_ from Robert C. Martin,
+[whom I refuse to call «Uncle
+Bob»](http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt). It states
+that there should be only one assertion per test case. One can argue whether or
+not this rule is useful.
+
+## Unclean Code
+
+However, in my experience this rule leads to a consequence I do not like ‒ and
+which also doesn't fit into the _Clean Code_ philosophy (or _cult_, I daresay):
+The programming language being used to write test code is a small subset of the
+implementation language, often degenerating into a sheer sequence of statements
+(imperative programming).
+
+Even though using a subset of a language is often a sensible approach (just
+think about C++, or `with` and `eval` in JavaScript, or `unsafe` in Go, etc.),
+using a subset of a language that doesn't even contain core features from
+structured programming (decisions, loops, data structures) does not sound
+sensible to me, except when programming in a purely functional style.
+
+How should an additional test case to cover, say, negative numbers, be added to
+the one above? The _single assert rule_ wants us to write an additional test
+case:
+
+    public void testAdditionWithNegativeNumbers() {
+        // Given/Arrange
+        Calculator calc = new Calculator();
+        int a = -1;
+        int b = 3;
+
+        // When/Act
+        sum = calc.add(a, b);
+
+        // Then/Assert
+        assertEqual(2, sum);
+    }
+
+Who would _type_ in that code, which is almost identical to the one above? Such
+code is rather _copied_ than written again. (Why don't I hear somebody shouting
+_«Clean Code!!!!11»_ now?)
+
+## Structured Programming to the Rescue
+
+Let's violate the _single assert rule_ for a minute and bring back structured
+programming. Let's write a unit test in C!
+
+    typedef struct {
+        int a;
+        int b;
+        int expected;
+    } addition_test_case;
+
+    void test_addition()
+    {
+        addition_test_case tests[] = {
+            {3, 5, 8},
+            {-1, 3, 2},
+        };
+        int n = sizeof(tests) / sizeof(tests[0]);
+        for (int i = 0; i &lt; n; i++) {
+            addition_test_case test = tests[i];
+            int actual = add(test.a, test.b);
+            if (actual != test.expected) {
+                printf(&quot;add(%d, %d): expected %d, got %d\n&quot;,
+                        test.a, test.b, test.expected, actual);
+                exit(1);
+            }
+        }
+        printf(&quot;test_addition: %d tests passed\n&quot;, n);
+    }
+
+This test case, which does not make use of any unit testing framework, was
+designed in a _table-driven_ manner. I first got to know the concept of
+_table-driven test design_ when learning Go by reading [The Go Programming
+Language](http://www.gopl.io/) (p. 306) by Alan A. A. Donovan and the great
+Brian W. Kernighan.
+
+However, the concept must predate Go, for I can at least remember one article by
+Rob Pike, who later designed Go, mentioning table-driven test design.
+(Ironically ‒ or not so ironically ‒ that article was a critique of
+object-oriented programming, as far as I can remember.)
+
+## Table-Driven Test Design
+
+Let's break down the parts that make up a table-driven test design.
+
+First, a single test case is defined using a structure that contains all the
+input parameters, and the expected result of the test:
+
+    typedef struct {
+        int a;
+        int b;
+        int expected;
+    } addition_test_case;
+
+Second, an array ‒ the test _table_ ‒ containing all the test definitions is
+defined (_Given_/_Arrange_):
+
+    addition_test_case tests[] = {
+        {3, 5, 8},
+        {-1, 3, 2},
+    };
+
+Third, the test table is processed using a _loop_ (structured programming,
+remember that?):
+
+    int n = sizeof(tests) / sizeof(tests[0]);
+    for (int i = 0; i &lt; n; i++) {
+        // omitted
+    }
+
+For every test case, the result is computed (_Act_/_When_):
+
+    addition_test_case test = tests[i];
+    int actual = add(test.a, test.b);
+
+Fourth, the result is validated against the definition (_Then_/_Assert_):
+
+    if (actual != test.expected) {
+        printf(&quot;add(%d, %d): expected %d, got %d\n&quot;,
+                test.a, test.b, test.expected, actual);
+        exit(1);
+    }
+    printf(&quot;test_addition: %d tests passed\n&quot;, n);
+
+An error message is printed if the `actual` value is not equal to the `expected`
+value (in case `add` was implemented incorrectly):
+
+    add(3, 5): exptected 8, got 666
+
+Note that this test terminates after the first error. No assertions are used.
+The lack of a test framework is compensated by manually defined error and
+success messages.
+
+Yes, I'm well aware of the fact that there are unit testing libraries in C. The
+point is that this C code covering two test cases is only slightly longer than
+the Java code to cover the same amount of test cases would be. (Using Python or
+Go rather than C would have shaved off some additional lines.)
+
+Now let's add a third and a fourth test case:
+
+    addition_test_case tests[] = {
+        {3, 5, 8},
+        {-1, 3, 2},
+        {13, 17, 30}, // new
+        (-100, 100, 0}, // new
+    };
+
+No code was copied. No existing code was modified. Only _two_ lines of code were
+added to define _two_ additional test cases. The table-driven test is
+_extensible_.  Robert C. Martin would love it, wouldn't he?
+
+## Comparing Apples to Rotten Tomatoes
+
+So why isn't everybody writing table-driven tests instead of triple-A copy-paste
+tests?
+
+First, some programming languages make it harder to define data structures as
+literals. Languages like JavaScript, Python, or Go are quite good at that. Even
+C, as shown above, can be quite concise when it comes to defining static data
+structures. Java recently got better at that, but up to version 8, defining a
+static map structure was done by adding single elements subsequently. (Why don't
+I hear _«DRY principle!!!1»_ now?)
+
+Second, the unit testing framework plays an important role. In C, (at least as
+shown above), and in Go (as it is done using the standard library), no
+assertions are used. The programmer instead performs the checks manually and
+reacts with a reasonable error message. The programmer is supposed to _program_
+the tests.
+
+Some unit testing frameworks that do make use of assertions also allow to add
+custom error messages to every `assert` call. Other frameworks, such as
+[Jest](https://jestjs.io/), just will tell you _on which line_ an assertion
+failed. This is not very useful when having assertions within a loop, for the
+programmer does not know which test case failed. At least for Jest, writing pure
+sequential assertion code is a necessity, and the _single assert rule_ looks
+quite reasonable from that perspective.
+
+The [PyTest](https://docs.pytest.org/en/latest/) framework, for example, has
+table-driven test design built-in, by providing the static test definitions
+through a decorator, which is basically an annotation in Java lingo. (Check
+`@pytest.mark.parametrize` for details.) However, this approach makes it
+impossible to include information into the test table that needs prior
+construction within the test function.
+
+More recent versions of JUnit also allow for parametrized tests (check out the
+`@ParametrizedTest` and `@ValueSource` annotations). The restrictions stated
+above for PyTest also apply here. Again, the poor programmer is put into
+straightjacket, for he's not supposed to _program_, but only to _test_.
+
+My favourite test framework is from the Go standard library, which on one hand
+gives the programmer total flexibility, and on the other hand provides an useful
+API to construct small but powerful test runners. Checkout the
+[testing](https://golang.org/pkg/testing/) package for details. (And read [The
+Go Programming Language](https://gopl.io) by all means, even if you don't need
+to learn Go. You'll pick up a lot about computer science in this book.)
+
+## Single Assert Rule Revisited
+
+The discussion about testing frameworks and programming languages (and text
+editors, and tabs vs. spaces) could be extended here ad nauseam. But let's
+review the _single assert rule_ instead, which could be interpreted from two
+perspectives:
+
+1. Runtime: `assert` should only be called once per execution of every test
+   function/method.
+2. Code: There should only be one reference to `assert` in every test
+   function/method.
+
+While the first interpretation makes table-driven design impossible, the second
+interpretation might be closer to the rule's original intention: Each test case
+should only verify one aspect of the function/method being called.
+
+I'll therefore continue to happily violate the first interpretation of the rule,
+for the advantages of table-driven test design (extensibility, flexibility, more
+concise code) outhweigh the indiscriminate application of some hand-wavy
+statements about «doing only one thing» by far. Please let me just _program_
+those tests…
+
+As an additional example, check out my test cases for some time formatting
+routines
+([test_timefmt.c](https://github.com/patrickbucher/countdown/blob/master/test_timefmt.c)).
+Here, the test table can be used in two directions: One function uses the left
+value as input and the right value as the expected outcome, while the other
+function does the opposite. Here, _two_ new test cases are defined by adding
+_one_ (very short) line of code.
+
+Am _I_ allowed to shout _«Clean Code!»_ and _«DRY principle!»_ now, by the way?
+</content>
+    </entry>
+    <entry>
+        <title>Optimierung und Externalisierung</title>
+        <link href="https://paedubucher.ch/articles/2020-07-04-optimierung-und-externalisierung.html"/>
+        <author>
+            <name>Patrick Bucher</name>
+        </author>
+        <id>https://paedubucher.ch/articles/2020-07-04-optimierung-und-externalisierung.html</id>
+        <updated>2020-07-04T15:00:00Z</updated>
+        <content type="text/markdown; charset=UTF-8">
+Ich habe diesen Frühling _Heute schon einen Prozess optimiert?_ von Gunter Dueck
+gelesen. Der Autor beschreibt in diesem Buch, wie in Deutschland (und im
+ähnlichen Stil wohl auch in anderen Ländern) derzeit Prozessoptimiertung überall
+das Gebot der Stunde ist. Historisch gesehen habe man das Wirtschaftswachstum
+seit dem zweiten Weltkrieg vor allem Prozessoptimierungen im zweiten
+Wirtschaftssektor (Industrie) zu verdanken. Die Autos, die wir heute fahren,
+unterscheiden sich nicht grundlegend von denjenigen, die vor 50 Jahren
+produziert worden sind. Ihre Herstellungsweise hat sich jedoch radikal
+verändert und läuft heute grösstenteils automatisch ab.
+
+In der Industrie sind wir mittlerweile an die Grenzen der Optimierung und des
+Wachstums geraten. Grosses Wachstum gibt es nur noch im Dienstleistungssektor.
+Das Problem, das Dueck beschreibt, bezieht sich auf die Dienstleistungen. Denn
+hier wird genau nach dem gleichen Prinzip verfahren wie in der Industrie:
+Prozessoptimierung, was das Zeugs hält! Doch sind optimierte Dienstleistungen
+wirklich das, was sich der Kunde wünscht?
+
+McDonald's ist das Paradebeispiel für Prozessoptimierung in der Gastronomie. Ich
+esse sehr selten dort, und das praktisch nur, wenn es keine Alternativen gibt,
+und/oder wenn ich betrunken bin. Die Bedienung erfolgt hocheffizient. Dank der
+neuen Bestell- und Bezahlterminals muss man nicht einmal mehr lange an der Kasse
+anstehen und sich dort mit dem Personal unterhalten. Der Bestellprozess ist
+mittlerweile soweit durchoptimiert, wie es der Herstellungsprozess in der Küche
+schon längstens ist.
+
+Doch möchte ich auch in einem «richtigen» Restaurant so bedient werden? Ich gehe
+gerne zwischendurch in der Mittagspause mit Bekannten ausgedehnt in einem
+Restaurant essen. Dort steht neben dem guten Essen auch die Unterhaltung im
+Mittelpunkt. So eine Mittagspause ist oft bereichernd und entspannend, quasi ein
+Kurzurlaub vor dem Nachmittag.
+
+Merke ich jedoch, dass die Bedienung sichtlich gestresst ist, kann ich mich beim
+Restaurantbesuch kaum entspannen. Ich wähle und bestelle mein Essen sehr schnell
+und versuche, die Bedienung nicht unnötig lange aufzuhalten, denn ansonsten
+könnte das Ärger mit dem Vorgesetzten geben, was bloss für noch mehr Stress und
+schlechte Laune sorgt. Ein Mittagessen in einem Restaurant, das
+Prozessoptimierung betreibt, geht zwar schneller, ist aber kein sehr angenehmes
+Erlebnis. Man könnte auch gleich zu McDonald's gehen.
+
+Ein anderes Beispiel ist die Zustellung von Paketen. In den 90er-Jahren kam
+einmal täglich ein Postbote vorbei, der auf einem kleinen Anhänger Pakete
+mitführte. Für ein Dorf mit den weit ausserhalb gelegenen Bauernhöfen waren
+meistens ein oder zwei Postboten verantwortlich. Zu dieser Zeit gab es
+wesentlich weniger Pakete, jedoch mehr Briefe, Zeitungen, Zeitschriften usw.
+
+Diese Postboten haben immer einen sehr entspannten Eindruck auf mich gemacht.
+Oft konnte ich beobachten, dass sich der Postbote nach der Brief- und
+Paketzustellung noch mit den Nachbarn unterhielt, bis er zum nächsten Haus
+weiterzog. Offensichtlich hatte man damals noch Zeit…
+
+Heutzutage ist Effizienz angesagt. Der Paketbote rennt aus seinem Kastenwagen
+und will siene Ware möglichst schnell loswerden. Das ist auch nötig, denn seine
+Route wurde zuvor nach tayloristischen Methoden vermessen. Die Post weiss, wie
+lange der Bote für welche Anzahl Pakete maximal benötigen darf. Wird diese
+Zielvorgabe nicht eingehalten, hat der Bote mit negativen Konsequenzen zu
+rechnen.
+
+Manche Paketzusteller, denn es gibt ja mittlerweile Konkurrenz zur Post,
+klingeln sich so oft bei einem Mehrfamilienhaus durch. Schliesslich muss die
+Sendung nicht unbedingt dem Empfänger übergeben, sondern nur in das Gebäude
+hineingebracht werden. Der Bote klingelt also bei allen Hausbewohnern, und
+unterbricht dabei möglicherweise eine Vielzahl von Personen bei ihrer
+Beschäftigung. In den letzten Monaten könnte das durchaus Büroarbeit (in meinem
+Fall Softwareentwicklung) gewesen sein, zumal viele Leute im Home-Office tätig
+sind. Wie schädlich solche Unterbrechungen sein können, weiss ich als
+Programmierer nur zu gut.
+
+Ergebnis: Durch die Unterbrechungen sind die Leute weniger produktiv. Ihre
+Arbeitgeber verlieren Arbeitsleistung und damit Geld, müssen ihre Angestellten
+aber genau gleich entlöhnen. Der Paketzusteller spart hingegen einen Bruchteil
+seiner Personalkosten, da der Zustellungsprozess mittels Durchklingeln optimiert
+worden ist. Der Paketzusteller externalisiert seine Kosten ‒ das Umfeld hat
+diese zu bezahlen.
+
+Diese Prozessoptimierung führt nicht nur zu schlechteren Dienstleistungen ‒ das
+Paket wurde unsanft beim Eingang abgeworfen, und nicht dem Empfänger überreicht
+‒ sondern auch zu externalisierten Kosten. Denn der entstandene Schaden taucht
+nicht in der Bilanz des Paketzustellers auf, jedenfalls nicht sofort. (Und
+sollten die Versandhändler wegen schlechter Rückmeldungen der Logistikfirma ihre
+Aufträge entziehen, dürfte diese zum Ausgleich wiederum mit weiteren
+Prozessoptimierungen reagieren.)
+
+Ich bin keinesfalls gegen die Automatisierung von mechanischen Abläufen, denn
+diese ist als Softwareentwickle mein täglich Brot, ja meine
+Existenzberechtigung. Es gibt Aufgaben, die der Computer schneller und präziser
+ausführen kann als ein Mensch. Die zwischenmenschlichen Interaktionen sollten
+jedoch nicht optimiert werden, denn diese machen oftmals die Qualität einer
+Dienstleistung aus. Solche Optimierungen führen oft bloss zu Frust auf beide
+Seiten ‒ und eben zu externalisierten Kosten, von denen wir sonst schon viele
+haben (Umweltverschmutzung, Lärmbelastung, Littering usw.)
+
+Fazit: Wir sollten beim Optimieren von Prozessen nicht nur darauf achten, dass
+dabei die Dienstleistung und der zwischenmenschlicher Umgang nicht
+beeinträchtigt werden. Wir sollten auch darauf achten, dass wir unsere
+Einsparungen nicht unseren Mitmenschen als externalisierte Kosten aufbürden.
+</content>
+    </entry>
+    <entry>
+        <title>Meine Linux-Distributionen</title>
+        <link href="https://paedubucher.ch/articles/2020-06-28-meine-linux-distributionen.html"/>
+        <author>
+            <name>Patrick Bucher</name>
+        </author>
+        <id>https://paedubucher.ch/articles/2020-06-28-meine-linux-distributionen.html</id>
+        <updated>2020-06-28T22:00:00Z</updated>
+        <content type="text/markdown; charset=UTF-8">
+Ich verwende seit 2005 hauptsächlich Linux als Betriebssystem. Dabei habe ich
+schon Erfahrungen mit verschiedenen Distributionen sammeln können. Meistens
+hatte ich eine Hauptdistribution, die ich praktisch auf all meinen Rechnern
+installiert war. Dies ändert sich jetzt vielleicht. Doch der Reihe nach…
+
+## Mandrake: Wie alles begann
+
+Meine ersten Erfahrungen mit Linux habe ich im Jahr 2004 gemacht. Alles begann
+damit, dass eMule (das damals wichtigste File-Sharing-Tool, das einen
+Stellenwert hatte, wie es heute BitTorrent hat) auf dem Windows-Rechner der
+Familie nicht mehr richtig funktionierte. Irgendetwas musste ich am
+Betriebssystem kaputt gemacht haben.
+
+Eine mögliche Lösung wäre es gewesen, den Rechner neu mit Windows XP
+aufzusetzen. Das konnte ich aber nicht so einfach tun, da auch andere
+Familienmitglieder Dateien auf dem Rechner hatten. So musste ich immer um
+Erlaubnis bitten, wenn ich den Rechner neu aufsetzen wollte. Ausserdem dauerte
+es oft Tage, bis wieder alles funktionstüchtig war.
+
+Da ich eine zweite Festplatte hatte, die ich sonst für nichts brauchte, wollte
+ich stattdessen einen Dual-Boot einrichten. So gab ich _Mandrake Linux_ (heute
+_Mandriva_) eine Chance. Die Installation lief problemlos ab, und auch der Dual
+Boot mit Windows klappte problemlos. Meine Familie konnte weiter standardmässig
+nach Windows booten.
+
+Die KDE-Oberfläche war für mich einfach bedienbar. Da ich bereits auf Windows
+diverse OpenSource-Programme (OpenOffice.org, VLC Media Player, Firefox)
+verwendete, kam ich recht schnell mit dem Betriebssystem zurecht. eMule lief
+tatsächlich unter Mandrake. Das Problem war aber, wie ich die heruntergeladenen
+Dateien vom Rechner wegkopieren sollte.
+
+Der USB-Stick (Kapazität: 128 MB), den ich an einem überbetrieblichen Kurs
+(Computer zusammenbauen) erhalten hatte, wurde nicht automatisch erkannt. Und
+das mit dem `mount`-Befehl, was von der Google-Suche ausgespuckt worden war,
+überforderte mich dann doch noch. Der Zugriff auf die Windows-Festplatte (NTFS)
+funktionierte (out of the box) leider nur lesend. So werde ich mir wohl die
+heruntergeladenen Dateien auf CDs gebrannt haben, denn die Brennsoftware
+funktionierte problemlos.
+
+Ansonsten verlor ich bald das Interesse an Mandrake und bootete nur noch nach
+Windows.
+
+## SuSE: Linux als neues Zuhause
+
+Es muss wohl Ende 2004 oder Anfang 2005 gewesen sein, als ich mir zum ersten mal
+SuSE installierte. Wahrshceinlich war es Version 9.2 oder 9.3. Wieder
+installierte ich es auf der zweiten Festplatte neben Windows. Doch dieses mal
+sollte ich dabei bleiben.
+
+Im Sommer 2005 wechselte ich nach zwei Jahren Lehrlingsaustausch bei der [Data
+Unit AG](https://www.dataunit.ch) in die Softwareentwicklung bei [Bison Schweiz
+AG](https://www.bison-group.ch). Nach zwei eher Microsoft-geprägten Jahren
+sollte ich nun also ein Java-Entwickler werden. In der Schule arbeiteten wir mit
+C#. Doch unser Lehrer in den Programmierfächern, Roland Bucher, der beide
+Programmiersprachen kannte, war so flexibel, dass er uns die Wahl der
+Programmiersprache frei liess. So rückte ich ab von C# und beschäftigte mich
+bereits im zweiten Lehrjahr, also bevor ich den Arbeitsplatz wechselte, mit
+Java.
+
+Es muss kurz vor diesem Wechsel gewesen sein, als ich auf
+[Heise.de](https://www.heise.de) einen Artikel über die Zukunftsstrategie von
+Microsoft gelesen hatte. Dabei kündigte der damalige CEO Steve Ballmer an, dass
+Microsoft so etwas wie _full spectrum dominance_ in der IT erreichen wollte. Das
+Forum zu dieser News-Meldung war damals voller ablehnender Beiträge. Microsoft
+wurde zu dieser Zeit vom unsympathischen Monopolisten zum absoluten Hassobjekt,
+und das nicht nur für mich. Für mich war klar, dass ich von Microsoft und damit
+von Windows weg musste.
+
+Es kam dazu, dass ich die Dokumentation [The
+Code](https://www.youtube.com/watch?v=XMm0HsmOTFI) gesehen hatte. Nun
+interessierte ich mich nicht nur für GNU/Linux als Betriebssystem, sondern für
+die Freie-Software-Bewegung als Ganzes. Für mich war eine neue Welt aufgegangen.
+Leute wie Richard Stallman, Linus Torvalds und Alan Cox waren meine neuen Idole.
+
+Im Herbst 2005 hatten wir in der Lehre unsere Zwischenprüfungen (pardon:
+Teilabschlussprüfungen). Hierfür habe ich mit einer Gruppe von fünf
+Klassenkameraden einige Zusammenfassungen geschrieben. Diese sind immer noch
+in einem [Archiv](https://github.com/patrickbucher/archive/tree/master/pdfs) auf
+GitHub zu finden. Wir nannten uns damals «Team Eichhof». (Das würde ich heute
+auch nicht mehr machen…) All diese Dokumente wurden in OpenOffice.org
+geschrieben. Ich war der einzige von uns sechs, der das verwendete. Ich weiss
+nicht einmal mehr genau, wie ich die Beiträge meiner Kollegen eingebunden hatte.
+Wahrscheinlich habe ich sie aus den Word-Dokumenten der Kameraden rauskopiert.
+
+Die meiste Zeit war ich nun auf Linux unterwegs, wobei ich diese
+Zusammenfassungen natürlich auch unter Windows hätte bearbeiten können. Wichtig
+war, dass mein jeweils aktuelles Arbeitsverzeichnis nun auf der Linux-Festplatte
+lag. Beim Dual Boot wählte ich nun immer seltener Windows aus.
+
+Sollten die Zwischenprüfungen problemlos ablaufen, und sollte ich alles
+bestehen, wollte ich mir meinen ersten eigenen Computer zur Belohnung kaufen.
+Natürlich würde ich mir den selber zusammenbauen, und bloss die Komponenten dazu
+kaufen. Wichtig war, dass die Komponenten alle gut von Linux unterstützt wurden.
+Das war damals beispielsweise bei WiFi-Karten gar nicht selbstverständlich. Und
+da der Computer in meinem Zimmer stehen sollte, war ein Ethernet-Kabel leider
+keine Option.
+
+Ein Berufsschulkollege, der schon seit frühem Jugendalter mit Linux arbeitete,
+und auch bereits seine eigene Firma hatte, war hierfür ein guter
+Ansprechpartner. Ich bestellte die Hardware bei ihm. (Die Prüfungen waren
+übrigens sehr gut gelaufen.) Ich staunte sehr, dass er mir die Komponenten mit
+seinem eigenen Firmenauto lieferte.
+
+Den Computer hatte ich bald zusammengebaut. Doch leider liess sich SuSE Linux
+darauf nicht installieren ‒ oder zumindest funktionierte das WiFi nicht, so
+genau kann ich mich nicht mehr darain erinnern. Auf jeden Fall gab es ein
+Problem mit SuSE. So habe ich einen Plan B gebraucht.
+
+## Ubuntu: Ein gelungener Umstieg
+
+Zu dieser Zeit wurde gerade _Ubuntu_ einigermassen populär. Ich war zwar auf
+SuSE ein begeisterter KDE-Benutzer und hätte darum auch zu _Kubuntu_ wechseln
+können. Ich wollte aber doch lieber das «Original» einmal ausprobieren.
+
+Ubuntu liess sich problemlos installieren. Ich weiss nicht mehr, ob es _Breezy
+Badger_ (5.10, am 12. Oktober 2005 erschienen) oder die Vorgängerversion _Hoary
+Hedgehog_ (5.04, am 8. April 2005 erschienen) war. Auf jeden Fall funktionierte
+alles auf Anhieb, auch das WiFi.
+
+An GNOME gewöhnte ich mich sehr schnell. Es war übersichtlicher und eleganter
+als KDE. Es funktionierte alles so, wie es musste. Aus dieser Zeit ist mir
+ansonsten eher wenig geblieben.
+
+Ab und zu musste ich wohl auch noch am Windows-Rechner arbeiten, denn in der
+Berufsschule wurde immer noch der Microsoft-Stack unterrichtet. _Microsoft SQL
+Server_ habe ich mit Sicherheit einmal verwenden müssen. Geblieben ist mir davon
+wenig. Die gleichen Übungen hätte man auch mit MySQL oder PostgreSQL machen
+können.
+
+2006 kaufte ich mir dann sogar einen eigenen Laptop. Der Lehrlingslohn war ja
+mit dem dritten Lehrjahr bedeutend angestiegen. Das HP-Notebook hatte einen
+verspiegelten Bildschirm. (Diesen Fehler würde ich heute nicht mehr machen.)
+Doch Ubuntu lief darauf problemlos. Ich konnte den Laptop auch in die Schule
+mitbringen und darauf arbeiten. Aber ans Netzwerk durfte ich ihn nicht
+anschliessen, aus Sicherheitsgründen, versteht sich. Eine externe USB-Festplatte
+diente zum Dateiaustausch.
+
+So bin ich bis zum Lehrabschluss bei Ubuntu geblieben. Für die
+Lehrabschlussprüfungen haben wir wieder in der gleichen Gruppe wie zwei Jahre
+zuvor Zusammenfassungen geschrieben. Dieses mal nicht mehr als «Team Eichhof»,
+aber wiederum mit OpenOffice.org. Die Zusammenfassung für die Allgemeinbildung
+hatte ich selbständig mit LaTeX verfasst. (Diese war Jahre später noch einem
+Lehrling hilfreich, sodass sich dieser per E-Mail bei mir bedankte.)
+
+## Debian: Ubuntu für Erwachsene
+
+2009 kaufte ich mir gleich zwei Computer. Einerseits einen Dell OptiPlex als
+Computer für mein Zimer, und andererseits ein Lenovo Thinkpad (mit grosszügigem
+Studentenrabatt) für mein Informatik-Studium.
+
+Ich weiss nicht mehr, ob Ubuntu auf einem der beiden Rechnern nicht
+funktionierte. Auf jeden Fall stieg ich in dieser Zeit auf Debian um, das den
+Ruf hatte, schwer installierbar zu sein. Tatsächlich waren es einfach ein paar
+Klicks mehr im Setup-Menü als bei Ubuntu.
+
+Auf meinem Laptop hatte ich einen Dual Boot eingerichtet, da ich ja im
+Informatikstudium weiterhin würde Windows verwenden müssen. (Daran hat sich bis
+heute kaum etwas geändert.)
+
+Von Ubuntu her waren mir viele Konzepte für Debian schon bekannt, zumal ja
+Ubuntu auf Debian basiert. Den Paketmanger `apt-get` verwendete ich auch über
+die Kommandozeile, und kaum noch über ein grafisches Tool, dessen Name mir
+entfallen ist.
+
+Ich arbeitete nun schon seit etwa fünf Jahren mit Linux, war aber nur ein
+Anwender, und keinesfalls ein Profi. Wenn ich etwas auf der Kommandozeilen
+machen musste, dann kopierte ich mir diese Befehle von einer Webseite, und
+hoffte, dass sie funktionieren würde. Ich war auch weiterhin in der alten
+Windows-Routine verhaftet, dass ich das Betriebssystem komplett neu
+installierte, wenn etwas grundsätzliches nicht mehr funktionierte. Verstanden
+habe ich vom System sehr wenig.
+
+Zu dieser Zeit verlor ich auch die Lust an der Informatik. Der Grund dafür
+dürfte eine Kombination aus meiner Situation in Beruf und Hochschule gewesen
+sein, wobei auch der Mangel an Freizeit über mehrere Jahre (Berufsmatura,
+Studium) mit Lektionen am Samstag, an den Abenden und Lernen am Wochenende auch
+eine Rolle gespielt haben dürfte.
+
+Ich entschloss mich dazu, mein Informatikstudium abzubrechen (bzw. offiziell
+bloss zu unterbrechen), und die Matura nachzuholen. Ich wollte lieber
+Geistes- und Sprachwissenschaften studieren, als mich noch länger mit der
+Informatik zu beschäftigen. Zunächst wollte ich aber mein Französisch aufbessern
+und ging im Sommer 2010 für einige Wochen nach Paris.
+
+Auf diese Zeit geht auch meine Aversion gegen Bloatware zurück. Ein
+Schlüsselerlebnis dürften für mich die Vorträge von [meillo](http://marmaro.de/)
+beim Chaos Computer Club Ulm gewesen sein. Schliesslich war es der Window
+Manager [dwm](http://dwm.suckless.org/), der mich nachhaltig auf einen anderen
+Pfad bringen sollte: Weg vom GUI, hin zur Kommandozeile!
+
+Zunächst verwendete ich weiterhin den GNOME-Login-Bildschirm. Ich schaffte es,
+`dwm` als zweite Option (neben dem GNOME-Desktop) zu konfigurieren. So konnte
+ich notfalls immer noch auf GNOME ausweichen. Meine grafische Oberfläche war
+aber nun `dwm`. Dies hat sich bis heute nicht geändert.
+
+Ich verwendete dieses Setup einige Jahre lang auf meinem Laptop und meinem
+Heimrechner. Nun machte ich auch Fortschritte auf der Kommandozeile. Ich
+verwendete aber immer noch grösstenteils die Konfigurationstools des Systems.
+Für die Netzwerkverbindung war beispielsweise WICD im Einsatz.
+
+In der Zwischenzeit war in meinem Leben einiges passiert: Ich absolvierte die
+Passerelle, hatte ein einjähriges Gastspiel in Fribourg, wo ich Slavistik und
+Germanistik studierte ‒ und kehrte 2012 dann doch wieder in die Informatik
+zurück. Meine Lust am Programmieren hatte ich wohl wiederentdeckt.
+
+In diesen Jahren hatte ich mir auch ein Netbook angeschafft: eine Gattung
+Geräte, die von den Tablets verdrängt worden sind. Es muss auf diesem Netbook
+gewesen sein, wo ich zum ersten mal ein Betriebssystem ohne GUI installiert
+habe. Seither startete ich `dwm` direkt von der Kommandozeile, einen
+Login-Screen hatte ich nicht mehr. Diese Installation dokumentierte ich in einem
+Artikel namens [Lean Debian](https://web.archive.org/web/20150217043316/http://paedubucher.ch/docs/lean-debian.html).
+
+## Arch: Das vorläufige Ende einer Reise
+
+2016 entschied ich mich dazu, mein Informatik-Studium an der Hochschule Luzern
+wieder aufzunehmen und also doch noch zu beenden. Im Sommer hatte ich eine
+Aktion entdeckt: einen ultraschwachen Acer-Laptop für 199 Franken mit 32 GB
+internem Speicher, der dafür aber extrem leicht und energieeffizient war: der
+ideale Laptop fürs Studium!
+
+Die Debian-Installation scheiterte dabei leider. Ich stand wieder vor dem
+gleichen Problem, das mich schon früher hat die Distribution wechseln lassen.
+Doch mit Debian war ich doch so zufrieden…
+
+Ich probierte verschiedenste Distributionen aus. Einige davon basierten auf _Arch
+Linux_. Damit funktionierte alles auf Anhieb, ich hatte aber immer die grafische
+Benutzeroberfläche dabei. So wagte ich mich an die manuelle Installation des
+«richtigen» Arch Linux heran, wofür ich seither eine personalisierte
+[Dokumentation](https://github.com/patrickbucher/docs/blob/master/arch-setup/arch-setup.md)
+führe.
+
+Die ganze Sache lief doch recht problemlos ab, sodass ich Arch gleich noch auf
+meinem «richtigen» Laptop installierte. (Ich wollte damals diesen Laptop für
+Windows brauchen, war aber jetzt zu begeistert von Arch.) Dabei musste ich wohl
+vergessen haben, das Mounten der `/boot`-Partition in `/etc/fstab` festzuhalten,
+sodass sich der Laptop nach dem nächsten Kernel-Update nicht mehr aufstarten
+liess.
+
+Ich verfluchte Linux wie kaum jemals zuvor ‒ und wie seither niemals wieder.
+Denn der Fehler war ganz klar auf meiner Seite. Endlich lernte ich etwas übers
+System. Das Problem löste ich nicht durch eine komplette Neuinstallation,
+sondern indem ich das System mit dem USB-Stick startete und das Mounten der
+`/boot`-Partition korrekt konfigurierte. Für mich war das ein Meilenstein.
+
+Im Studium habe ich mich dann weitgehendst an Linux gehalten. Ausnahmen waren
+Prüfungen mit dem _Safe Exam Browser_, der eben nur unter Windows und macOS das
+System komplett blockieren konnte. In den Modulen _C# in Action_ und
+_Microcontroller_ stand auch gezwungenermassen Windows-Einsatz auf dem Programm,
+sodass es kaum ein Zufall ist, dass ich diese beiden Module abgebrochen habe.
+
+In der Zwischenzeit arbeitete ich in einer Firma mit macOS. Auf meiner neuen
+Stelle kann ich komplett mit Linux arbeiten. Neben Arch Linux auf dem Laptop
+kommt auf den Servern Ubuntu zum Einsatz.
+
+## Ausprobiert: Alpine Linux, OpenBSD, FreeBSD
+
+Wenn ich mit Docker-Containern arbeite, ist oft das schlanke _Alpine Linux_
+meine Wahl für das Base-Image. Auf einem Heimrechner oder auf einem Laptop habe
+ich es bisher noch nicht ernsthaft verwendet. Das dürfte wohl mit der etwas
+älteren Kernel-Version zusammenhängen. Auch auf Servern verwende ich es nicht,
+da es von vielen Cloud-Anbietern nicht angeboten wird. Dort verwende ich Debian
+‒ oder Ubuntu, wenn ich auf neuere Packages angewiesen bin. (Lokal kann man
+schon einmal Debian Testing verwenden, das läuft dermassen stabil.)
+
+Weiter habe ich dieses Jahr einige kleinere Ausflüge in die BSD-Welt
+unternommen. OpenBSD scheint mir wie geschaffen zu sein für meine Ansprüche:
+alles ist minimal, standardmässig sinnvoll konfiguriert und sicher. FreeBSD ist
+mir in der Firma begegnet, wo ein Backup-Server (mit ZFS als Dateisystem) damit
+läuft.
+
+Für meinen privaten Einsatz konnte sich aber noch keines der beiden Systeme
+gegen Arch durchsetzen. Gerade bei Laptops läuft Linux mittlerweile so gut, dass
+die BSDs eher ein Rückschritt in vielerlei Hinsicht wäre.
+
+Seit einigen Monaten betreibe ich einen kleinen Server in der Cloud auf Debian.
+Hier wäre vielleicht OpenBSD eine sinnvolle Alternative, die ich gelegentlich
+prüfen sollte. Überhaupt möchte ich mich gelegentlich stärker mit den BSDs
+befassen als mit Linux.
+
+Für die «Hardcore»-Distributionen wie _Gentoo_ und _Linux from Scratch_ konnte
+ich mich bisher noch nicht begeistern. Es wären wohl beides gewinnbringende
+Übungen.
+
+Im Moment stehen für mich aber andere Themen an, z.B. die funktionale
+Programmierung. So bleibe ich vorerst bei Arch Linux, und lasse mich von der
+Zukunft überraschen… OpenBSD und FreeBSD laufen mir ja nicht weg.
+</content>
+    </entry>
+    <entry>
+        <title>Hallo, Welt!</title>
+        <link href="https://paedubucher.ch/articles/2020-06-28-hallo-welt.html"/>
+        <author>
+            <name>Patrick Bucher</name>
+        </author>
+        <id>https://paedubucher.ch/articles/2020-06-28-hallo-welt.html</id>
+        <updated>2020-06-28T19:00:00Z</updated>
+        <content type="text/markdown; charset=UTF-8">
+Dies ist ein Demo-Artikel auf meiner neuen Webseite
+[paedubucher.ch](http://paedubucher.ch). Die Seite ist mithilfe eines einfachen
+statischen Webseiten-Generators erstellt, der auf
+[GitHub](https://github.com/patrickbucher/paedubucher.ch) verfügbar ist. Wie
+dieser funktioniert, werde ich gerne einmal ausführlicher erklären.
+
+Ich möchte in Zukunft auf meiner Webseite mehr schreiben, auf Deutsch und auf
+Englisch, je nach Lust und Laune ‒ und Thema.
+</content>
+    </entry>
+</feed>
