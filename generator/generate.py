@@ -169,7 +169,7 @@ def create_atom_feed(articles):
     title.text = 'paedubucher.ch'
 
     subtitle = ET.SubElement(feed, 'subtitle')
-    subtitle.text = 'Article Feed'
+    subtitle.text = 'paedubucher.ch Article Feed'
 
     selfLink = ET.SubElement(feed, 'link')
     selfLink.attrib['href'] = 'https://paedubucher.ch/atom.xml'

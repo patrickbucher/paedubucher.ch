@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>paedubucher.ch</title>
-    <subtitle>Article Feed</subtitle>
+    <subtitle>paedubucher.ch Article Feed</subtitle>
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-07-24T10:28:32.827328Z</updated>
+    <updated>2020-07-24T10:30:23.745956Z</updated>
     <entry>
         <title>Table-Driven Test Design</title>
         <link href="https://paedubucher.ch/articles/2020-07-22-table-driven-test-design.html"/>
