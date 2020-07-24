@@ -90,7 +90,7 @@ programming. Let's write a unit test in C!
             {3, 5, 8},
             {-1, 3, 2},
         };
-        int n = sizeof(tests) / sizeof(addition_test_case);
+        int n = sizeof(tests) / sizeof(tests[0]);
         for (int i = 0; i < n; i++) {
             addition_test_case test = tests[i];
             int actual = add(test.a, test.b);
@@ -138,7 +138,7 @@ defined (_Given_/_Arrange_):
 Third, the test table is processed using a _loop_ (structured programming,
 remember that?):
 
-    int n = sizeof(tests) / sizeof(addition_test_case);
+    int n = sizeof(tests) / sizeof(tests[0]);
     for (int i = 0; i < n; i++) {
         // omitted
     }
