@@ -1,7 +1,7 @@
 ---
 title: Meine Linux-Distributionen
 author: Patrick Bucher
-date: 2020-06-28
+date: 2020-06-28T22:00:00
 lang: de
 ---
 

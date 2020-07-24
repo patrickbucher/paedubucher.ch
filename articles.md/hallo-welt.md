@@ -2,7 +2,7 @@
 title: Hallo, Welt!
 subtitle: Wieder online
 author: Patrick Bucher
-date: 2020-06-28
+date: 2020-06-28T19:00:00
 lang: de
 ---
 

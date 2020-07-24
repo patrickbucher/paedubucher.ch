@@ -2,7 +2,7 @@
 title: Table-Driven Test Design
 subtitle: With an Example in C
 author: Patrick Bucher
-date: 2020-07-22
+date: 2020-07-22T22:00:00
 lang: en
 ---
 
