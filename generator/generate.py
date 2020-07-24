@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 from collections import namedtuple
+from datetime import datetime
 import os
 import re
 import shutil
 import sys
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
 
 import markdown
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -15,10 +18,12 @@ Article = namedtuple('article', [
     'title',
     'subtitle',
     'author',
+    'datetime_raw',
     'date_raw',
     'date_fmt',
     'lang',
     'content',
+    'markdown',
     'name',
     'href'])
 
@@ -34,7 +39,7 @@ def main():
 
     article_md_dir = os.path.join(page_dir, 'articles.md')
     articles = parse_articles(article_md_dir, article_dir)
-    articles.sort(key=lambda article: (article.date_raw, article.title))
+    articles.sort(key=lambda article: (article.datetime_raw, article.title))
     articles.reverse()
 
     index_template = env.get_template('index.jinja2')
@@ -50,6 +55,11 @@ def main():
         article_file = os.path.join(html_dir, article.href)
         with open(article_file, 'w') as f:
             f.write(article_content)
+
+    atom_feed_content = create_atom_feed(articles)
+    atom_feed_xml = os.path.join(html_dir, 'atom.xml')
+    with open(atom_feed_xml, 'wb') as f:
+        f.write(atom_feed_content)
 
 
 def scaffold(page_dir):
@@ -78,21 +88,23 @@ def parse_articles(article_md_dir, article_dir):
     articles = []
     for article_file in os.listdir(article_md_dir):
         article_path = os.path.join(article_md_dir, article_file)
-        meta_data, html_content = parse_article(article_path)
+        meta_data, html_content, markdown_content = parse_article(article_path)
         lang = meta_data['lang']
-        date_raw = meta_data['date']
-        date_fmt = format_date(date_raw, lang)
+        datetime_raw = meta_data['date']
+        date_fmt = format_date(datetime_raw, lang)
         title = meta_data['title'].strip()
         subtitle = meta_data['subtitle'] if 'subtitle' in meta_data else ''
-        name = normalize(f'{date_raw}-{title}')
+        name = normalize(f'{datetime_raw}-{title}')
         article = Article(
             title=meta_data['title'],
             subtitle=subtitle.strip(),
             author=meta_data['author'],
-            date_raw=date_raw,
+            datetime_raw=datetime_raw,
+            date_raw=datetime_raw.date(),
             date_fmt=date_fmt,
             lang=meta_data['lang'],
             content=html_content,
+            markdown=markdown_content,
             name=name,
             href=os.path.join('articles', f'{name}.html')
         )
@@ -134,7 +146,7 @@ def parse_article(article_path):
     content_data = content[meta_end+len(sep)+1:]
     html = markdown.markdown(content_data, output_format='html5')
 
-    return yaml_dict, html
+    return yaml_dict, html, content_data
 
 
 def get_page_dir():
@@ -146,6 +158,61 @@ def get_page_dir():
         raise ValueError(f'the directory {page_dir} does not exist')
 
     return page_dir
+
+
+def create_atom_feed(articles):
+    feed = ET.Element('feed')
+    feed.attrib['xmlns'] = 'http://www.w3.org/2005/Atom'
+
+    title = ET.SubElement(feed, 'title')
+    title.text = 'paedubucher.ch'
+
+    subtitle = ET.SubElement(feed, 'subtitle')
+    subtitle.text = 'Article Feed'
+
+    selfLink = ET.SubElement(feed, 'link')
+    selfLink.attrib['href'] = 'https://paedubucher.ch/atom.xml'
+    selfLink.attrib['rel'] = 'self'
+
+    link = ET.SubElement(feed, 'link')
+    link.attrib['href'] = 'https://paedubucher.ch/'
+
+    identifier = ET.SubElement(feed, 'id')
+    identifier.text = 'https://paedubucher.ch/'
+
+    updated = ET.SubElement(feed, 'updated')
+    updated.text = datetime.utcnow().isoformat('T') + 'Z'
+
+    for article in articles:
+        add_atom_feed_entry(article, feed)
+
+    raw = ET.tostring(feed, 'utf-8')
+    return minidom.parseString(raw).toprettyxml(indent=4*' ').encode('utf-8')
+
+
+def add_atom_feed_entry(article, parent):
+    entry = ET.SubElement(parent, 'entry')
+
+    title = ET.SubElement(entry, 'title')
+    title.text = article.title
+
+    link = ET.SubElement(entry, 'link')
+    href = f'https://paedubucher.ch/{article.href}'
+    link.attrib['href'] = href
+
+    author = ET.SubElement(entry, 'author')
+    name = ET.SubElement(author, 'name')
+    name.text = article.author
+
+    identifier = ET.SubElement(entry, 'id')
+    identifier.text = href
+
+    updated = ET.SubElement(entry, 'updated')
+    updated.text = article.datetime_raw.isoformat('T') + 'Z'
+
+    content = ET.SubElement(entry, 'content')
+    content.attrib['type'] = 'text/markdown; charset=UTF-8'
+    content.text = article.markdown
 
 
 if __name__ == '__main__':
