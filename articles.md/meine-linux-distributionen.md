@@ -13,10 +13,10 @@ installiert war. Dies ändert sich jetzt vielleicht. Doch der Reihe nach…
 ## Mandrake: Wie alles begann
 
 Meine ersten Erfahrungen mit Linux habe ich im Jahr 2004 gemacht. Alles begann
-damit, das eMule (das damals wichtigste File-Sharing-Tool, das einen Stellenwert
-hatte, wie es heute BitTorrent hat) auf dem Windows-Rechner der Familie nicht
-mehr richtig funktionierte. Irgendetwas musste ich am Betriebssystem kaputt
-gemacht haben.
+damit, dass eMule (das damals wichtigste File-Sharing-Tool, das einen
+Stellenwert hatte, wie es heute BitTorrent hat) auf dem Windows-Rechner der
+Familie nicht mehr richtig funktionierte. Irgendetwas musste ich am
+Betriebssystem kaputt gemacht haben.
 
 Eine mögliche Lösung wäre es gewesen, den Rechner neu mit Windows XP
 aufzusetzen. Das konnte ich aber nicht so einfach tun, da auch andere
@@ -77,7 +77,7 @@ Es kam dazu, dass ich die Dokumentation [The
 Code](https://www.youtube.com/watch?v=XMm0HsmOTFI) gesehen hatte. Nun
 interessierte ich mich nicht nur für GNU/Linux als Betriebssystem, sondern für
 die Freie-Software-Bewegung als Ganzes. Für mich war eine neue Welt aufgegangen.
-Leute wie Richard Stallman, Linux Torvalds und Alan Cox waren meine neuen Idole.
+Leute wie Richard Stallman, Linus Torvalds und Alan Cox waren meine neuen Idole.
 
 Im Herbst 2005 hatten wir in der Lehre unsere Zwischenprüfungen (pardon:
 Teilabschlussprüfungen). Hierfür habe ich mit einer Gruppe von fünf
