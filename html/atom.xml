@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-08-01T20:42:00.658461Z</updated>
+    <updated>2020-08-01T20:56:38.462683Z</updated>
     <entry>
         <title>Virtual Machines with libvirt and Networking</title>
         <link href="https://paedubucher.ch/articles/2020-08-01-virtual-machines-with-libvirt-and-networking.html"/>
@@ -32,11 +32,13 @@ beforehand.
 
 This article shows how to set up three virtual machines ‒ `master`, `node1`, and
 `node2`, which later could be used for a Puppet setup with a Puppetmaster ‒
-using [libvirt](https://libvirt.org/) on top of KVM. [Debian 10
+using [libvirt](https://libvirt.org/) on top of
+[KVM](https://www.linux-kvm.org/page/Main_Page). [Debian 10
 («Buster»)](https://www.debian.org/releases/buster/) is going to be used both as
 the host and guest operating system. The host operating system is installed on a
-Dell Latitude E6430 from 2013, which is just laying around here. (It also proofs
-that you don't need a whole lot of hardware resources for such a setup.
+Dell Latitude E6430 from 2013 with 8 GB or RAM, which is just laying around
+here. (This also proofs that you don't need a whole lot of hardware resources
+for such a setup.)
 
 # Setting up the Virtualization
 
@@ -61,7 +63,7 @@ running.
 
 # Setting up the Virtual Network
 
-By default, a `default` network is defined, which can be checked as follows:
+Usually a `default` network is pre-defined, which can be checked as follows:
 
     # virsh net-list --all
      Name      State      Autostart   Persistent
@@ -73,7 +75,7 @@ The `default` network can be configured to be started up automatically:
     # virsh net-autostart default
     Network default marked as autostarted
 
-For now, it can be started manually:
+Until the next system restart, it is started up manually:
 
     # virsh net-start default
     Network default started
@@ -88,6 +90,8 @@ Make sure that NAT is activated:
 
     # sudo sysctl -a | grep 'net.ipv4.ip_forward ='
     net.ipv4.ip_forward = 1
+
+The value of the above property must be `1`.
 
 # Setting up the Virtual Machines
 
@@ -126,12 +130,13 @@ configured:
 - `root`: `topsecret`
 - `user`: `secret`
 
-After setup, just let the system boot, and login as `root`. Then shutdown the
-virtual machine:
+After the setup is finished, just let the system boot, and login as `root`. Then
+shut the virtual machine down:
 
     # shutdown -h now
 
-The nodes can be created by cloning the `master` virtual machine just set up:
+The two additional guest nodes can be created by cloning the `master` virtual
+machine just set up:
 
     # virt-clone --original master --name node1 --file node1.qcow2
     # virt-clone --original master --name node2 --file node2.qcow2
@@ -166,7 +171,7 @@ An editor showing an XML configuration appears:
 
 The `dhcp` section needs to be extended with static IP definitions, which map
 the MAC addresses of the guest's virtual network interfaces to the static IP
-addressed to be used.
+addresses to be used.
 
 The MAC addresses of the virtual machines can be extracted from their
 configuration as follows:
@@ -178,13 +183,15 @@ configuration as follows:
     # virsh dumpxml node2 | grep -i '&lt;mac'
         &lt;mac address='52:54:00:51:e8:ef'/&gt;
 
-Using that MAC address, new static host definitions can be created:
+Using those MAC addresses, new static host definitions can be created as
+follows:
 
     &lt;host mac='52:54:00:db:07:7c' name='master' ip='192.168.122.2'/&gt;
     &lt;host mac='52:54:00:a4:77:a9' name='node1' ip='192.168.122.3'/&gt;
     &lt;host mac='52:54:00:51:e8:ef' name='node2' ip='192.168.122.4'/&gt;
 
-The XML network definition now should look as follows:
+The XML network definition should now look as follows (the `uuid` and `mac
+address` of the host will vary):
 
     &lt;network&gt;
       &lt;name&gt;default&lt;/name&gt;
@@ -280,9 +287,9 @@ comfortably accessed without any passwords through SSH, and are able to
 communicate with one another over a virtual network.
 
 It took me almost a day ‒ and gave me some additional grey hair ‒ to get all
-this information together from various sources. After I figured out how to setup
-everything, it only took me two about two hours to setup everything (including
-the laptop) and to write this article.
+this information together from various sources. After I figured out how to
+create the setup described above, it only took me about two hours to setup
+everything (including the laptop) and to write this article.
 
 Since I did the try-and-error part on Arch Linux, this article can also be used
 on that distribution, and probably many others as well. Only the packages to be

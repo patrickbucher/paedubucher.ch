@@ -29,11 +29,13 @@ you to test changes to be applied to your productive environment locally
 beforehand.</p>
 <p>This article shows how to set up three virtual machines ‒ <code>master</code>, <code>node1</code>, and
 <code>node2</code>, which later could be used for a Puppet setup with a Puppetmaster ‒
-using <a href="https://libvirt.org/">libvirt</a> on top of KVM. <a href="https://www.debian.org/releases/buster/">Debian 10
+using <a href="https://libvirt.org/">libvirt</a> on top of
+<a href="https://www.linux-kvm.org/page/Main_Page">KVM</a>. <a href="https://www.debian.org/releases/buster/">Debian 10
 («Buster»)</a> is going to be used both as
 the host and guest operating system. The host operating system is installed on a
-Dell Latitude E6430 from 2013, which is just laying around here. (It also proofs
-that you don't need a whole lot of hardware resources for such a setup.</p>
+Dell Latitude E6430 from 2013 with 8 GB or RAM, which is just laying around
+here. (This also proofs that you don't need a whole lot of hardware resources
+for such a setup.)</p>
 <h1>Setting up the Virtualization</h1>
 <p>Given a fresh Debian setup with the lightweight LXQt desktop, a couple of
 packages need to be installed in order to get virtualization to work:</p>
@@ -52,7 +54,7 @@ kvm                 835584  1 kvm_intel
 <p>If there is a number not equal to 0 in the third column, <code>kvm</code> is up and
 running.</p>
 <h1>Setting up the Virtual Network</h1>
-<p>By default, a <code>default</code> network is defined, which can be checked as follows:</p>
+<p>Usually a <code>default</code> network is pre-defined, which can be checked as follows:</p>
 <pre><code># virsh net-list --all
  Name      State      Autostart   Persistent
 ----------------------------------------------
@@ -62,7 +64,7 @@ running.</p>
 <pre><code># virsh net-autostart default
 Network default marked as autostarted
 </code></pre>
-<p>For now, it can be started manually:</p>
+<p>Until the next system restart, it is started up manually:</p>
 <pre><code># virsh net-start default
 Network default started
 </code></pre>
@@ -75,6 +77,7 @@ virbr0          8000.5254005f4e6b       yes             virbr0-nic
 <pre><code># sudo sysctl -a | grep 'net.ipv4.ip_forward ='
 net.ipv4.ip_forward = 1
 </code></pre>
+<p>The value of the above property must be <code>1</code>.</p>
 <h1>Setting up the Virtual Machines</h1>
 <p>Since networking over the bridge interface requires <code>root</code> privileges, all
 virtual machine files are put into the <code>/opt/vms</code> directory, which first needs
@@ -107,11 +110,12 @@ configured:</p>
 <li><code>root</code>: <code>topsecret</code></li>
 <li><code>user</code>: <code>secret</code></li>
 </ul>
-<p>After setup, just let the system boot, and login as <code>root</code>. Then shutdown the
-virtual machine:</p>
+<p>After the setup is finished, just let the system boot, and login as <code>root</code>. Then
+shut the virtual machine down:</p>
 <pre><code># shutdown -h now
 </code></pre>
-<p>The nodes can be created by cloning the <code>master</code> virtual machine just set up:</p>
+<p>The two additional guest nodes can be created by cloning the <code>master</code> virtual
+machine just set up:</p>
 <pre><code># virt-clone --original master --name node1 --file node1.qcow2
 # virt-clone --original master --name node2 --file node2.qcow2
 </code></pre>
@@ -141,7 +145,7 @@ them. The network configuration can be edited as follows:</p>
 </code></pre>
 <p>The <code>dhcp</code> section needs to be extended with static IP definitions, which map
 the MAC addresses of the guest's virtual network interfaces to the static IP
-addressed to be used.</p>
+addresses to be used.</p>
 <p>The MAC addresses of the virtual machines can be extracted from their
 configuration as follows:</p>
 <pre><code># virsh dumpxml master | grep -i '&lt;mac'
@@ -151,12 +155,14 @@ configuration as follows:</p>
 # virsh dumpxml node2 | grep -i '&lt;mac'
     &lt;mac address='52:54:00:51:e8:ef'/&gt;
 </code></pre>
-<p>Using that MAC address, new static host definitions can be created:</p>
+<p>Using those MAC addresses, new static host definitions can be created as
+follows:</p>
 <pre><code>&lt;host mac='52:54:00:db:07:7c' name='master' ip='192.168.122.2'/&gt;
 &lt;host mac='52:54:00:a4:77:a9' name='node1' ip='192.168.122.3'/&gt;
 &lt;host mac='52:54:00:51:e8:ef' name='node2' ip='192.168.122.4'/&gt;
 </code></pre>
-<p>The XML network definition now should look as follows:</p>
+<p>The XML network definition should now look as follows (the <code>uuid</code> and <code>mac
+address</code> of the host will vary):</p>
 <pre><code>&lt;network&gt;
   &lt;name&gt;default&lt;/name&gt;
   &lt;uuid&gt;fecb90d5-9b46-48f6-8b93-e57032f8ba6a&lt;/uuid&gt;
@@ -237,9 +243,9 @@ rather old laptop running Debian GNU/Linux itself. Those virtual machines can be
 comfortably accessed without any passwords through SSH, and are able to
 communicate with one another over a virtual network.</p>
 <p>It took me almost a day ‒ and gave me some additional grey hair ‒ to get all
-this information together from various sources. After I figured out how to setup
-everything, it only took me two about two hours to setup everything (including
-the laptop) and to write this article.</p>
+this information together from various sources. After I figured out how to
+create the setup described above, it only took me about two hours to setup
+everything (including the laptop) and to write this article.</p>
 <p>Since I did the try-and-error part on Arch Linux, this article can also be used
 on that distribution, and probably many others as well. Only the packages to be
 installed will probably vary on other distributions.</p>
