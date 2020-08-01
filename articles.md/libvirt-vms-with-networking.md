@@ -260,9 +260,12 @@ On the guests, create a directory for the public key:
 
 Copy the public key from the host into those freshly created guest directories:
 
-    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@master 'cat >> ~/.ssh/authorized_keys'
-    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@node1 'cat >> ~/.ssh/authorized_keys'
-    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@node2 'cat >> ~/.ssh/authorized_keys'
+    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@master \
+        'cat >> ~/.ssh/authorized_keys'
+    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@node1 \
+        'cat >> ~/.ssh/authorized_keys'
+    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@node2 \
+        'cat >> ~/.ssh/authorized_keys'
 
 Check that the SSH connection now works without any password:
 

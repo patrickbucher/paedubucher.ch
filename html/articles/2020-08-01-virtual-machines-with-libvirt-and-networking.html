@@ -228,9 +228,12 @@ locally without any passphrase:</p>
 [user@node2]$ mkdir ~/.ssh
 </code></pre>
 <p>Copy the public key from the host into those freshly created guest directories:</p>
-<pre><code>$ cat ~/.ssh/id_vms_rsa.pub | ssh user@master 'cat &gt;&gt; ~/.ssh/authorized_keys'
-$ cat ~/.ssh/id_vms_rsa.pub | ssh user@node1 'cat &gt;&gt; ~/.ssh/authorized_keys'
-$ cat ~/.ssh/id_vms_rsa.pub | ssh user@node2 'cat &gt;&gt; ~/.ssh/authorized_keys'
+<pre><code>$ cat ~/.ssh/id_vms_rsa.pub | ssh user@master \
+    'cat &gt;&gt; ~/.ssh/authorized_keys'
+$ cat ~/.ssh/id_vms_rsa.pub | ssh user@node1 \
+    'cat &gt;&gt; ~/.ssh/authorized_keys'
+$ cat ~/.ssh/id_vms_rsa.pub | ssh user@node2 \
+    'cat &gt;&gt; ~/.ssh/authorized_keys'
 </code></pre>
 <p>Check that the SSH connection now works without any password:</p>
 <pre><code>$ ssh -i ~/.ssh/id_vms_rsa user@master
