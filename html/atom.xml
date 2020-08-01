@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-08-01T20:36:44.048439Z</updated>
+    <updated>2020-08-01T20:42:00.658461Z</updated>
     <entry>
         <title>Virtual Machines with libvirt and Networking</title>
         <link href="https://paedubucher.ch/articles/2020-08-01-virtual-machines-with-libvirt-and-networking.html"/>
@@ -15,7 +15,7 @@
         <id>https://paedubucher.ch/articles/2020-08-01-virtual-machines-with-libvirt-and-networking.html</id>
         <updated>2020-08-01T22:30:00Z</updated>
         <content type="text/markdown; charset=UTF-8">
-I'd like to dive deeper into system administration tasks. At work, I have to
+I'd like to dig deeper into system administration tasks. At work, I have to
 manage a fleet of Linux servers with Puppet. And in my spare time, I'd like to
 manage the servers I run with Ansible or Puppet in the future.
 

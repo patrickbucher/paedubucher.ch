@@ -6,7 +6,7 @@ date: 2020-08-01T22:30:00
 lang: en
 ---
 
-I'd like to dive deeper into system administration tasks. At work, I have to
+I'd like to dig deeper into system administration tasks. At work, I have to
 manage a fleet of Linux servers with Puppet. And in my spare time, I'd like to
 manage the servers I run with Ansible or Puppet in the future.
 
