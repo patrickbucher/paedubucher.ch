@@ -279,8 +279,9 @@ communicate with one another over a virtual network.
 
 It took me almost a day ‒ and gave me some additional grey hair ‒ to get all
 this information together from various sources. After I figured out how to
-create the setup described above, it only took me about two hours to setup
-everything (including the laptop) and to write this article.
+create the setup described above, it only took me about two hours to reproduce 
+everything on another laptop (including the setup of the laptop itself) and to
+write this article.
 
 Since I did the try-and-error part on Arch Linux, this article can also be used
 on that distribution, and probably many others as well. Only the packages to be
