@@ -17,7 +17,7 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/paedubucher.ch/privkey.pem;
 
 	gzip on;
-	gzip_types text/html text/css;
+	gzip_types text/css;
 	gunzip on;
 }
 
