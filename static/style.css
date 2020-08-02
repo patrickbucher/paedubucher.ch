@@ -43,8 +43,21 @@ p, li {
     hyphens: auto;
 }
 
+h1 {
+    font-size: 140%;
+}
+
+h2 {
+    font-size: 120%;
+}
+
+h3 {
+    font-size: 100%;
+}
+
 h1.title {
     text-align: center;
+    font-size: 180%;
 }
 
 h2.subtitle {

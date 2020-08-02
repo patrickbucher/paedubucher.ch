@@ -10,7 +10,7 @@ schon Erfahrungen mit verschiedenen Distributionen sammeln können. Meistens
 hatte ich eine Hauptdistribution, die ich praktisch auf all meinen Rechnern
 installiert war. Dies ändert sich jetzt vielleicht. Doch der Reihe nach…
 
-## Mandrake: Wie alles begann
+# Mandrake: Wie alles begann
 
 Meine ersten Erfahrungen mit Linux habe ich im Jahr 2004 gemacht. Alles begann
 damit, dass eMule (das damals wichtigste File-Sharing-Tool, das einen
@@ -47,7 +47,7 @@ funktionierte problemlos.
 Ansonsten verlor ich bald das Interesse an Mandrake und bootete nur noch nach
 Windows.
 
-## SuSE: Linux als neues Zuhause
+# SuSE: Linux als neues Zuhause
 
 Es muss wohl Ende 2004 oder Anfang 2005 gewesen sein, als ich mir zum ersten mal
 SuSE installierte. Wahrshceinlich war es Version 9.2 oder 9.3. Wieder
@@ -113,7 +113,7 @@ darauf nicht installieren ‒ oder zumindest funktionierte das WiFi nicht, so
 genau kann ich mich nicht mehr darain erinnern. Auf jeden Fall gab es ein
 Problem mit SuSE. So habe ich einen Plan B gebraucht.
 
-## Ubuntu: Ein gelungener Umstieg
+# Ubuntu: Ein gelungener Umstieg
 
 Zu dieser Zeit wurde gerade _Ubuntu_ einigermassen populär. Ich war zwar auf
 SuSE ein begeisterter KDE-Benutzer und hätte darum auch zu _Kubuntu_ wechseln
@@ -149,7 +149,7 @@ aber wiederum mit OpenOffice.org. Die Zusammenfassung für die Allgemeinbildung
 hatte ich selbständig mit LaTeX verfasst. (Diese war Jahre später noch einem
 Lehrling hilfreich, sodass sich dieser per E-Mail bei mir bedankte.)
 
-## Debian: Ubuntu für Erwachsene
+# Debian: Ubuntu für Erwachsene
 
 2009 kaufte ich mir gleich zwei Computer. Einerseits einen Dell OptiPlex als
 Computer für mein Zimer, und andererseits ein Lenovo Thinkpad (mit grosszügigem
@@ -217,7 +217,7 @@ habe. Seither startete ich `dwm` direkt von der Kommandozeile, einen
 Login-Screen hatte ich nicht mehr. Diese Installation dokumentierte ich in einem
 Artikel namens [Lean Debian](https://web.archive.org/web/20150217043316/http://paedubucher.ch/docs/lean-debian.html).
 
-## Arch: Das vorläufige Ende einer Reise
+# Arch: Das vorläufige Ende einer Reise
 
 2016 entschied ich mich dazu, mein Informatik-Studium an der Hochschule Luzern
 wieder aufzunehmen und also doch noch zu beenden. Im Sommer hatte ich eine
@@ -259,7 +259,7 @@ In der Zwischenzeit arbeitete ich in einer Firma mit macOS. Auf meiner neuen
 Stelle kann ich komplett mit Linux arbeiten. Neben Arch Linux auf dem Laptop
 kommt auf den Servern Ubuntu zum Einsatz.
 
-## Ausprobiert: Alpine Linux, OpenBSD, FreeBSD
+# Ausprobiert: Alpine Linux, OpenBSD, FreeBSD
 
 Wenn ich mit Docker-Containern arbeite, ist oft das schlanke _Alpine Linux_
 meine Wahl für das Base-Image. Auf einem Heimrechner oder auf einem Laptop habe

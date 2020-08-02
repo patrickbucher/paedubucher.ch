@@ -45,7 +45,7 @@ prescribe the following structure for a test case:</p>
 Bob»</a>. It states
 that there should be only one assertion per test case. One can argue whether or
 not this rule is useful.</p>
-<h2>Unclean Code</h2>
+<h1>Unclean Code</h1>
 <p>However, in my experience this rule leads to a consequence I do not like ‒ and
 which also doesn't fit into the <em>Clean Code</em> philosophy (or <em>cult</em>, I daresay):
 The programming language being used to write test code is a small subset of the
@@ -75,7 +75,7 @@ case:</p>
 <p>Who would <em>type</em> in that code, which is almost identical to the one above? Such
 code is rather <em>copied</em> than written again. (Why don't I hear somebody shouting
 <em>«Clean Code!!!!11»</em> now?)</p>
-<h2>Structured Programming to the Rescue</h2>
+<h1>Structured Programming to the Rescue</h1>
 <p>Let's violate the <em>single assert rule</em> for a minute and bring back structured
 programming. Let's write a unit test in C!</p>
 <pre><code>typedef struct {
@@ -112,7 +112,7 @@ Brian W. Kernighan.</p>
 Rob Pike, who later designed Go, mentioning table-driven test design.
 (Ironically ‒ or not so ironically ‒ that article was a critique of
 object-oriented programming, as far as I can remember.)</p>
-<h2>Table-Driven Test Design</h2>
+<h1>Table-Driven Test Design</h1>
 <p>Let's break down the parts that make up a table-driven test design.</p>
 <p>First, a single test case is defined using a structure that contains all the
 input parameters, and the expected result of the test:</p>
@@ -170,7 +170,7 @@ Go rather than C would have shaved off some additional lines.)</p>
 <p>No code was copied. No existing code was modified. Only <em>two</em> lines of code were
 added to define <em>two</em> additional test cases. The table-driven test is
 <em>extensible</em>.  Robert C. Martin would love it, wouldn't he?</p>
-<h2>Comparing Apples to Rotten Tomatoes</h2>
+<h1>Comparing Apples to Rotten Tomatoes</h1>
 <p>So why isn't everybody writing table-driven tests instead of triple-A copy-paste
 tests?</p>
 <p>First, some programming languages make it harder to define data structures as
@@ -207,7 +207,7 @@ API to construct small but powerful test runners. Checkout the
 <a href="https://golang.org/pkg/testing/">testing</a> package for details. (And read <a href="https://gopl.io">The
 Go Programming Language</a> by all means, even if you don't need
 to learn Go. You'll pick up a lot about computer science in this book.)</p>
-<h2>Single Assert Rule Revisited</h2>
+<h1>Single Assert Rule Revisited</h1>
 <p>The discussion about testing frameworks and programming languages (and text
 editors, and tabs vs. spaces) could be extended here ad nauseam. But let's
 review the <em>single assert rule</em> instead, which could be interpreted from two

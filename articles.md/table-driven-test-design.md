@@ -38,7 +38,7 @@ Bob»](http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt). It states
 that there should be only one assertion per test case. One can argue whether or
 not this rule is useful.
 
-## Unclean Code
+# Unclean Code
 
 However, in my experience this rule leads to a consequence I do not like ‒ and
 which also doesn't fit into the _Clean Code_ philosophy (or _cult_, I daresay):
@@ -73,7 +73,7 @@ Who would _type_ in that code, which is almost identical to the one above? Such
 code is rather _copied_ than written again. (Why don't I hear somebody shouting
 _«Clean Code!!!!11»_ now?)
 
-## Structured Programming to the Rescue
+# Structured Programming to the Rescue
 
 Let's violate the _single assert rule_ for a minute and bring back structured
 programming. Let's write a unit test in C!
@@ -114,7 +114,7 @@ Rob Pike, who later designed Go, mentioning table-driven test design.
 (Ironically ‒ or not so ironically ‒ that article was a critique of
 object-oriented programming, as far as I can remember.)
 
-## Table-Driven Test Design
+# Table-Driven Test Design
 
 Let's break down the parts that make up a table-driven test design.
 
@@ -184,7 +184,7 @@ No code was copied. No existing code was modified. Only _two_ lines of code were
 added to define _two_ additional test cases. The table-driven test is
 _extensible_.  Robert C. Martin would love it, wouldn't he?
 
-## Comparing Apples to Rotten Tomatoes
+# Comparing Apples to Rotten Tomatoes
 
 So why isn't everybody writing table-driven tests instead of triple-A copy-paste
 tests?
@@ -229,7 +229,7 @@ API to construct small but powerful test runners. Checkout the
 Go Programming Language](https://gopl.io) by all means, even if you don't need
 to learn Go. You'll pick up a lot about computer science in this book.)
 
-## Single Assert Rule Revisited
+# Single Assert Rule Revisited
 
 The discussion about testing frameworks and programming languages (and text
 editors, and tabs vs. spaces) could be extended here ad nauseam. But let's
