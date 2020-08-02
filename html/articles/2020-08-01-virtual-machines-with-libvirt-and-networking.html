@@ -78,6 +78,11 @@ virbr0          8000.5254005f4e6b       yes             virbr0-nic
 net.ipv4.ip_forward = 1
 </code></pre>
 <p>The value of the above property must be <code>1</code>.</p>
+<h2>Possible Issues</h2>
+<p>If <code>iptables</code> is in use, make sure to forward the traffic from the guests over
+the bridge <code>virbr0</code>, so that the guests also have internet access:</p>
+<pre><code># iptables -I FORWARD -i virbr0 -o virbr0 -j ACCEPT
+</code></pre>
 <h1>Setting up the Virtual Machines</h1>
 <p>Since networking over the bridge interface requires <code>root</code> privileges, all
 virtual machine files are put into the <code>/opt/vms</code> directory, which first needs

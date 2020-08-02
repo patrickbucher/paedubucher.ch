@@ -84,6 +84,13 @@ Make sure that NAT is activated:
 
 The value of the above property must be `1`.
 
+## Possible Issues
+
+If `iptables` is in use, make sure to forward the traffic from the guests over
+the bridge `virbr0`, so that the guests also have internet access:
+
+    # iptables -I FORWARD -i virbr0 -o virbr0 -j ACCEPT
+
 # Setting up the Virtual Machines
 
 Since networking over the bridge interface requires `root` privileges, all

@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-08-02T12:30:54.422013Z</updated>
+    <updated>2020-08-02T15:50:46.231325Z</updated>
     <entry>
         <title>Virtual Machines with libvirt and Networking</title>
         <link href="https://paedubucher.ch/articles/2020-08-01-virtual-machines-with-libvirt-and-networking.html"/>
@@ -92,6 +92,13 @@ Make sure that NAT is activated:
     net.ipv4.ip_forward = 1
 
 The value of the above property must be `1`.
+
+## Possible Issues
+
+If `iptables` is in use, make sure to forward the traffic from the guests over
+the bridge `virbr0`, so that the guests also have internet access:
+
+    # iptables -I FORWARD -i virbr0 -o virbr0 -j ACCEPT
 
 # Setting up the Virtual Machines
 
