@@ -259,26 +259,27 @@ locally without any passphrase:
 
     $ ssh-keyen -t rsa -b 4096 -f ~/.ssh/id_vms_rsa
 
-On the guests, create a directory for the public key:
+Make sure that your `~/.ssh` folder has the access mode `700`, and the contained
+files all have the access mode `600` (thanks to [meillo](http://marmaro.de/) for
+pointing that out):
 
-    [user@master]$ mkdir ~/.ssh
-    [user@node1]$ mkdir ~/.ssh
-    [user@node2]$ mkdir ~/.ssh
+    $ chmod 700 ~/.ssh
+    $ chmod 600 ~/.ssh/*
 
-Copy the public key from the host into those freshly created guest directories:
+Copy the public key to the hosts using `ssh-copy_id` (thanks to meillo again for
+hinting that utility to me):
 
-    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@master \
-        'cat >> ~/.ssh/authorized_keys'
-    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@node1 \
-        'cat >> ~/.ssh/authorized_keys'
-    $ cat ~/.ssh/id_vms_rsa.pub | ssh user@node2 \
-        'cat >> ~/.ssh/authorized_keys'
+    $ ssh-copy-id -i ~/.ssh/id_vms_rsa user@master
+    $ ssh-copy-id -i ~/.ssh/id_vms_rsa user@node1
+    $ ssh-copy-id -i ~/.ssh/id_vms_rsa user@node2
+
 
 Check that the SSH connection now works without any password:
 
     $ ssh -i ~/.ssh/id_vms_rsa user@master
     $ ssh -i ~/.ssh/id_vms_rsa user@node1
     $ ssh -i ~/.ssh/id_vms_rsa user@node2
+
 
 # Conclusion
 
