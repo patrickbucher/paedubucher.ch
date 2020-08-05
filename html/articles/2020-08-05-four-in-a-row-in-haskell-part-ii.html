@@ -19,7 +19,7 @@
 article</a>,
 I outlined the purpose of a <em>stock program</em>: a non-trivial coding exercise to
 be done in every new programming language somebody is learning. I also stated
-that «Four in a Row» is my personal stock program, and that I'd like to
+that «Four in a Row» is becoming my personal stock program, and that I'd like to
 implement it in Haskell.</p>
 <p>The main challenge in Haskell is the functional programming paradigm.
 Immutability is the main difference between an implementation of «Four in a
@@ -27,24 +27,26 @@ Row» in a functional programming language compared to rather structured
 programming languages such as C or Python. The object-oriented aspect of an
 implementation in Python makes hardly a difference, for OOP equally allows for
 mutable an immutable programming beneath the surface. (In introductory courses
-on OOP, hidden mutability is rather praised as a virtue; the disadvantages of
-mutability are only taught in advanced courses by showing the advantages of
-constructs like immutable classes. Learn and unlearn, but I'm digressing…)</p>
+on OOP, hidden mutability is rather praised as a virtue than frowned upon; the
+disadvantages of mutability are only taught in advanced courses by showing the
+advantages of constructs like immutable classes. Learn and unlearn, but I'm
+digressing…)</p>
 <p>A later re-implementation of my stock program in Python might profit from the
 experiences made in Haskell. Structured programming also allows for
 immutability, and list comprehensions allow for compact code to produce new
-state based on older state, without modifying existing state. (This might be
-matter for a fourth article, but let's not get ahead of ourselves.)</p>
-<p>In this article, I'm going to show how the board logic of «Four in a Row» can
-be implemented in Haskell.</p>
+state based on older state, without modifying existing state. (This
+re-implementation could be matter for a fourth article, but let's not get ahead
+of ourselves.)</p>
+<p>In this article, I'm going to show how the board logic for the game «Four in a
+Row» can be implemented in Haskell.</p>
 <h1>Let There Be Code</h1>
 <p>As analyzed in my previous article, the board logic consists of five building blocks:</p>
 <ol>
 <li>Create an empty grid with given dimensions.</li>
 <li>Validate if a move (i.e. the choice of a column) is allowed for a given board.</li>
 <li>Set a player's stone in the right place on the grid based on the choice of a column.</li>
-<li>Detect if a player's won the game by checking if four of the player's stones
-   lay in a horizontal, vertical, or diagonal line.</li>
+<li>Detect if a player has won the game by checking if four of the player's
+   stones lay in a horizontal, vertical, or diagonal line.</li>
 <li>Format the grid as a string in order to display it on the command line.</li>
 </ol>
 <p>The last building block, formatting, won't be covered in this article. I first
@@ -65,15 +67,15 @@ the numbers <code>1</code> and <code>2</code>, respectively.</p>
 <p>Just like a row, a column (type <code>Col</code>) is a list of integers. It is an
 alternative way to express the relationships between individual fields. The
 <code>Grid</code>, however, uses the <code>Row</code> type as its building blocks.</p>
-<p>A <code>Stone</code> is an integer, too. It represents the player's number for fields
-occupied by a particular player.</p>
+<p>A <code>Stone</code> is an integer, too. It represents a player's number for fields
+occupied by his or her stones.</p>
 <p>Those types won't add powerful abstractions to the program, but make the
 signature of certain functions a bit clearer. (It's also possible to limit the
 scope of the types declared to certain values, but let's focus on the program
 logic instead.)</p>
 <h2>Creating a Grid</h2>
 <p>The function <code>new_grid</code> accepts two integer parameters (number of rows and
-columns) and produces a grid of those dimensions:</p>
+columns), and produces a grid of those dimensions:</p>
 <pre><code>new_grid :: Int -&gt; Int -&gt; Grid
 new_grid r c = [new_row c | _ &lt;- [1..r]]
 </code></pre>
@@ -103,7 +105,7 @@ contain the value <code>0</code>. Since the columns are filled up from the botto
 column is not full if its the top-most field is equal to <code>0</code>. So this
 validation seems trivial.</p>
 <p>However, in order to deal with <em>columns</em> rather than <em>rows</em> (remember, the grid
-is defined in terms of rows, now the other way around), we first need a way to
+is defined in terms of rows, not the other way around), we first need a way to
 gather the fields of a column. The function <code>get_column</code> expects a grid and a
 column index and returns the fields belonging to that particular column:</p>
 <pre><code>get_column :: Grid -&gt; Int -&gt; Col
@@ -148,7 +150,7 @@ is used to extract a list based on a lambda expression: Elements are taken from
 the column as long as the lambda expression holds true. The bottom-most position
 of a column with the given value <code>v</code> is simply the length of the extracted sub
 list minus one (indexes are zero-based). Again, the <code>get_column</code> function is
-used to get access to a particular column. </p>
+used to get access to the fields of a particular column. </p>
 <p>Now <code>apply_move</code> can be implemented as follows:</p>
 <pre><code>apply_move g c p = replace_value g r c p
                    where r = bottom_most g 0 c
@@ -166,7 +168,7 @@ replace_value g r c p = take r g ++ [new_row] ++ drop (r + 1) g
 to be transformed, because the index is zero-based.) The row at index <code>r</code> is
 computed as <code>new_row</code> in a further step. The remaining rows are extracted from
 the existing grid by dropping the first <code>r + 1</code> rows from it. Those three
-components are concatenated using the <code>++</code> operator to a new grid.</p>
+components are concatenated to a new grid using the <code>++</code> operator.</p>
 <p>The <code>new_row</code> looks like the old row at index <code>r</code>, expect that a single value
 at index <code>c</code> (the column) has to be replaced with the player's value <code>v</code>. The
 function <code>replace_row_value</code> performs this transformation:</p>
@@ -174,9 +176,9 @@ function <code>replace_row_value</code> performs this transformation:</p>
 replace_row_value r c p = take c r ++ [p] ++ drop (c+1) r
 </code></pre>
 <p>The same logic using <code>take</code> and <code>drop</code> can be implemented for the column's
-field like for the grid's rows before. The empty field at column index <code>c</code> can
-simply be replaced by a list solely consisting of the player's value <code>v</code>. List
-concatenation is used again to produce the tranformed column.</p>
+fields like for the grid's rows before. The empty field at column index <code>c</code> can
+simply be replaced by a list solely consisting of the player's stone value <code>v</code>.
+List concatenation is used again to produce the tranformed column.</p>
 <p>A move can be applied as follows:</p>
 <pre><code>&gt; g = new_grid 6 7
 &gt; g1 = apply_move g 3 1
@@ -200,12 +202,11 @@ concatenation is used again to produce the tranformed column.</p>
 <p><code>apply_move</code> could also be invoking <code>is_valid_move</code> for validation. But this
 task should be left for the client to be implemented later on.</p>
 <h2>Detecting a Win</h2>
-<p>Figuring out whether or not a player's most recent move leads to a win or not is
-the hardest part of this program, no matter what implementation language is
-used. (However, I didn't try Prolog <em>yet</em> on this problem.) Let's analyze the
-problem.</p>
+<p>Figuring out whether or not a player's most recent move leads to a win is the
+hardest part of this program, no matter what implementation language is used.
+(However, I didn't try Prolog <em>yet</em> for this.) Let's analyze the problem.</p>
 <p>First, what do we know? The player with a number (<code>1</code> or <code>2</code>) just picked a
-column (between <code>0</code> and <code>5</code> in our 6x7 grid). A stone was set it the bottom-most
+column (between <code>0</code> and <code>5</code> in our 6x7 grid). A stone was set in the bottom-most
 empty field of that column. The actual row where the stone landed in is unknown.
 However, this information can be found out: it is the top-most row of the chosen
 column holding the player's stone value. All the fields above must be empty.</p>
@@ -213,12 +214,13 @@ column holding the player's stone value. All the fields above must be empty.</p>
 column, row figured out as described above), there are three possibilities to
 build a row of four values: horizontal, vertical, and diagonal lines. A
 horizontal line is a row, and a vertical row is a column. Diagonal lines can
-occur in two shapes: ascending or descending. So we actually need to account for
-four kinds of rows, which need to be extracted from the row/column coordinates.</p>
+occur in two directions: ascending or descending. So we actually need to account
+for four kinds of rows, which need to be extracted from the row/column
+coordinates.</p>
 <p>Third, once the horizontal, the vertical, and the two diagonal lines going
-through the player's stone most recently set are, a simple check can be done:
-Does the line, which can be represented as a list, contain a list of four of the
-player's stones? If that's the case, the player just won the game.</p>
+through the player's stone most recently set are established, a simple check can
+be done: Does the line, which can be represented as a list, contain a list of
+four of the player's stones? If that's the case, the player just won the game.</p>
 <p>Let's implement that algorithm in a top-down manner!</p>
 <p>The function <code>is_win</code> expects a grid, a column, and a player's stone value, and
 returns a boolean value indicating if the player just won the game:</p>
@@ -226,13 +228,12 @@ returns a boolean value indicating if the player just won the game:</p>
 is_win g c p = horizontal_win g row p ||
                vertical_win g c p ||
                diagonal_win g row c p
-               where
-                 row = top_most g p c
+               where row = top_most g p c
 </code></pre>
 <p>Three predicate functions <code>horizontal_win</code>, <code>vertical_win</code>, and <code>diagonal_win</code>
 handle the three different shapes of winning rows. To check for a vertical win,
 the row is irrelevant. For the other wins, the row where the player's stone just
-landed in, is figured out using the <code>top_most</code> function:</p>
+landed in is figured out using the <code>top_most</code> function:</p>
 <pre><code>top_most :: Grid -&gt; Stone -&gt; Int -&gt; Int
 top_most g v c = length (takeWhile (\x -&gt; x /= v) col)
                  where col = get_column g c
@@ -255,7 +256,7 @@ vertical_win g c p = contained fiar (get_column g c)
                      where fiar = [p | _ &lt;- [1..4]]
 </code></pre>
 <p>In both cases, a grid, an index (row or column, respectively), and a player's
-stone value is expected. The boolean return value indicats whether or not the
+stone value is expected. The boolean return value indicates whether or not the
 row or column contains a sub-list consisting of four of the player's stone
 values: <code>fiar</code>, which is built using a list comprehension.</p>
 <p>For the horizontal win, the row can be directly accessed from the grid using the
@@ -342,18 +343,19 @@ row index, <code>j</code> the column index. Those indices are obtained by zippin
 row indices with a list of column indices. The starting and end point of those
 lists are the tricky part.</p>
 <p>Consider this grid, in which <code>-</code> stands for an empty field, and the upper-case
-<code>X</code> for the field played most recently (with the <code>r</code> and <code>c</code> arguments as
-indices). All the fields indicated with a lower-case <code>x</code> are to be extracted for
-the ascending diagonal holding the upper-case <code>X</code>:</p>
-<pre><code>0 1 2 3 4 5 6
-- - - - - - x 0
-- - - - - x - 1
-- - - - x - - 2
-- - - x - - - 3
-- - X - - - - 4
-- x - - - - - 5
+<code>F</code> for the field played most recently (with the <code>r</code> and <code>c</code> arguments as
+indices). All the fields indicated with a lower-case <code>f</code> are to be extracted for
+the ascending diagonal holding the upper-case <code>F</code>:</p>
+<pre><code>    !
+0 1 2 3 4 5 6
+- - - - - - f 0
+- - - - - f - 1
+- - - - f - - 2
+- - - f - - - 3
+- - F - - - - 4 !
+- f - - - - - 5
 </code></pre>
-<p>The row and column indices of <code>X</code> are given as <code>4</code> and <code>2</code>. The starting point
+<p>The row and column indices of <code>F</code> are given as <code>4</code> and <code>2</code>. The starting point
 at the bottom-left can be figured out by shifting the coordinates by an
 <em>offset</em>. This offset is the smaller value of the following two differences:</p>
 <ul>
@@ -371,7 +373,7 @@ offset = max 1 0
 offset = 1
 </code></pre>
 <p>And the starting points <code>max_row</code>/<code>min_col</code> (bottom left) are calculated based
-on the given indices of <code>X</code> as follows:</p>
+on the given indices of <code>F</code> as follows:</p>
 <pre><code>max_row = r + offset
 max_row = 4 + 1
 max_row = 5
