@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-08-05T22:36:13.684191Z</updated>
+    <updated>2020-08-05T22:39:38.467152Z</updated>
     <entry>
         <title>«Four in a Row» in Haskell (Part II)</title>
         <link href="https://paedubucher.ch/articles/2020-08-05-four-in-a-row-in-haskell-part-ii.html"/>
@@ -529,8 +529,9 @@ maybe months.
 In a [recent interview](https://youtu.be/O9upVbGSBFo?t=3741), Brian W. Kernighan
 said that he always re-implements the same program when he's learning a new
 programming language. In his case, it's a programm to process a text file
-containing tabular data. In this task, his programming language AWK (Kernighan
-is the «K» in «AWK») shines, for it was designed for that kind of a task.
+containing a variable number of lines. In this task, his programming language
+AWK (Kernighan is the «K» in «AWK») shines, for it was designed for that kind of
+a task.
 
 Such a _stock program_ allows to evaluate a programming language from a certain
 perspective. Different programs offer different perspectives. I personally

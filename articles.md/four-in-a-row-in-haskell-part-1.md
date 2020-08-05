@@ -9,8 +9,9 @@ lang: en
 In a [recent interview](https://youtu.be/O9upVbGSBFo?t=3741), Brian W. Kernighan
 said that he always re-implements the same program when he's learning a new
 programming language. In his case, it's a programm to process a text file
-containing tabular data. In this task, his programming language AWK (Kernighan
-is the «K» in «AWK») shines, for it was designed for that kind of a task.
+containing a variable number of lines. In this task, his programming language
+AWK (Kernighan is the «K» in «AWK») shines, for it was designed for that kind of
+a task.
 
 Such a _stock program_ allows to evaluate a programming language from a certain
 perspective. Different programs offer different perspectives. I personally
