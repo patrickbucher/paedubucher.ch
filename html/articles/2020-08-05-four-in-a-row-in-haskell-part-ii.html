@@ -330,18 +330,20 @@ differences in the way they process the grid:</p>
 <p>The function <code>diag_asc</code> expects a grid and both row and column indices. It
 returns the ascending diagonal row containing that coordinate:</p>
 <pre><code>diag_asc :: Grid -&gt; Int -&gt; Int -&gt; [Int]
-diag_asc g r c = [g !! i !! j | (i,j) &lt;- zip (reverse [0..max_row]) [min_col..cols-1]]
+diag_asc g r c = [g !! i !! j | (i,j) &lt;- zip rows cols]
                  where
+                   nrows   = length g
+                   ncols   = length (g !! 0)
+                   offset  = max (min (nrows - r - 1) (ncols - c - 1)) 0
                    max_row = r + offset
                    min_col = c - offset
-                   offset  = max (min (rows - r - 1) (cols - c - 1)) 0
-                   rows    = length g
-                   cols    = length (g !! 0)
+                   rows    = reverse [0..max_row]
+                   cols    = [min_col..ncols-1]
 </code></pre>
 <p>The function is implemented using a list comprehension. The variable <code>i</code> is the
 row index, <code>j</code> the column index. Those indices are obtained by zipping a list of
-row indices with a list of column indices. The starting and end point of those
-lists are the tricky part.</p>
+row indices (<code>rows</code>) with a list of column indices (<code>cols</code>). The starting and
+end point of those lists are the tricky part.</p>
 <p>Consider this grid, in which <code>-</code> stands for an empty field, and the upper-case
 <code>F</code> for the field played most recently (with the <code>r</code> and <code>c</code> arguments as
 indices). All the fields indicated with a lower-case <code>f</code> are to be extracted for
@@ -366,7 +368,7 @@ at the bottom-left can be figured out by shifting the coordinates by an
 </ul>
 <p>The offset is set to <code>0</code>, if either difference becomes negative (boarder
 clipping). The offset is calculated as follows:</p>
-<pre><code>offset = max (min (rows - r - 1) (cols - c - 1)) 0
+<pre><code>offset = max (min (nrows - r - 1) (ncols - c - 1)) 0
 offset = max (min (6 - 4 - 1) (7 - 2 - 1)) 0
 offset = max (min 1 4) 0
 offset = max 1 0
@@ -387,12 +389,12 @@ Here, it is possible to always use the maximum value, because the <code>zip</cod
 will stop picking values once the shorter list is exhausted.</p>
 <p>The number of rows and columns can simply be figured out using the <code>length</code>
 function applied on the grid as a whole and on a single row thereof:</p>
-<pre><code>rows = length g
-cols = length (g !! 0)
+<pre><code>nrows = length g
+ncols = length (g !! 0)
 </code></pre>
 <p>Notice that in order to create a list containing the <em>falling</em> values from
-<code>max_row</code> down to <code>0</code>, a rising list from <code>0</code> to <code>max_row</code> has to be created and
-reversed:</p>
+<code>max_row</code> down to <code>0</code> (<code>rows</code>), a rising list from <code>0</code> to <code>max_row</code> has to be
+created and reversed:</p>
 <pre><code>&gt; reverse [0..max_row]
 [0,1,2,3,4,5]
 </code></pre>
@@ -404,13 +406,15 @@ reversed:</p>
 without any further comments.  Figuring out how it works is left to the reader.
 The extensive comments above on <code>diag_asc</code> certainly help for this purpose:</p>
 <pre><code>diag_desc :: Grid -&gt; Int -&gt; Int -&gt; [Int]
-diag_desc g r c = [g !! i !! j | (i,j) &lt;- zip [min_row..rows-1] [min_col..cols-1]]
+diag_desc g r c = [g !! i !! j | (i,j) &lt;- zip rows cols]
                   where
+                    offset  = min r c
                     min_row = r - offset
                     min_col = c - offset
-                    offset  = min r c
-                    rows    = length g
-                    cols    = length (g !! 0)
+                    nrows   = length g
+                    ncols   = length (g !! 0)
+                    rows    = [min_row..nrows-1]
+                    cols    = [min_col..ncols-1]
 </code></pre>
 <h1>Conclusion</h1>
 <p>The complete board logic required to implement a basic «Four in a Row» game has

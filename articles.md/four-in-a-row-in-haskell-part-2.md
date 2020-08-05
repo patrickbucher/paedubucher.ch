@@ -382,18 +382,20 @@ The function `diag_asc` expects a grid and both row and column indices. It
 returns the ascending diagonal row containing that coordinate:
 
     diag_asc :: Grid -> Int -> Int -> [Int]
-    diag_asc g r c = [g !! i !! j | (i,j) <- zip (reverse [0..max_row]) [min_col..cols-1]]
+    diag_asc g r c = [g !! i !! j | (i,j) <- zip rows cols]
                      where
+                       nrows   = length g
+                       ncols   = length (g !! 0)
+                       offset  = max (min (nrows - r - 1) (ncols - c - 1)) 0
                        max_row = r + offset
                        min_col = c - offset
-                       offset  = max (min (rows - r - 1) (cols - c - 1)) 0
-                       rows    = length g
-                       cols    = length (g !! 0)
+                       rows    = reverse [0..max_row]
+                       cols    = [min_col..ncols-1]
 
 The function is implemented using a list comprehension. The variable `i` is the
 row index, `j` the column index. Those indices are obtained by zipping a list of
-row indices with a list of column indices. The starting and end point of those
-lists are the tricky part.
+row indices (`rows`) with a list of column indices (`cols`). The starting and
+end point of those lists are the tricky part.
 
 Consider this grid, in which `-` stands for an empty field, and the upper-case
 `F` for the field played most recently (with the `r` and `c` arguments as
@@ -421,7 +423,7 @@ _offset_. This offset is the smaller value of the following two differences:
 The offset is set to `0`, if either difference becomes negative (boarder
 clipping). The offset is calculated as follows:
 
-    offset = max (min (rows - r - 1) (cols - c - 1)) 0
+    offset = max (min (nrows - r - 1) (ncols - c - 1)) 0
     offset = max (min (6 - 4 - 1) (7 - 2 - 1)) 0
     offset = max (min 1 4) 0
     offset = max 1 0
@@ -445,12 +447,12 @@ will stop picking values once the shorter list is exhausted.
 The number of rows and columns can simply be figured out using the `length`
 function applied on the grid as a whole and on a single row thereof:
 
-    rows = length g
-    cols = length (g !! 0)
+    nrows = length g
+    ncols = length (g !! 0)
 
 Notice that in order to create a list containing the _falling_ values from
-`max_row` down to `0`, a rising list from `0` to `max_row` has to be created and
-reversed:
+`max_row` down to `0` (`rows`), a rising list from `0` to `max_row` has to be
+created and reversed:
 
     > reverse [0..max_row]
     [0,1,2,3,4,5]
@@ -465,13 +467,15 @@ without any further comments.  Figuring out how it works is left to the reader.
 The extensive comments above on `diag_asc` certainly help for this purpose:
 
     diag_desc :: Grid -> Int -> Int -> [Int]
-    diag_desc g r c = [g !! i !! j | (i,j) <- zip [min_row..rows-1] [min_col..cols-1]]
+    diag_desc g r c = [g !! i !! j | (i,j) <- zip rows cols]
                       where
+                        offset  = min r c
                         min_row = r - offset
                         min_col = c - offset
-                        offset  = min r c
-                        rows    = length g
-                        cols    = length (g !! 0)
+                        nrows   = length g
+                        ncols   = length (g !! 0)
+                        rows    = [min_row..nrows-1]
+                        cols    = [min_col..ncols-1]
 
 # Conclusion
 
