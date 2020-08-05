@@ -10,21 +10,12 @@ body {
     background-color: #fafafa;
 }
 
-a:link, a:active, a:hover {
-    color: #00f;
-}
-
-a:link {
+a:link, a:visited {
     text-decoration: none;
 }
 
 a:active, a:hover {
     text-decoration: underline;
-}
-
-a:visited {
-    color: #66f;
-    text-decoration: none;
 }
 
 ul#articles {
