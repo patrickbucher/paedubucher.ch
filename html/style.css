@@ -75,24 +75,22 @@ div.content:after {
 
 div.backlink {
     font-size: 80%;
-    margin: 0 0 1em 0;
+    margin: 0 0 2em 0;
 }
 
-.tt {
+.tt, code {
     font-family: monospace;
 }
 
-code {
-    background-color: #dfdfdf;
-    padding: 2pt;
-    border-radius: 2pt;
-    font-size: 90%;
+pre, pre>code {
+    color: #fafafa;
+    background-color: #23373b;
 }
 
 pre {
-    background-color: #dfdfdf;
     padding: 1em;
     border-radius: 0.5em;
+    font-size: 90%;
 }
 
 pre>code {

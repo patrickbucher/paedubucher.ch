@@ -25,7 +25,7 @@ implement it in Haskell.</p>
 Immutability is the main difference between an implementation of «Four in a
 Row» in a functional programming language compared to rather structured
 programming languages such as C or Python. The object-oriented aspect of an
-implementation in Python makes hardly a difference, for OOP equally allows for
+implementation in Python makes hardly any difference, for OOP equally allows for
 mutable an immutable programming beneath the surface. (In introductory courses
 on OOP, hidden mutability is rather praised as a virtue than frowned upon; the
 disadvantages of mutability are only taught in advanced courses by showing the
@@ -35,8 +35,8 @@ digressing…)</p>
 experiences made in Haskell. Structured programming also allows for
 immutability, and list comprehensions allow for compact code to produce new
 state based on older state, without modifying existing state. (This
-re-implementation could be matter for a fourth article, but let's not get ahead
-of ourselves.)</p>
+re-implementation could be subject matter for a fourth article, but let's not
+get ahead of ourselves.)</p>
 <p>In this article, I'm going to show how the board logic for the game «Four in a
 Row» can be implemented in Haskell.</p>
 <h1>Let There Be Code</h1>
@@ -61,9 +61,9 @@ type Col = [Int]
 type Stone = Int
 </code></pre>
 <p>A grid (type <code>Grid</code>) is a list of rows. A row (type <code>Row</code>) itself is a list of
-integers. As discussed in my previous article, <code>0</code> is going to be used for
-empty fields. The fields occupied by player one and two shall be represented by
-the numbers <code>1</code> and <code>2</code>, respectively.</p>
+integers. As discussed in my previous article, 0 is going to be used for empty
+fields. The fields occupied by player one and two shall be represented by the
+numbers 1 and 2, respectively.</p>
 <p>Just like a row, a column (type <code>Col</code>) is a list of integers. It is an
 alternative way to express the relationships between individual fields. The
 <code>Grid</code>, however, uses the <code>Row</code> type as its building blocks.</p>
@@ -101,9 +101,9 @@ output has been wrapped for better readability):</p>
 columns) if nothing else is stated. A valid move must be in the range of 0
 (leftmost column) to 6 (inclusive, rightmost column).</p>
 <p>For a move to be valid, the column must have an empty field, i.e. it must
-contain the value <code>0</code>. Since the columns are filled up from the bottom, a
-column is not full if its the top-most field is equal to <code>0</code>. So this
-validation seems trivial.</p>
+contain the value 0. Since the columns are filled up from the bottom, a column
+is not full if its the top-most field is equal to 0. So this validation seems
+trivial.</p>
 <p>However, in order to deal with <em>columns</em> rather than <em>rows</em> (remember, the grid
 is defined in terms of rows, not the other way around), we first need a way to
 gather the fields of a column. The function <code>get_column</code> expects a grid and a
@@ -114,7 +114,7 @@ get_column g c = [row !! c | row &lt;- g]
 <p>A list comprehension is used to select the element at index <code>c</code> in every grid
 row using the index operator (<code>!!</code>).</p>
 <p>The function <code>is_valid_move</code> simply extracts the column chosen by the player
-and checks its topmost field to be empty (equals <code>0</code>, that is):</p>
+and checks its topmost field to be empty (equals 0, that is):</p>
 <pre><code>is_valid_move :: Grid -&gt; Int -&gt; Bool
 is_valid_move g c = (get_column g c) !! 0 == 0
 </code></pre>
@@ -144,7 +144,7 @@ bottom_most g v c = length (takeWhile (\x -&gt; x == v) col) - 1
                     where col = get_column g c
 </code></pre>
 <p>The lowest free position is found by extracting a subsequent list of a given
-value <code>v</code>, which can be handed in as an argument. (The value <code>0</code> has to be used
+value <code>v</code>, which can be handed in as an argument. (The value 0 has to be used
 for this particular use case by the caller.) The built-in function <code>takeWhile</code>
 is used to extract a list based on a lambda expression: Elements are taken from
 the column as long as the lambda expression holds true. The bottom-most position
@@ -156,9 +156,9 @@ used to get access to the fields of a particular column. </p>
                    where r = bottom_most g 0 c
 </code></pre>
 <p>Another function is needed: <code>replace_value</code>, which creates a new grid based on
-the existing grid <code>g</code>, by setting the player's stone value <code>p</code> to the
-coordinate <code>r</code>/<code>c</code>. (The row coordinate is figured out using <code>bottom_most</code>, as
-shown above.)</p>
+the existing grid <code>g</code>, by setting the player's stone value <code>p</code> to the coordinate
+<code>(r,c)</code>. (The row coordinate is figured out using <code>bottom_most</code>, as shown
+above.)</p>
 <p>The function <code>replace_move</code> is implemented as follows:</p>
 <pre><code>replace_value :: Grid -&gt; Int -&gt; Int -&gt; Stone -&gt; Grid
 replace_value g r c p = take r g ++ [new_row] ++ drop (r + 1) g
@@ -205,9 +205,9 @@ task should be left for the client to be implemented later on.</p>
 <p>Figuring out whether or not a player's most recent move leads to a win is the
 hardest part of this program, no matter what implementation language is used.
 (However, I didn't try Prolog <em>yet</em> for this.) Let's analyze the problem.</p>
-<p>First, what do we know? The player with a number (<code>1</code> or <code>2</code>) just picked a
-column (between <code>0</code> and <code>5</code> in our 6x7 grid). A stone was set in the bottom-most
-empty field of that column. The actual row where the stone landed in is unknown.
+<p>First, what do we know? The player with a number (1 or 2) just picked a column
+(between 0 and 5 in our 6x7 grid). A stone was set in the bottom-most empty
+field of that column. The actual row where the stone landed in is unknown.
 However, this information can be found out: it is the top-most row of the chosen
 column holding the player's stone value. All the fields above must be empty.</p>
 <p>Second, what do we need to find out? Starting from the coordinates (given
@@ -357,16 +357,16 @@ the ascending diagonal holding the upper-case <code>F</code>:</p>
 - - F - - - - 4 !
 - f - - - - - 5
 </code></pre>
-<p>The row and column indices of <code>F</code> are given as <code>4</code> and <code>2</code>. The starting point
-at the bottom-left can be figured out by shifting the coordinates by an
-<em>offset</em>. This offset is the smaller value of the following two differences:</p>
+<p>The row and column indices of <code>F</code> are given as 4 and 2. The starting point at
+the bottom-left can be figured out by shifting the coordinates by an <em>offset</em>.
+This offset is the smaller value of the following two differences:</p>
 <ul>
 <li><code>rows - r - 1</code>: the number of rows minus the row index (minus one to account
   for the zero-based row index)</li>
 <li><code>cols - c - 1</code>: the number of columns minus the column index (minus one;
   zero-based index again)</li>
 </ul>
-<p>The offset is set to <code>0</code>, if either difference becomes negative (boarder
+<p>The offset is set to 0, if either difference becomes negative (boarder
 clipping). The offset is calculated as follows:</p>
 <pre><code>offset = max (min (nrows - r - 1) (ncols - c - 1)) 0
 offset = max (min (6 - 4 - 1) (7 - 2 - 1)) 0
@@ -384,7 +384,7 @@ min_col = c - offset
 min_col = 2 - 1
 min_col = 1
 </code></pre>
-<p>The diagonal line can be drawn up to the row index <code>0</code> and the column index <code>6</code>.
+<p>The diagonal line can be drawn up to the row index 0 and the column index 6.
 Here, it is possible to always use the maximum value, because the <code>zip</code> function
 will stop picking values once the shorter list is exhausted.</p>
 <p>The number of rows and columns can simply be figured out using the <code>length</code>
@@ -393,7 +393,7 @@ function applied on the grid as a whole and on a single row thereof:</p>
 ncols = length (g !! 0)
 </code></pre>
 <p>Notice that in order to create a list containing the <em>falling</em> values from
-<code>max_row</code> down to <code>0</code> (<code>rows</code>), a rising list from <code>0</code> to <code>max_row</code> has to be
+<code>max_row</code> down to 0 (<code>rows</code>), a rising list from 0 to <code>max_row</code> has to be
 created and reversed:</p>
 <pre><code>&gt; reverse [0..max_row]
 [0,1,2,3,4,5]

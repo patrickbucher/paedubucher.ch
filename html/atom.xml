@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-08-05T22:39:38.467152Z</updated>
+    <updated>2020-08-06T09:24:09.862074Z</updated>
     <entry>
         <title>«Four in a Row» in Haskell (Part II)</title>
         <link href="https://paedubucher.ch/articles/2020-08-05-four-in-a-row-in-haskell-part-ii.html"/>
@@ -26,7 +26,7 @@ The main challenge in Haskell is the functional programming paradigm.
 Immutability is the main difference between an implementation of «Four in a
 Row» in a functional programming language compared to rather structured
 programming languages such as C or Python. The object-oriented aspect of an
-implementation in Python makes hardly a difference, for OOP equally allows for
+implementation in Python makes hardly any difference, for OOP equally allows for
 mutable an immutable programming beneath the surface. (In introductory courses
 on OOP, hidden mutability is rather praised as a virtue than frowned upon; the
 disadvantages of mutability are only taught in advanced courses by showing the
@@ -37,8 +37,8 @@ A later re-implementation of my stock program in Python might profit from the
 experiences made in Haskell. Structured programming also allows for
 immutability, and list comprehensions allow for compact code to produce new
 state based on older state, without modifying existing state. (This
-re-implementation could be matter for a fourth article, but let's not get ahead
-of ourselves.)
+re-implementation could be subject matter for a fourth article, but let's not
+get ahead of ourselves.)
 
 In this article, I'm going to show how the board logic for the game «Four in a
 Row» can be implemented in Haskell.
@@ -69,9 +69,9 @@ Before implementing the actual logic, let's define a couple of type aliases:
     type Stone = Int
 
 A grid (type `Grid`) is a list of rows. A row (type `Row`) itself is a list of
-integers. As discussed in my previous article, `0` is going to be used for
-empty fields. The fields occupied by player one and two shall be represented by
-the numbers `1` and `2`, respectively.
+integers. As discussed in my previous article, 0 is going to be used for empty
+fields. The fields occupied by player one and two shall be represented by the
+numbers 1 and 2, respectively.
 
 Just like a row, a column (type `Col`) is a list of integers. It is an
 alternative way to express the relationships between individual fields. The
@@ -120,9 +120,9 @@ columns) if nothing else is stated. A valid move must be in the range of 0
 (leftmost column) to 6 (inclusive, rightmost column).
 
 For a move to be valid, the column must have an empty field, i.e. it must
-contain the value `0`. Since the columns are filled up from the bottom, a
-column is not full if its the top-most field is equal to `0`. So this
-validation seems trivial.
+contain the value 0. Since the columns are filled up from the bottom, a column
+is not full if its the top-most field is equal to 0. So this validation seems
+trivial.
 
 However, in order to deal with _columns_ rather than _rows_ (remember, the grid
 is defined in terms of rows, not the other way around), we first need a way to
@@ -136,7 +136,7 @@ A list comprehension is used to select the element at index `c` in every grid
 row using the index operator (`!!`).
 
 The function `is_valid_move` simply extracts the column chosen by the player
-and checks its topmost field to be empty (equals `0`, that is):
+and checks its topmost field to be empty (equals 0, that is):
 
     is_valid_move :: Grid -&gt; Int -&gt; Bool
     is_valid_move g c = (get_column g c) !! 0 == 0
@@ -173,7 +173,7 @@ the bottom-most free field of a column has to be found:
                         where col = get_column g c
 
 The lowest free position is found by extracting a subsequent list of a given
-value `v`, which can be handed in as an argument. (The value `0` has to be used
+value `v`, which can be handed in as an argument. (The value 0 has to be used
 for this particular use case by the caller.) The built-in function `takeWhile`
 is used to extract a list based on a lambda expression: Elements are taken from
 the column as long as the lambda expression holds true. The bottom-most position
@@ -187,9 +187,9 @@ Now `apply_move` can be implemented as follows:
                        where r = bottom_most g 0 c
 
 Another function is needed: `replace_value`, which creates a new grid based on
-the existing grid `g`, by setting the player's stone value `p` to the
-coordinate `r`/`c`. (The row coordinate is figured out using `bottom_most`, as
-shown above.)
+the existing grid `g`, by setting the player's stone value `p` to the coordinate
+`(r,c)`. (The row coordinate is figured out using `bottom_most`, as shown
+above.)
 
 The function `replace_move` is implemented as follows:
 
@@ -245,9 +245,9 @@ Figuring out whether or not a player's most recent move leads to a win is the
 hardest part of this program, no matter what implementation language is used.
 (However, I didn't try Prolog _yet_ for this.) Let's analyze the problem.
 
-First, what do we know? The player with a number (`1` or `2`) just picked a
-column (between `0` and `5` in our 6x7 grid). A stone was set in the bottom-most
-empty field of that column. The actual row where the stone landed in is unknown.
+First, what do we know? The player with a number (1 or 2) just picked a column
+(between 0 and 5 in our 6x7 grid). A stone was set in the bottom-most empty
+field of that column. The actual row where the stone landed in is unknown.
 However, this information can be found out: it is the top-most row of the chosen
 column holding the player's stone value. All the fields above must be empty.
 
@@ -420,16 +420,16 @@ the ascending diagonal holding the upper-case `F`:
     - - F - - - - 4 !
     - f - - - - - 5
 
-The row and column indices of `F` are given as `4` and `2`. The starting point
-at the bottom-left can be figured out by shifting the coordinates by an
-_offset_. This offset is the smaller value of the following two differences:
+The row and column indices of `F` are given as 4 and 2. The starting point at
+the bottom-left can be figured out by shifting the coordinates by an _offset_.
+This offset is the smaller value of the following two differences:
 
 - `rows - r - 1`: the number of rows minus the row index (minus one to account
   for the zero-based row index)
 - `cols - c - 1`: the number of columns minus the column index (minus one;
   zero-based index again)
 
-The offset is set to `0`, if either difference becomes negative (boarder
+The offset is set to 0, if either difference becomes negative (boarder
 clipping). The offset is calculated as follows:
 
     offset = max (min (nrows - r - 1) (ncols - c - 1)) 0
@@ -449,7 +449,7 @@ on the given indices of `F` as follows:
     min_col = 2 - 1
     min_col = 1
 
-The diagonal line can be drawn up to the row index `0` and the column index `6`.
+The diagonal line can be drawn up to the row index 0 and the column index 6.
 Here, it is possible to always use the maximum value, because the `zip` function
 will stop picking values once the shorter list is exhausted.
 
@@ -460,7 +460,7 @@ function applied on the grid as a whole and on a single row thereof:
     ncols = length (g !! 0)
 
 Notice that in order to create a list containing the _falling_ values from
-`max_row` down to `0` (`rows`), a rising list from `0` to `max_row` has to be
+`max_row` down to 0 (`rows`), a rising list from 0 to `max_row` has to be
 created and reversed:
 
     &gt; reverse [0..max_row]
