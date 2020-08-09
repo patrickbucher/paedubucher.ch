@@ -338,7 +338,7 @@ the second list, _if the second list is at least as long as the first list_.
 zipped lists is exhausted. The length check ensures that the comparison of the
 lists does not end prematurely.)
 
-The `otherwise` case is processed when the two list's heads to not match. In
+The `otherwise` case is processed when the two list's heads do not match. In
 this case, the `contained` function is invoked again with the full first list
 and the second's list tail: It shall be checked whether or not the first list is
 contained in the second's list tail.
