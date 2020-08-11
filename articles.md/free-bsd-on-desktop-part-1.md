@@ -101,8 +101,9 @@ here…) The computer has a WiFi card, of course, but since my router is just ne
 to my desk, I rather use a stable ethernet connection.
 
 I already tried out OpenBSD once on that computer, and didn't have any issues
-getting it to run. So FreeBSD having access to the same code base under the BSD
-license is likely to suppport this hardware as well. Let's just try it out!
+getting it to run. So FreeBSD having access to the same code base under a
+compatible license is likely to suppport this hardware as well. Let's just try
+it out!
 
 # Preparations
 

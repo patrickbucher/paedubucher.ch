@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-08-11T20:13:46.211920Z</updated>
+    <updated>2020-08-11T20:52:12.421502Z</updated>
     <entry>
         <title>FreeBSD on the Desktop (Part I)</title>
         <link href="https://paedubucher.ch/articles/2020-08-11-freebsd-on-the-desktop-part-i.html"/>
@@ -110,8 +110,9 @@ here…) The computer has a WiFi card, of course, but since my router is just ne
 to my desk, I rather use a stable ethernet connection.
 
 I already tried out OpenBSD once on that computer, and didn't have any issues
-getting it to run. So FreeBSD having access to the same code base under the BSD
-license is likely to suppport this hardware as well. Let's just try it out!
+getting it to run. So FreeBSD having access to the same code base under a
+compatible license is likely to suppport this hardware as well. Let's just try
+it out!
 
 # Preparations
 
