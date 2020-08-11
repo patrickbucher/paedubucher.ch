@@ -490,9 +490,9 @@ Having audio running (almost) out of the box was a positive surprise. The
 an option to be changed using `sysctl`. This calls for some additional `dwm`
 shortcuts!
 
-My keyboard (a Cherry board with MX Brown keys) doesn't work properly out of the
-box. I read about `uhidd`, which could be used to fix my issue with the volume
-keys. But for the moment, I have a working setup.
+My keyboard (a Cherry board with MX Brown switches) doesn't work properly out of
+the box. I read about `uhidd`, which could be used to fix my issue with the
+volume keys. But for the moment, I have a working setup.
 
 I'll come back to the open issues in a later article. But first, I'd like to
 work with my new FreeBSD desktop as much as possible to gain more experience.
