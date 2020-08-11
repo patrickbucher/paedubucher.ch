@@ -332,9 +332,14 @@ package, which should provide a monospace font needed for `dwm`:
 
     # pkg install xorg-fonts
 
-Now, finally, `dwm` works!
+Now, finally, `dwm` works! Since `startx` is long to type, I define the alias
+`x` for it in `~/.cshrc`:
 
-    $ startx
+    alias x     startx
+
+And start `dwm`:
+
+    $ x
 
 ## Configure `dwm`
 
@@ -366,4 +371,76 @@ support scrollback buffers:
 
     # pkg install qterminal dmenu
 
-TODO: xsetroot in .xinitrc, setxkbmap, mixer
+## Status Line
+
+`dwm` can display status information using the `xsetroot` command. The text to
+be displayed is computed in a background task that can be defined in `.xinitrc`.
+On laptops, I usually print the battery status. On desktops, the current date
+and time suffices. Here's the `.xinitrc` that displays this information
+(surrounded by spaces) in five second intervals:
+
+    while true
+    do
+        xsetroot -name " $(date +'%Y-%m-%d %H:%M') "
+    done &
+    setxkbmap ch
+    exec dwm
+
+The keymap is also set to the `ch` (i.e. Swiss German) variant just before
+executing `dwm`. The `xsetroot` and `setxkbmap` utilities need to be installed
+for this:
+
+    # pkg install xsetroot setxkbmap
+
+## Volume Control
+
+In order to test audio, let's download the Free Software Song:
+
+    $ curl https://www.gnu.org/music/free-software-song.ogg > fss.ogg
+
+I prefer `mplayer`, which needs to be installed:
+
+    # pkg install mplayer
+
+Make sure to include `/usr/local/bin` in your `$PATH` variable in order to run
+`mplayer` without further path specification (`.cshrc`):
+
+    export PATH="$PATH:/usr/local/bin"
+
+Playing the song as follows works if i plug in a headphone into one of the front
+plugs:
+
+    $ mplayer fss.ogg
+
+The devices are listed in `/dev/sndstat` and switched by setting the respective
+device number:
+
+    # sysctl hw.snd.dfault_unit=1
+
+The default volume is set to 85, which is quite loud for Richard Stallman's
+singing voice. The volume can be changed relatively or absolutely using the
+`mixer` command:
+
+    $ mixer vol -10
+    Setting the mixer from 85:85 to 75:75
+    $ mixer vol 50
+    Setting the mixer from 75:75 to 50:50
+
+I don't always want to type that command, but rather use the volume keys on my
+keyboard. So let's add a couple of commands to the `dwm` config (`config.h`,
+just before the `keys[]` section):
+
+    static const char *upvol[] = {"mixer", "vol", "+5"});
+    static const char *downvol[] = {"mixer", "vol", "-5"});
+    static const char *mutevol[] = {"mixer", "vol", "0"});
+
+For the key mapping, I first need to figure out the key codes for my volume
+keys, which can be done using `xev`:
+
+    # pkg install xev
+    $ xev > xev.out
+
+Just press the volume down, volume up, and mute button in that order. Then close
+the `xev` window and inspect `xev.out`:
+
+TODO: the keys are not detected
