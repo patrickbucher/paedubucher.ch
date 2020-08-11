@@ -1,6 +1,6 @@
 ---
 title: FreeBSD on the Desktop (Part I)
-subtitle: Basic Setup
+subtitle: Basic Setup with Xorg and dwm
 author: Patrick Bucher
 date: 2020-08-11T11:00:00
 lang: en
@@ -12,14 +12,14 @@ university with my setup, and only had to bring a Windows machine on some rare
 occasions, even though some professors are openly hostile towards a Linux setup.
 (It doesn't run Microsoft Project and the real Excel, after all…)
 
-Recently, I got interested in the BSDs, especially
-[OpenBSD](https://www.openbsd.org/) and [FreeBSD](https://www.freebsd.org/).
-Even though OpenBSD with its minimalistic appeal is suited to my taste, I'm
-currently looking at FreeBSD for a couple of reasons. First, I'll have to
-maintain a storage server (a FreeBSD setup using ZFS) at work. Second, I've also
+Recently, I got interested in the BSDs, especially in
+[OpenBSD](https://www.openbsd.org/) and in [FreeBSD](https://www.freebsd.org/).
+Even though OpenBSD with its minimalistic appeal is better suited to my taste,
+I'm currently looking at FreeBSD for a couple of reasons. First, I have to
+maintain a storage server (a FreeBSD box using ZFS) at work. Second, I've also
 built up a storage server at home. FreeBSD gives me the things I need mostly out
-of the box (ZFS with redundancy on really cheap hardware). And third, I just
-like to learn new things.
+of the box: ZFS with redundancy on really cheap hardware. And third, I just like
+to learn new things.
 
 # Why FreeBSD?
 
@@ -27,13 +27,13 @@ However, when it comes to learning new things in my spare time, I'd rather spend
 my time on something that will be useful in the long run. I use the [Lindy
 Effect](https://en.wikipedia.org/wiki/Lindy_effect) as a guide: Technologies
 like Kubernetes, the latest JavaScript framework, or Web Assembly have only been
-around for a couple of years, and it's possible that those will go as fast as
-they came. Older technologies _that are still around nowadays_, on the other
-hand, can be expected to be around for many more years. Examples are the C
-programming language, various Unix shells, and ‒ FreeBSD. (I also make
-exceptions to this rule now and then. For example, I learned Go and Rust in the
-summers of 2018 and 2019, respectively. Go, which had its 1.0 release earlier
-than Rust, proofed to be the more stable choice.)
+around for a couple of years, and it's possible that those will undergo major
+changes or vanish alltogether as fast as they came. Older technologies _that are
+still around nowadays_, on the other hand, can be expected to be around for many
+more years. Examples are the C programming language, various Unix shells, and ‒
+FreeBSD. (I also make exceptions to this rule now and then. For example, I
+learned Go and Rust in the summers of 2018 and 2019, respectively. Go, which had
+its 1.0 release earlier than Rust, proofed to be the more stable choice.)
 
 FreeBSD is now more than 25 years old. Its roots, however, go back to AT&T's
 original Unix from the 1970s. (All the code has been replaced or rewritten
@@ -57,8 +57,9 @@ Documentation is another advantage of FreeBSD. Having a system that rarely
 introduces breaking changes makes it easier and more worthwile to provide good
 documentation. The FreeBSD team not only provides good [manual
 pages](https://www.freebsd.org/cgi/man.cgi), but also a well curated
-[FAQs](https://www.freebsd.org/doc/en_US.ISO8859-1/books/faq/) and the very
-useful [Handbook](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/).
+[FAQs](https://www.freebsd.org/doc/en_US.ISO8859-1/books/faq/), a
+[Wiki](https://wiki.freebsd.org/), and the very useful
+[Handbook](https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/).
 FreeBSD material has such a long shelf life so that it is even worthwhile to
 print books about that operating system. I'm reading [Absolute
 FreeBSD](https://nostarch.com/absfreebsd3) now (from front to back, that is).
@@ -71,12 +72,13 @@ As I started to work with FreeBSD, I suddenly realized what the term
 «distribution» is probably supposed to mean: Not just a bunch of software
 cobbled together with more or less frequent upgrades, but an entire operating
 system that not only provides working software, but also the means to build that
-very software on a standard installation. A kernel can be compiled and installed
-with a single command. Thanks to the ports tree, the packages can be compiled
-easily and in a consistent way. I haven't tried _all_ Linux distributions, of
-course, but quality standards that high are certainly not the rule in the
-GNU/Linux world. (Debian and Arch, the Linux distributions I use the most and
-know the best, are still absolutely great operating systems.)
+very software on a standard installation. (Such a system is technically
+described as _self hosting_.) A kernel can be compiled and installed with a
+single command. Thanks to the ports tree, the packages can be compiled easily
+and in a consistent way. I haven't tried _all_ Linux distributions, of course,
+but quality standards that high are certainly not the rule in the GNU/Linux
+world. (Debian and Arch, the Linux distributions I use the most and know the
+best, are still absolutely great operating systems.)
 
 # FreeBSD on the Desktop?
 
@@ -84,7 +86,7 @@ It's safe to say that FreeBSD is a good choice for servers in a Unix
 environment. But does it also work well on a desktop computer? And is it even an
 option for the kind of desktop I like to run: not GNOE, KDE, or Xfce, but a
 minimalistic setup based on [dwm](http://dwm.suckless.org/), which probably
-isn's used by many. Since dwm can only be configured by modifying the `config.h`
+isn't used by many. Since dwm can only be configured by modifying the `config.h`
 file, I won't be able to use the version from the ports tree. I use my desktop
 computer mainly for work (programming, reading, writing, researching information
 on the internet) and some entertainment mostly provided through the web browser
@@ -110,8 +112,8 @@ Let's pick the most recent version 12.1. The [download
 page](https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/12.1/)
 for the `amd64` architecture offers various options. The compressed
 `mini-memstick` archive weighs the least and provides everything that is needed
-for an installation on a computer with an internet connection. I download it to
-my laptop runnng Arch Linux, and then verify the checksum:
+for an installation on a computer with internet connection. I download it to my
+laptop running Arch Linux, and then verify the checksum:
 
     $ wget https://download.freebsd.org/ftp/releases/amd64/amd64\
     /ISO-IMAGES/12.1/FreeBSD-12.1-RELEASE-amd64-mini-memstick.img.xz
@@ -120,8 +122,8 @@ my laptop runnng Arch Linux, and then verify the checksum:
     $ sha512sum -c CHECKSUM.SHA512-FreeBSD-12.1-RELEASE-amd64 --ignore-missing
     FreeBSD-12.1-RELEASE-amd64-mini-memstick.img.xz: OK
 
-The archive (389 MBs) needs to be unpacked and then is copied to a USB dongle
-(`dev/sda`):
+The archive (389 MBs) needs to be unpacked and is then copied to a USB dongle
+(`/dev/sda`):
 
     $ unxz FreeBSD-12.1-RELEASE-amd64-mini-memstick.img.xz
     # dd if=FreeBSD-12.1-RELEASE-amd64-mini-memstick.img of=/dev/sda bs=1M
@@ -154,11 +156,14 @@ and start the FreeBSD installer. These are the settings I use during setup:
 - Services: `sshd`, `moused`, `ntpd`, `powerd`, and `dumpdev`
 - Security Hardening Options: everything
 - User: `patrick` with additional group `wheel` (to become root), the `tcsh`
-  shell, a strong password and, otherwise, suggested settings
+  shell, a strong password, and, otherwise, suggested settings
 
-It can be argued whether or not the chosen partition sizes are reasonable.
-However, it is always a good idea to use separate `/tmp` and `/var` partitions
-to make sure that no process can fill up the entire disk.
+It can be argued if the chosen partition sizes are reasonable. However, it is
+always a good idea to use separate `/tmp` and `/var` partitions to make sure
+that no process can fill up the entire disk. (Using a separate `/usr` partition
+is an issue on Linux nowadays, since the widely used init system systemd
+requires access to `/usr`. On FreeBSD, it is still possible to do so without any
+issues.)
 
 Make sure to use `efi` as the type for the boot partition, not `freebsd-boot` as
 suggested in _Absolute FreeBSD_ (3rd Edition on page 36).
@@ -192,16 +197,16 @@ next boot. Now that the basic system is up and running, let's tackle the GUI!
 
 Since _Absolute FreeBSD_ doesn't cover graphical user interfaces, I have to
 resort to the handbook. In [Chapter
-5.3](https://www.freebsd.org/doc/handbook/x-install.html) it says, that the
-easiest way to setup the X Window System would be by installing the `xorg`
-package. Since I prefer a minimalistic setup, I opt for the `x11/xorg-minimal`
-package:
+5.3](https://www.freebsd.org/doc/handbook/x-install.html) it says that the
+easiest way to setup the X Window System is to install the `xorg` package. Since
+I prefer a minimalistic setup, I opt for the `x11/xorg-minimal` package instead:
 
     # pkg install x11/xorg-minimal
 
-Which depends on Python 3.7, Perl 5, and Wayland, among others, and weighs
-roughly 1 GB, which is not exactly minimalistic, in my opinion. On the other
-hand, it is notable that the base setup works without Perl or Python.
+This package depends on Python 3.7, Perl 5, and Wayland, among others, and
+weighs roughly 1 GB, which is not exactly minimalistic in my opinion. On the
+other hand, it is notable that the base setup works without Perl or Python.
+(Which _is_ minimalistic.)
 
 ## Compiling `dwm`
 
@@ -277,9 +282,9 @@ The `config.mk` contains the following section:
 So what is _Xinerama_, after all? According to
 [Wikipedia](https://en.wikipedia.org/wiki/Xinerama):
 
-    > Xinerama is an extension to the X Window System that enables X
-    > applications and window managers to use two or more physical displays as
-    > one large virtual display. 
+> Xinerama is an extension to the X Window System that enables X
+> applications and window managers to use two or more physical displays as
+> one large virtual display. 
 
 Since I have only one screen, I can do without Xinerama, so I comment out those
 lines:
@@ -309,7 +314,7 @@ The error log `/var/log/Xorg.0.log` does not offer any additional information
 that seems helpful to me. It turns out that `/etc/X11` is empty. [Section
 5.4](https://www.freebsd.org/doc/handbook/x-config.html) of the handbook is
 about Xorg configuration. I create a minimalistic configuration for my graphics
-card in `/etc/X11/xorg.conf`:
+card (onboard Intel GPU) in `/etc/X11/xorg.conf`:
 
     Section "Device"
         Identifier "Card0"
@@ -321,8 +326,9 @@ because my choice of `xorg-minimal` from before.
 
     # pkg install xf86-video-intel drm-kmod
 
-The kernel modul can be activated on startup by adding it to the `rc.conf` as
-follows:
+(Note that «drm» doesn't stand for «digital rights management» in this context,
+but for «direct rendering modules».) The kernel module can be activated on
+startup by adding it to the `rc.conf` as follows:
 
     # echo 'lkd_list="/boot/modules/i915kms.ko"' >> /etc/rc.conf
 
@@ -335,7 +341,7 @@ package, which should provide a monospace font needed for `dwm`:
 Now, finally, `dwm` works! Since `startx` is long to type, I define the alias
 `x` for it in `~/.cshrc`:
 
-    alias x     startx
+    alias x startx
 
 And start `dwm`:
 
@@ -343,16 +349,16 @@ And start `dwm`:
 
 ## Configure `dwm`
 
-By default, `dwm` uses the `Alt` as the modifier key (`MODKEY`). I prefer to use
-the «Windows» or «Super» Key), for it has no purpose on my system. (`Alt` is
-for some emacs-style readline commands.) To do this, the `MODKEY` variable has
-to be changed in `config.h` as follows:
+By default, `dwm` uses the Alt key as the modifier key (`MODKEY`). I prefer to
+use the «Windows» or «Super» Key, for it has no other purpose on my system.
+(`Alt` is useful for some emacs-style readline commands.) To do this, the
+`MODKEY` variable has to be changed in `config.h` as follows:
 
     #define MODKEY Mod4Mask
 
-The default rules make Firefox to appear on the last tag, and Gimp to be used
-with floating layout, which makes no sense with more recent versions of Gimp.
-Let's just undefine those rules:
+The default rules make Firefox appear on the last tag, and Gimp to be used with
+floating layout, which makes no sense with more recent versions of Gimp. Let's
+just undefine those rules:
 
     static const Rule rules[] = {
         {NULL, NULL, NULL, 0, 0, -1},
@@ -407,8 +413,8 @@ Make sure to include `/usr/local/bin` in your `$PATH` variable in order to run
 
     export PATH="$PATH:/usr/local/bin"
 
-Playing the song as follows works if i plug in a headphone into one of the front
-plugs:
+Playing the song as follows works if I plug in a headphone into one of the front
+audio sockets:
 
     $ mplayer fss.ogg
 
@@ -432,7 +438,6 @@ just before the `keys[]` section):
 
     static const char *upvol[] = {"mixer", "vol", "+5"});
     static const char *downvol[] = {"mixer", "vol", "-5"});
-    static const char *mutevol[] = {"mixer", "vol", "0"});
 
 For the key mapping, I first need to figure out the key codes for my volume
 keys, which can be done using `xev`:
@@ -440,7 +445,54 @@ keys, which can be done using `xev`:
     # pkg install xev
     $ xev > xev.out
 
-Just press the volume down, volume up, and mute button in that order. Then close
-the `xev` window and inspect `xev.out`:
+Just press the volume up and volume up button in that order. Then close the
+`xev` window and inspect `xev.out`.
 
-TODO: the keys are not detected
+**Unfortunately, the volume keys do not trigger an event.** There must be
+something wrong with the keyboard configuration. So let's use Page Up and Page
+Down to increase and decrese the volume (`keys[]` array in `config.h`):
+
+    static Key keys[] = {
+        // lines omitted
+        { MODKEY, XK_Page_Up,   spawn, {.v = upvol}   },
+        { MODKEY, XK_Page_Down, spawn, {.v = downvol} },
+    };
+
+Then simply re-compile, re-install, and re-start `dwm`:
+
+    # make install
+    $ x
+
+Now Richard Stallman can be made to sing louder or quieter by pressing
+Super+PgUp and Super+PgDown, respectively, _which is goood, hackers, which is,
+goo-oo-ood!_
+
+# Conclusion
+
+Setting up the FreeBSD base system was rather easy. I made the mistake of using
+`freebsd-boot` and not `efi` as the partition type for the boot partition, which
+seems to be a mistake in the otherwise amazing book _Absolute FreeBSD_.
+
+Installing the `x11/xorg-minimal` package instead of the full `xorg` package
+caused some additional trouble, but helped me to better understand which
+components are actually required to compile and run `dwm`. Instead of just
+installing Xinerama, as I always did on Linux, the extra pain of libraries not
+found made me investigate if I actually need that component. It turned out, I
+don't.
+
+I also needed to install the graphics driver and according kernel module
+manually. Doing so, I realized that FreeBSD offers a nice graphical console,
+which is a good fit for a `tmux` environment I use once in a while to work
+absolutely focused.
+
+Having audio running (almost) out of the box was a positive surprise. The
+`mixer` interface is very simplistic. Switching audio devices, however, requires
+an option to be changed using `sysctl`. This calls for some additional `dwm`
+shortcuts!
+
+My keyboard (a Cherry board with MX Brown keys) doesn't work properly out of the
+box. I read about `uhidd`, which could be used to fix my issue with the volume
+keys. But for the moment, I have a working setup.
+
+I'll come back to the open issues in a later article. But first, I'd like to
+work with my new FreeBSD desktop as much as possible to gain more experience.
