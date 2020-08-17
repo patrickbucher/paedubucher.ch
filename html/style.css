@@ -18,6 +18,10 @@ a:active, a:hover {
     text-decoration: underline;
 }
 
+p.slogan {
+    margin-bottom: 1em;
+}
+
 ul#articles {
     list-style-type: none;
     padding: 0;
