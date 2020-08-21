@@ -257,7 +257,7 @@ So that you can access your virtual machines by their host names:
 In order to login to the guests without typing a password, create an SSH key
 locally without any passphrase:
 
-    $ ssh-keyen -t rsa -b 4096 -f ~/.ssh/id_vms_rsa
+    $ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_vms_rsa
 
 Make sure that your `~/.ssh` folder has the access mode `700`, and the contained
 files all have the access mode `600` (thanks to [meillo](http://marmaro.de/) for

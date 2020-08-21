@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-08-17T11:31:19.818870Z</updated>
+    <updated>2020-08-21T15:36:43.762675Z</updated>
     <entry>
         <title>FreeBSD on the Desktop (Part I)</title>
         <link href="https://paedubucher.ch/articles/2020-08-11-freebsd-on-the-desktop-part-i.html"/>
@@ -1428,7 +1428,7 @@ So that you can access your virtual machines by their host names:
 In order to login to the guests without typing a password, create an SSH key
 locally without any passphrase:
 
-    $ ssh-keyen -t rsa -b 4096 -f ~/.ssh/id_vms_rsa
+    $ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_vms_rsa
 
 Make sure that your `~/.ssh` folder has the access mode `700`, and the contained
 files all have the access mode `600` (thanks to [meillo](http://marmaro.de/) for
