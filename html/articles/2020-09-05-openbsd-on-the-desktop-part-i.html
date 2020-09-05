@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>OpenBSD on the Desktop (Part I) ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <div class="backlink"><a href="../index.html">paedubucher.ch</a></div>
+        <h1 class="title">OpenBSD on the Desktop (Part I)</h1>
+        
+        <h2 class="subtitle">Basic Setup with Xorg and dwm</h2>
+        
+        <h3 class="author">Patrick Bucher</h3>
+        <h3 class="date">2020-09-05</h3>
+        <div class="content"><p>Let's install OpenBSD on a Lenovo Thinkpad X270. I used this computer for my
+computer science studies. It has both Arch Linux and Windows 10 installed as
+dual boot. Now that I'm no longer required to run Windows, I can ditch the dual
+boot and install an operating system of my choice.</p>
+<h1>Preparation</h1>
+<p>First, I grab my work Thinkpad running Arch Linux and some USB dongle big enough
+for the <a href="https://cdn.openbsd.org/pub/OpenBSD/6.7/amd64/miniroot67.fs">amd64 miniroot
+image</a> (roughly
+five megabytes, that is). This small image does not include the file sets, which
+will be downloaded during installation instead. I also download the <a href="https://mirror.ungleich.ch/pub/OpenBSD/6.7/amd64/SHA256">SHA256
+checksums</a> from the
+Swiss mirror, and verify the downloaded image, before I copy it on my dongle:</p>
+<pre><code>$ sha256sum -c --ignore-missing SHA256 
+miniroot67.fs: OK
+$ sudo dd if=miniroot67.fs of=/dev/sda bs=1M
+</code></pre>
+<h1>Installation</h1>
+<p>The Thinkpad X270 is connected to my network through Ethernet. The WiFi firmware
+usually needs to be installed separately, so only Ethernet will work out of the
+box. The BIOS has UEFI activated. OpenBSD and UEFI has issues on older hardware
+(at least on a 2014 Dell laptop I have), but let's try it on this laptop,
+anyway.</p>
+<p>I plug in the dongle prepared before, and start the computer. I interrupt
+the regular boot with Enter and pick an alternative boot method by pressing F12.
+Now I pick my USB dongle. After roughly a minute, the installer has been
+started. Now I follow these steps:</p>
+<ul>
+<li>I choose the option <code>I</code> to install OpenBSD.</li>
+<li>For the keyboard layout, I pick <code>sg</code>, for Swiss German.</li>
+<li>As a hostname, I simply pick <code>x270</code>, because it's a Thinkpad X270, and I'm not
+  very creative when it comes to naming things.</li>
+<li>From the available network options (<code>iwm0</code>: WiFi, <code>em0</code>: Ethernet, and
+  <code>vlan0</code>: Virtual LAN), I pick <code>em0</code>.</li>
+<li>I try to get an IPv4 address over DHCP, which seems to work very quickly.</li>
+<li>Next, I type in my very secret root password twice.</li>
+<li>I do <em>not</em> start <code>sshd</code> by default, because I don't need to connect to this
+  machine through SSH. It's supposed to be a workstation, not a server.</li>
+<li>The X Window System should not be started by <code>xnodm(1)</code>, so I leave it to
+  <code>no</code>.</li>
+<li>Neither do I want to change the default to <code>com0</code>.</li>
+<li>I set up my user <code>patrick</code> with my proper name <code>Patrick Bucher</code>, and a decent
+  password.</li>
+<li>The time zone has been detected properly as <code>Europe/Zurich</code>, which I just
+  leave the way it is.</li>
+<li>The installer detected two disks: <code>sd0</code> and <code>sd1</code>. Since <code>sd0</code> is the detected
+  SSD in my laptop, the UEFI issue from my Dell laptop doesn't exist on this
+  computer. I pick <code>sd0</code> for the root disk, since <code>sd1</code> is my USB dongle.</li>
+<li>I choose to use the whole disk with a GPT partitioning schema, because it's
+  2020.</li>
+<li>An auto-allocated layout for <code>sd0</code> is presented. It looks decent to me, so I
+  just go with that auto layout.</li>
+<li>I don't want to initialize another disk, so I just press Enter (<code>done</code>).</li>
+<li>Since the miniroot image does not come with the file sets, I pick <code>http</code> as
+  the location for the sets.</li>
+<li>I don't use a proxy, and use the mirror <code>mirrog.ungleich.ch</code> and the server
+  directory <code>pub/OpenBSD/6.7/amd64</code> as proposed.</li>
+<li>Next, I unselect the game sets by entering <code>-game*</code>. (I heard that they're not
+  much fun to play.) I leave all the other sets activated, including the <code>x</code>
+  sets, which will be required for the GUI later on.</li>
+<li>After those sets are installed, I press Enter (<code>done</code>). Now the installer
+  performs various tasks, after which I choose to <code>halt</code> the computer. This
+  gives me time to remove the USB dongle.</li>
+</ul>
+<h1>First Boot</h1>
+<p>I now restart my laptop, and OpenBSD boots. This takes more time than booting
+Arch Linux, which uses <code>systemd</code>, whereas OpenBSD uses <code>rc</code>, which performs the
+startup tasks sequentially.</p>
+<p>There's a message showing up that various firmware (<code>intel-firmware</code>,
+<code>iwm-firmware</code>, <code>inteldrm-firmware</code>, <code>uvideo-firmware</code>, and <code>vmm-firmware</code>) has
+been installed automatically. Very nice, indeed.</p>
+<h2>WiFi Connection</h2>
+<p>Now that the <code>iwm-firmware</code> has been installed, I can connect right away to my
+WiFi network <code>frzbxpdb5</code>. I create a file called <code>/etc/hostname.iwm0</code>, wich
+<code>hostname</code> being a literal string, and <code>iwm0</code> being the WiFi network card. The
+connection to my WiFi network consists of a single line:</p>
+<pre><code>dhcp nwid frzbxpdb5 wpakey [my-wpakey]
+</code></pre>
+<p>Whereas <code>frzbxpdb5</code> is my WiFi network's ESSID, and <code>[my-wpakey]</code> needs to be
+replaced by the actual WPA key.</p>
+<p>Then the networking can be restarted for that device:</p>
+<pre><code># sh /etc/netstart iwm0
+</code></pre>
+<p>This script is kind enough to set the file permissions of <code>/etc/hostname.iwm0</code>
+to <code>640</code>, and then connects to my WiFi network.</p>
+<p>I unplug the Ethernet cable and <code>ping openbsd.org</code>, which works fine, even after
+a restart.</p>
+<h1>Installing the GUI</h1>
+<p>My GUI on Unix-like systems is based on the Dynamic Window Manager (<code>dwm</code>) and a
+couple of other tools, such as <code>dmenu</code>, <code>st</code>, <code>slstatus</code>, <code>slock</code>, all created and
+maintained by the <a href="http://suckless.org/">Suckless</a> community.</p>
+<p>This software doesn't come with configuration facilities, but needs to be
+configured in the respective C header file <code>config.h</code>, and then re-compiled.
+Even though OpenBSD offers <code>dwm</code> as a package, customizing and configuring that
+window manager requires to build it from source.</p>
+<h2>Building <code>dwm</code> and Friends</h2>
+<p>First, I need to install <code>git</code> to fetch the source code:</p>
+<pre><code># pkg_add git
+</code></pre>
+<p>Then I fetch the source code for <code>dwm</code>, <code>dmenu</code>, <code>st</code>, and <code>slstatus</code> from <a href="http://suckless.org/">Suckless</a>:</p>
+<pre><code>$ git clone https://git.suckless.org/dwm
+$ git clone https://git.suckless.org/dmenu
+$ git clone https://git.suckless.org/st
+$ git clone https://git.suckless.org/slstatus
+</code></pre>
+<h3>Building <code>dwm</code></h3>
+<p>Next, I try to build <code>dwm</code>:</p>
+<pre><code>$ cd dwm
+$ make
+</code></pre>
+<p>This fails with an error message (<code>'ft2build.h' file not found</code>), which reminds
+me of building <code>dwm</code> on FreeBSD roughly a month before. Since I can finde the
+header file at another location:</p>
+<pre><code># find / -type f -name ft2build.h
+/usr/X11R6/include/freetype2/ft2build.h
+</code></pre>
+<p>I simply can modify the <code>config.mk</code> accordingly by changing</p>
+<pre><code>FREETYPEINC = /usr/include/freetype2
+</code></pre>
+<p>to</p>
+<pre><code>FREETYPEINC = $(X11INC}/freetype2
+</code></pre>
+<p>Actually, I only need to comment the above line, and uncomment the line below</p>
+<pre><code># OpenBSD (uncomment)
+</code></pre>
+<p>The Suckless folks obviously are friendly towards OpenBSD, which is also
+noticable in other places (more evidence to be shown further below).</p>
+<p>The next compilation attempt succeeds:</p>
+<pre><code>$ make
+</code></pre>
+<p>So let's install <code>dwm</code>, too:</p>
+<pre><code># make install
+</code></pre>
+<p>By default, and as to be seen in <code>config.h</code>, the keyboard combination
+<code>[Alt]+[Shift]+[Enter]</code> (deeply engraved into the muscle memories of many <code>dwm</code>
+users) starts the <code>st</code> terminal. This will be built in a while. However, I
+prefer to use the <em>Super</em> or <em>Windows</em> key instead of <code>Alt</code>, since the former
+is of no use in OpenBSD, and the latter still comes in handy when working with
+the emacs readline mode. Therefore, I change the <code>MODKEY</code> from</p>
+<pre><code>#define MODKEY Mod1Mask
+</code></pre>
+<p>to</p>
+<pre><code>#define MODKEY Mod4Mask
+</code></pre>
+<p>Then I rebuild and reinstall <code>dwm</code>:</p>
+<pre><code># make install
+</code></pre>
+<h3>Building <code>st</code></h3>
+<p>Let's switch over to the <code>st</code> source directory and just try to compile it:</p>
+<pre><code>$ cd ../st
+$ make
+</code></pre>
+<p>Here, we get a warning that the function <code>pledge</code> (an OpenBSD mitigation, which
+is built into the <code>master</code> branch, but surrounded by an <code>ifdef</code> preprocessor
+statement, so that it will only be compiled for OpenBSD) is imported implicitly.
+Let's just ignore this warning for now.</p>
+<p>What's worse, the compilation fails with the error message:</p>
+<pre><code>ld: error: unable to find library -lrt
+</code></pre>
+<p>Here, the FAQ comes in handy, stating that</p>
+<pre><code>If you want to compile st for OpenBSD you have to remove -lrt from
+config.mk, ...
+</code></pre>
+<p>Having done so in <code>config.mk</code>, <code>st</code> compiles without any further issues, and,
+thus, can be rebuilt and installed:</p>
+<pre><code># make install
+</code></pre>
+<h3>Building <code>dmenu</code></h3>
+<p>Even OpenBSD users with Suckless tools have to open another GUI application than
+a terminal emulator once in a while. For this purpose, Suckless offers <code>dmenu</code>.
+Let's switch over to it and compile it:</p>
+<pre><code>$ cd ../dmenu
+$ make
+</code></pre>
+<p>Again, we have the issue with <code>ft2build.h</code>, which can be resolved as above with
+<code>dwm</code>: by using the proper path for <code>FREETYPEINC</code> in <code>config.mk</code>. Afterwards,
+the build succeeds, and <code>dmenu</code> can be installed:</p>
+<pre><code># make install
+</code></pre>
+<h3>Building <code>slstatus</code></h3>
+<p><code>dwm</code> has a status bar on the top right, which can be used to show various
+information. I used to write some shell commands in <code>.xinitrc</code> to compose such a
+status line, and then set it by <code>xset -b</code> once every five seconds or so. This
+approach generates a multitude of processes every couple of seconds.</p>
+<p><code>slstatus</code> is a C programm that is capable of showing various kinds of more or
+less useful information. Let's switch over to <code>slstatus</code> and see, what is
+available in <code>config.def.h</code>:</p>
+<pre><code>$ cd ../slstatus
+$ less config.def.h
+</code></pre>
+<p>The comments section lists different functions (<code>battery_perc</code> for the battery
+percentage, <code>datetime</code> for date and time information, <code>temp</code> for thermal
+information, etc.). I usually display the CPU load, the battery percentage, the
+memory usage, the current keyboard layout, and the current date and time.</p>
+<p>Before configuring those, let's try to compile <code>slstatus</code>:</p>
+<pre><code>$ make
+</code></pre>
+<p>This worked fine, so let's configure the information to be displayed in
+<code>config.h</code>:</p>
+<pre><code>static const struct arg args[] = {
+    /* function    format    argument */
+    { datetime,    "%s",     "%F %T" },
+};
+</code></pre>
+<p>This renders the current date as follows:</p>
+<pre><code>$ date +"%F %T"
+2020-09-05 19:26:38
+</code></pre>
+<p>I also like to have the weekday included, but not the seconds, so I define a
+different argument string:</p>
+<pre><code>$ date +"%a %Y-%m-%d %H:%M"
+Sat 2020-09-05 19:27
+</code></pre>
+<p>That's better, so let's use it in <code>config.h</code> (surrounded with some spaces in the
+format string):</p>
+<pre><code>static const struct arg args[] = {
+    /* function    format    argument */
+    { datetime,    " %s ",   "%a %Y-%m-%d %H:%M" },
+};
+</code></pre>
+<p>The other settings I like to have do not require any arguments, at least not on
+OpenBSD, so I only need to define a decent format string (with <code>|</code> as a
+seperator) for those:</p>
+<pre><code>static const struct arg args[] = {
+    /* function    format           argument */
+    { cpu_perc,     " cpu: %s%% |", NULL },
+    { battery_perc, " bat: %s%% |", NULL },
+    { ram_used,     " mem: %s |",   NULL },
+    { keymap,       " %s |"         NULL },
+    { datetime,     " %s ",         "%a %Y-%m-%d %H:%M" },
+};
+</code></pre>
+<p>This actually compiles, so let's install it:</p>
+<pre><code># make install
+</code></pre>
+<h2>Configuring X Startup</h2>
+<p>Now that all software is compiled and installed, let's run X. To do so, a file
+<code>.xinitrc</code> in the user's directory is required (<code>/home/patrick/.xinitrc</code>):</p>
+<pre><code>setxkbmap ch
+slstatus &amp;
+exec dwm
+</code></pre>
+<p>This sets the keyboard map for X to Swiss German, starts <code>slstatus</code> in the
+background, and then executes <code>dwm</code>.</p>
+<p>X can now be started by typing <code>startx</code>. This is a bit cumbersome to type every
+time, so let's define a symbolic link to it:</p>
+<pre><code># ln -s "$(which startx)" /usr/bin/x
+</code></pre>
+<p>Now let's start X:</p>
+<pre><code>$ x
+</code></pre>
+<p>If everything was configured properly, <code>dwm</code> shows up, and the status line says
+that the whole system only uses roughly 60 megabytes of RAM. That's slim. The
+keyboard combinations to open <code>st</code> and <code>dmenu</code> work, too.</p>
+<h1>Conclusion</h1>
+<p>Installing a basic GUI with Suckless software was a rather smooth experience on
+OpenBSD. (For FreeBSD, I deliberately have chosen a rather fine-grained approach
+to installing X packages, which caused some additional work.) However, various
+settings require additional tweaking. I also didn't use audio yet, which require
+the volume buttons to be configured accordingly in <code>dwm</code>.</p>
+<p>I'll also need to setup <code>sudo</code> or <code>doas</code>. As a regular Linux user, I'm used to
+<code>sudo</code>, of course, but the simplicity of <code>doas</code> is a good argument to try it as
+an alternative.</p>
+<p>But those are things I'd like to cover in an upcoming article.</p></div>
+    </body>
+</html>
