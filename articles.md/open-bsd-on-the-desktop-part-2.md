@@ -183,10 +183,11 @@ Then use `disklabel` interactively to define a new partition:
 
     $ doas disklabel -E sd1
 
-Create a new partition with `n`, and make sure to specify the type as `ext2fs`
-instead of the default `4.2BSD`. Notice that the new partition has a different
-letter (say, a), so you need to use `sd1a` instead of `sd1c` for the next steps.
-Now you can format and mount the partition:
+First, delete all the partitions with `z`. Then, create a new partition with
+`a`, and make sure to specify the type as `ext2fs` instead of the default
+`4.2BSD`. Notice that the new partition has a different letter (say, `a`), so
+you need to use `sd1a` instead of `sd1c` for the next steps. Write the changes
+by typing `w`, then exit with `q`. Now you can format and mount the partition:
 
     $ doas newfs_ext2fs sd1a
     $ doas mount_ext2fs /dev/sd1a /mnt

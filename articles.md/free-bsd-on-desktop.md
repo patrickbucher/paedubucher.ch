@@ -1,5 +1,5 @@
 ---
-title: FreeBSD on the Desktop (Part I)
+title: FreeBSD on the Desktop
 subtitle: Basic Setup with Xorg and dwm
 author: Patrick Bucher
 date: 2020-08-11T22:00:00

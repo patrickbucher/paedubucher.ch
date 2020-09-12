@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-09-12T13:27:27.454013Z</updated>
+    <updated>2020-09-12T13:41:10.846869Z</updated>
     <entry>
         <title>OpenBSD on the Desktop (Part II)</title>
         <link href="https://paedubucher.ch/articles/2020-09-12-openbsd-on-the-desktop-part-ii.html"/>
@@ -192,10 +192,11 @@ Then use `disklabel` interactively to define a new partition:
 
     $ doas disklabel -E sd1
 
-Create a new partition with `n`, and make sure to specify the type as `ext2fs`
-instead of the default `4.2BSD`. Notice that the new partition has a different
-letter (say, a), so you need to use `sd1a` instead of `sd1c` for the next steps.
-Now you can format and mount the partition:
+First, delete all the partitions with `z`. Then, create a new partition with
+`a`, and make sure to specify the type as `ext2fs` instead of the default
+`4.2BSD`. Notice that the new partition has a different letter (say, `a`), so
+you need to use `sd1a` instead of `sd1c` for the next steps. Write the changes
+by typing `w`, then exit with `q`. Now you can format and mount the partition:
 
     $ doas newfs_ext2fs sd1a
     $ doas mount_ext2fs /dev/sd1a /mnt
@@ -652,12 +653,12 @@ But those are things I'd like to cover in an upcoming article.
 </content>
     </entry>
     <entry>
-        <title>FreeBSD on the Desktop (Part I)</title>
-        <link href="https://paedubucher.ch/articles/2020-08-11-freebsd-on-the-desktop-part-i.html"/>
+        <title>FreeBSD on the Desktop</title>
+        <link href="https://paedubucher.ch/articles/2020-08-11-freebsd-on-the-desktop.html"/>
         <author>
             <name>Patrick Bucher</name>
         </author>
-        <id>https://paedubucher.ch/articles/2020-08-11-freebsd-on-the-desktop-part-i.html</id>
+        <id>https://paedubucher.ch/articles/2020-08-11-freebsd-on-the-desktop.html</id>
         <updated>2020-08-11T22:00:00Z</updated>
         <content type="text/markdown; charset=UTF-8">
 I'm a happy user of [Arch Linux](https://www.archlinux.org/) both on my private

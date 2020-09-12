@@ -155,10 +155,11 @@ of MBR (additional <code>-g</code> parameter):</p>
 <p>Then use <code>disklabel</code> interactively to define a new partition:</p>
 <pre><code>$ doas disklabel -E sd1
 </code></pre>
-<p>Create a new partition with <code>n</code>, and make sure to specify the type as <code>ext2fs</code>
-instead of the default <code>4.2BSD</code>. Notice that the new partition has a different
-letter (say, a), so you need to use <code>sd1a</code> instead of <code>sd1c</code> for the next steps.
-Now you can format and mount the partition:</p>
+<p>First, delete all the partitions with <code>z</code>. Then, create a new partition with
+<code>a</code>, and make sure to specify the type as <code>ext2fs</code> instead of the default
+<code>4.2BSD</code>. Notice that the new partition has a different letter (say, <code>a</code>), so
+you need to use <code>sd1a</code> instead of <code>sd1c</code> for the next steps. Write the changes
+by typing <code>w</code>, then exit with <code>q</code>. Now you can format and mount the partition:</p>
 <pre><code>$ doas newfs_ext2fs sd1a
 $ doas mount_ext2fs /dev/sd1a /mnt
 </code></pre>
