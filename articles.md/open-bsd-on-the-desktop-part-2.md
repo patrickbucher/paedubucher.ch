@@ -210,11 +210,11 @@ laptop (which currently has the IP `192.168.178.53`):
 
 Or using the USB flash drive formatted with `ext2` from before:
 
-    $ doas newfs_ext2fs -I sd1c
-    $ doas mount_ext2fs /dev/sd1c /mnt
+    $ doas newfs_ext2fs -I sd1a
+    $ doas mount_ext2fs /dev/sd1a /mnt
     $ doas cp ~/.ssh/id_rsa.pub /mnt/
 
-Then `id_rsa.pub` can be copied into the accordding [GitHub Settings
+Then `id_rsa.pub` can be copied into the according [GitHub Settings
 Page](https://github.com/settings/ssh/new), after which cloning GitHub
 repositories should work on the OpenBSD machine:
 
@@ -288,8 +288,6 @@ I define my aliases in `~/.kshrc` (excerpt):
     alias gcl='git clone'
     alias gad='git add'
 
-    export gcl gad
-
 In order to load those settings, an according `ENV` parameter needs to be
 defined in `~/.profile` (see `man 1 ksh` for details):
 
@@ -300,9 +298,9 @@ used.
 
 # Conclusion
 
-Not only is my enhanced setup now ready to do some serious work, but also did my
-understanding of some OpenBSD subjects. There are still things to be improved
-and to be understood, but my setup is now good enough so that I no longer need a
-Linux machine running next to it. I'm looking forward to use and learn about
-OpenBSD in the time to come. I'll write additional articles on the subject as
-soon as I have enough subject material ready.
+Not only is my enhanced setup now ready to do some serious work, but I also
+increased my understanding of some OpenBSD subjects. There are still things to
+be improved and to be understood, but my setup is now good enough so that I no
+longer need a Linux machine running next to it. I'm looking forward to use and
+learn about OpenBSD in the time to come. I'll write additional articles on the
+subject as soon as I have enough subject material ready.
