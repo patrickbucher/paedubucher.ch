@@ -78,7 +78,7 @@ While being able to write source code faster and not having to distinguish
 between English, German, and Russian when typing punctuation marks sounds great
 in terms of _efficiency_, not typing in the typographically correct
 representations of German umlauts (_Ae_, _Oe_, _Ue_ instead of _Ä_, _Ö_, _Ü_) or
-misspelling french words with accent marks (_depecherent_ instead of
+misspelling French words with accent marks (_depecherent_ instead of
 _dépêchèrent_) is bad in terms of communicating _effectively_. So there must be
 at least a way to type those characters somewhat efficiently.
 
