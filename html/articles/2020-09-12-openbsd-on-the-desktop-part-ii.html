@@ -176,11 +176,11 @@ laptop (which currently has the IP <code>192.168.178.53</code>):</p>
 <pre><code>$ scp ~/.ssh/id_rsa.pub 192.168.178.53:/home/patrick
 </code></pre>
 <p>Or using the USB flash drive formatted with <code>ext2</code> from before:</p>
-<pre><code>$ doas newfs_ext2fs -I sd1c
-$ doas mount_ext2fs /dev/sd1c /mnt
+<pre><code>$ doas newfs_ext2fs -I sd1a
+$ doas mount_ext2fs /dev/sd1a /mnt
 $ doas cp ~/.ssh/id_rsa.pub /mnt/
 </code></pre>
-<p>Then <code>id_rsa.pub</code> can be copied into the accordding <a href="https://github.com/settings/ssh/new">GitHub Settings
+<p>Then <code>id_rsa.pub</code> can be copied into the according <a href="https://github.com/settings/ssh/new">GitHub Settings
 Page</a>, after which cloning GitHub
 repositories should work on the OpenBSD machine:</p>
 <pre><code>$ git clone git@github.com:patrickbucher/conf
@@ -237,8 +237,6 @@ switch to <code>bash</code>, which is not exactly the point of using OpenBSD.</p
 <p>I define my aliases in <code>~/.kshrc</code> (excerpt):</p>
 <pre><code>alias gcl='git clone'
 alias gad='git add'
-
-export gcl gad
 </code></pre>
 <p>In order to load those settings, an according <code>ENV</code> parameter needs to be
 defined in <code>~/.profile</code> (see <code>man 1 ksh</code> for details):</p>
@@ -247,11 +245,11 @@ defined in <code>~/.profile</code> (see <code>man 1 ksh</code> for details):</p>
 <p>After the next login, <code>~/.profile</code> is reloaded, and the aliases are ready to be
 used.</p>
 <h1>Conclusion</h1>
-<p>Not only is my enhanced setup now ready to do some serious work, but also did my
-understanding of some OpenBSD subjects. There are still things to be improved
-and to be understood, but my setup is now good enough so that I no longer need a
-Linux machine running next to it. I'm looking forward to use and learn about
-OpenBSD in the time to come. I'll write additional articles on the subject as
-soon as I have enough subject material ready.</p></div>
+<p>Not only is my enhanced setup now ready to do some serious work, but I also
+increased my understanding of some OpenBSD subjects. There are still things to
+be improved and to be understood, but my setup is now good enough so that I no
+longer need a Linux machine running next to it. I'm looking forward to use and
+learn about OpenBSD in the time to come. I'll write additional articles on the
+subject as soon as I have enough subject material ready.</p></div>
     </body>
 </html>
