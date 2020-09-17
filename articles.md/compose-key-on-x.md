@@ -213,3 +213,23 @@ to enter whole strings in that manner:
     <Multi_key> <m> <a> <c> : "fanboy"
 
 Whose effect I leave for you to figure out.
+
+# Update (2020-09-17)
+
+A former [fellow student](https://github.com/chefe) just made me aware of the
+keyboard variant `altgr-intl` for the US layout. It can be set as follows:
+
+    $ setxkbmap us -variant altgr-intl
+
+This layout variant offers some useful shortcuts, all to be entered in
+combination with AltGr:
+
+- AltGr + q: ä
+- AltGr + y: ü
+- AltGr + p: ö
+- AltGr + e: é
+- AltGr + r: ë
+- AltGr + s: ß
+
+Unfortunately, an e with grave accent is not easily available, but the
+`altgr-intl` variant is still a good alternative for German.

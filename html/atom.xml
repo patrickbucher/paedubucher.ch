@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-09-17T09:21:51.273266Z</updated>
+    <updated>2020-09-17T15:46:58.126764Z</updated>
     <entry>
         <title>Compose Key on X</title>
         <link href="https://paedubucher.ch/articles/2020-09-16-compose-key-on-x.html"/>
@@ -222,6 +222,26 @@ to enter whole strings in that manner:
     &lt;Multi_key&gt; &lt;m&gt; &lt;a&gt; &lt;c&gt; : &quot;fanboy&quot;
 
 Whose effect I leave for you to figure out.
+
+# Update (2020-09-17)
+
+A former [fellow student](https://github.com/chefe) just made me aware of the
+keyboard variant `altgr-intl` for the US layout. It can be set as follows:
+
+    $ setxkbmap us -variant altgr-intl
+
+This layout variant offers some useful shortcuts, all to be entered in
+combination with AltGr:
+
+- AltGr + q: ä
+- AltGr + y: ü
+- AltGr + p: ö
+- AltGr + e: é
+- AltGr + r: ë
+- AltGr + s: ß
+
+Unfortunately, an e with grave accent is not easily available, but the
+`altgr-intl` variant is still a good alternative for German.
 </content>
     </entry>
     <entry>
