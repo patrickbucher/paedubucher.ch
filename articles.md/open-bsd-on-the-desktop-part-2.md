@@ -7,15 +7,15 @@ lang: en
 ---
 
 A week ago, I've installed [OpenBSD on my
-Thinkpad](/articles/2020-09-05-openbsd-on-the-desktop-part-i.html). I've been
-using it now and then, and already have changed a couple of things in respect to
-the original setup described in the article. I also installed OpenBSD on the
-Dell Optiplex on which I [previously installed
-FreeBSD](/articles/2020-08-11-freebsd-on-the-desktop-part-i.html) a month
-before. This means that I'm no longer using FreeBSD on the desktop, at least not
-for the moment. However, FreeBSD is running on a disk station I built earlier
-this summer. Maybe I'll describe that particular setup (using ZFS) in a later
-article.
+Thinkpad](https://paedubucher.ch/articles/2020-09-05-openbsd-on-the-desktop-part-i.html).
+I've been using it now and then, and already have changed a couple of things in
+respect to the original setup described in the article. I also installed OpenBSD
+on the Dell Optiplex on which I [previously installed
+FreeBSD](https:///paedubucher.ch/articles/2020-08-11-freebsd-on-the-desktop.html)
+a month before. This means that I'm no longer using FreeBSD on the desktop, at
+least not for the moment. However, FreeBSD is running on a disk station I built
+earlier this summer. Maybe I'll describe that particular setup (using ZFS) in a
+later article.
 
 Except for that storage server, I'd like to use OpenBSD for most of my private
 computing. In this article, I describe some GUI tweaks and additional setup
