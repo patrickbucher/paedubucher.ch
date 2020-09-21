@@ -21,12 +21,12 @@ buy technical books as paperbacks or hardcovers rather than ebooks. And if I buy
 an ebook with demanding content, I print out those sections for offline reading.
 
 Having switched to OpenBSD for my private computing shifted my reading habits
-more towards manpages. When I need to figure out how something works on OpenBSD,
-`apropos(1)` beats Google as a starting point in many cases. Some manpages are
-really long, for example `ksh(1)`. I have a book on the Korn Shell in my
-basement, which covers `ksh93`. However, there are some differences between
-`ksh93` and OpenBSD's `pdksh`. So reading the manpage not only gives me more
-accurate information, but also _less_ to read.
+more towards manpages. When I need to figure out how something works on
+OpenBSD, `apropos(1)` beats Google as a starting point in many cases. Some
+manpages are really long, for example `ksh(1)`. I have a book on the Korn Shell
+in my basement, which covers `ksh93`.  However, there are some differences
+between `ksh93` and OpenBSD's `pdksh`. So reading the manpage not only gives me
+more accurate information, but also _less_ to read.
 
 So why not printing out the manpage `ksh(1)`? I can do so even nicely formatted
 using PostScript:
@@ -83,7 +83,7 @@ in order to print documents:
 
     # mkdir /var/spool/output/brother
     # chown -R root:daemon /var/spool/output/brother
-    # chmod 777 /var/spool/output/brother
+    # chmod 770 /var/spool/output/brother
 
 Now the printer daemon `lpd` needs to be activated. To do so on system startup,
 add the following line to `/etc/rc.conf/local`:
@@ -102,7 +102,16 @@ out, the last two steps can be performed using `rcctl(8)`:
     # rcctl restart lpd
 
 The manpage says that `rcctl(8)` was introduced in OpenBSD 5.7 back in 2015.
-_Absolute OpenBSD (2nd Edition)_ is from 2013 and, thus, older than that.
+_Absolute OpenBSD (2nd Edition)_ is from 2013 and, thus, older than that. (At
+the time of this writing, I'm using Version 6.7.)
+
+Another reader pointed out that setting the access rights to `777` is a bad
+practice. That's true, and I actually got the reasoning behind this wrong: I
+thought any user must be able to write to the spooler, because any user is
+supposed to print. However, it's `lpd` that is writing to the spooler, which of
+course runs under the `daemon` group. Therefore, the access rights for
+`/var/spool/output/brother` should be set to `770`, not to `777` (as corrected
+above).
 
 # Printing Documents
 

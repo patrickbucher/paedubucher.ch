@@ -28,12 +28,12 @@ prefer to read long texts on paper rather than on the screen. Therefore I often
 buy technical books as paperbacks or hardcovers rather than ebooks. And if I buy
 an ebook with demanding content, I print out those sections for offline reading.</p>
 <p>Having switched to OpenBSD for my private computing shifted my reading habits
-more towards manpages. When I need to figure out how something works on OpenBSD,
-<code>apropos(1)</code> beats Google as a starting point in many cases. Some manpages are
-really long, for example <code>ksh(1)</code>. I have a book on the Korn Shell in my
-basement, which covers <code>ksh93</code>. However, there are some differences between
-<code>ksh93</code> and OpenBSD's <code>pdksh</code>. So reading the manpage not only gives me more
-accurate information, but also <em>less</em> to read.</p>
+more towards manpages. When I need to figure out how something works on
+OpenBSD, <code>apropos(1)</code> beats Google as a starting point in many cases. Some
+manpages are really long, for example <code>ksh(1)</code>. I have a book on the Korn Shell
+in my basement, which covers <code>ksh93</code>.  However, there are some differences
+between <code>ksh93</code> and OpenBSD's <code>pdksh</code>. So reading the manpage not only gives me
+more accurate information, but also <em>less</em> to read.</p>
 <p>So why not printing out the manpage <code>ksh(1)</code>? I can do so even nicely formatted
 using PostScript:</p>
 <pre><code>$ man -T ps -O paper=a4 ksh &gt;ksh.1.ps
@@ -82,7 +82,7 @@ using backslashes, except for the last line. The options are defined as follows:
 in order to print documents:</p>
 <pre><code># mkdir /var/spool/output/brother
 # chown -R root:daemon /var/spool/output/brother
-# chmod 777 /var/spool/output/brother
+# chmod 770 /var/spool/output/brother
 </code></pre>
 <p>Now the printer daemon <code>lpd</code> needs to be activated. To do so on system startup,
 add the following line to <code>/etc/rc.conf/local</code>:</p>
@@ -98,7 +98,15 @@ out, the last two steps can be performed using <code>rcctl(8)</code>:</p>
 # rcctl restart lpd
 </code></pre>
 <p>The manpage says that <code>rcctl(8)</code> was introduced in OpenBSD 5.7 back in 2015.
-<em>Absolute OpenBSD (2nd Edition)</em> is from 2013 and, thus, older than that.</p>
+<em>Absolute OpenBSD (2nd Edition)</em> is from 2013 and, thus, older than that. (At
+the time of this writing, I'm using Version 6.7.)</p>
+<p>Another reader pointed out that setting the access rights to <code>777</code> is a bad
+practice. That's true, and I actually got the reasoning behind this wrong: I
+thought any user must be able to write to the spooler, because any user is
+supposed to print. However, it's <code>lpd</code> that is writing to the spooler, which of
+course runs under the <code>daemon</code> group. Therefore, the access rights for
+<code>/var/spool/output/brother</code> should be set to <code>770</code>, not to <code>777</code> (as corrected
+above).</p>
 <h1>Printing Documents</h1>
 <p>Now the printer is ready to accept jobs. In order to print the PostScript file
 generated before, just run <code>lpr</code> on the file:</p>
