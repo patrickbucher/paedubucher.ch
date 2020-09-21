@@ -50,8 +50,9 @@ I'd like to keep it minimalistic for the moment.)</p>
 <h1>Printer Setup</h1>
 <p>I figured out how to configure my printer by reading the section <em>The lpd
 Printing Daemon</em> in the 16th chapter of <a href="https://nostarch.com/obenbsd2e">Absolute OpenBSD (2nd
-Edition)</a> (p. 306-307). This is how I applied
-the configuration to my local setup.</p>
+Edition)</a> (p. 306-307) by <a href="https://mwl.io/">Michael W
+Lucas</a>. This is how I applied the configuration to my local
+setup.</p>
 <p>First, I created the file <code>/etc/printcap</code> with the following content:</p>
 <pre><code>lp|brother:\
     :sh=:\
@@ -90,6 +91,14 @@ add the following line to <code>/etc/rc.conf/local</code>:</p>
 <p>Then start the service:</p>
 <pre><code># /etc/rc.d/lpd restart
 </code></pre>
+<p><strong>Update (2020-09-21)</strong>: As one reader on
+<a href="https://news.ycombinator.com/item?id=24535357#24538879">Hackernews</a> pointed
+out, the last two steps can be performed using <code>rcctl(8)</code>:</p>
+<pre><code># rcctl enable lpd
+# rcctl restart lpd
+</code></pre>
+<p>The manpage says that <code>rcctl(8)</code> was introduced in OpenBSD 5.7 back in 2015.
+<em>Absolute OpenBSD (2nd Edition)</em> is from 2013 and, thus, older than that.</p>
 <h1>Printing Documents</h1>
 <p>Now the printer is ready to accept jobs. In order to print the PostScript file
 generated before, just run <code>lpr</code> on the file:</p>

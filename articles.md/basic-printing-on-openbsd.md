@@ -48,8 +48,9 @@ I'd like to keep it minimalistic for the moment.)
 
 I figured out how to configure my printer by reading the section _The lpd
 Printing Daemon_ in the 16th chapter of [Absolute OpenBSD (2nd
-Edition)](https://nostarch.com/obenbsd2e) (p. 306-307). This is how I applied
-the configuration to my local setup.
+Edition)](https://nostarch.com/obenbsd2e) (p. 306-307) by [Michael W
+Lucas](https://mwl.io/). This is how I applied the configuration to my local
+setup.
 
 First, I created the file `/etc/printcap` with the following content:
 
@@ -92,6 +93,16 @@ add the following line to `/etc/rc.conf/local`:
 Then start the service:
 
     # /etc/rc.d/lpd restart
+
+**Update (2020-09-21)**: As one reader on
+[Hackernews](https://news.ycombinator.com/item?id=24535357#24538879) pointed
+out, the last two steps can be performed using `rcctl(8)`:
+
+    # rcctl enable lpd
+    # rcctl restart lpd
+
+The manpage says that `rcctl(8)` was introduced in OpenBSD 5.7 back in 2015.
+_Absolute OpenBSD (2nd Edition)_ is from 2013 and, thus, older than that.
 
 # Printing Documents
 
