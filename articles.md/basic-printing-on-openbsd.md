@@ -95,7 +95,7 @@ Then start the service:
     # /etc/rc.d/lpd restart
 
 **Update (2020-09-21)**: As one reader on
-[Hackernews](https://news.ycombinator.com/item?id=24535357#24538879) pointed
+[Hacker News](https://news.ycombinator.com/item?id=24535357#24538879) pointed
 out, the last two steps can be performed using `rcctl(8)`:
 
     # rcctl enable lpd
