@@ -1,8 +1,8 @@
 ---
-title: Semi-Automated Arch Linux Setup with Disk Encryption
-subtitle: Using dm-crypt, LUKS, and some Shell Scripts
+title: Arch Linux Setup with Disk Encryption
+subtitle: Using dm-crypt, LUKS, and the systemd boot loader
 author: Patrick Bucher
-date: 2020-09-25T14:00:00
+date: 2020-09-26T10:00:00
 lang: en
 ---
 
