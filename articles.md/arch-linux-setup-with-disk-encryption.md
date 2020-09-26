@@ -313,6 +313,12 @@ the UUID (`egrep`). Don't forget the space in front of `UUID`, otherwise the
 removed with `tr`. The variable `$uuid` now contains the UUID of the encrypted
 partition.
 
+**Update**: As the user _fra-san_ [pointed
+out](https://unix.stackexchange.com/a/611507/223188), there's an easier way to
+extract the UUID:
+
+    # uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)
+
 Having this information, the entry for the boot loader can be created as
 follows:
 

@@ -263,6 +263,11 @@ the UUID (<code>egrep</code>). Don't forget the space in front of <code>UUID</co
 (<code>"abc..."</code>) is taken using <code>awk</code>. Then the surrounding double quotes are
 removed with <code>tr</code>. The variable <code>$uuid</code> now contains the UUID of the encrypted
 partition.</p>
+<p><strong>Update</strong>: As the user <em>fra-san</em> <a href="https://unix.stackexchange.com/a/611507/223188">pointed
+out</a>, there's an easier way to
+extract the UUID:</p>
+<pre><code># uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)
+</code></pre>
 <p>Having this information, the entry for the boot loader can be created as
 follows:</p>
 <pre><code># cat &lt;&lt;EOF &gt;/boot/loader/entries/arch.conf
