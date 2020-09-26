@@ -211,6 +211,14 @@ name (`-n` parameter):
     # lvcreate -L 8G volgrp -n tmp
     # lvcreate -l '100%FREE' volgrp -n home
 
+**Update**: As the user _fra-san_ [pointed
+out](https://unix.stackexchange.com/questions/611421/arch-linux-setup-with-encryption-lvm-on-luks)
+in a comment on StackExchange, leaving some space open rather than using `-l
+'100%FREE'` for the `/home` partition is useful when partition sizes should be
+increased later.  Shrinking partitions requires to unmount them, whereas growing
+them can happen with the affected partition still being mounted. (Check out
+`lvresize` for details.)
+
 The partitions are going to be formatted using the `swap` and `ext4` format,
 respectively:
 

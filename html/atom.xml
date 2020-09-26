@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-09-26T13:11:55.660976Z</updated>
+    <updated>2020-09-26T15:02:47.987421Z</updated>
     <entry>
         <title>Arch Linux Setup with Disk Encryption</title>
         <link href="https://paedubucher.ch/articles/2020-09-26-arch-linux-setup-with-disk-encryption.html"/>
@@ -219,6 +219,14 @@ name (`-n` parameter):
     # lvcreate -L 64G volgrp -n var
     # lvcreate -L 8G volgrp -n tmp
     # lvcreate -l '100%FREE' volgrp -n home
+
+**Update**: As the user _fra-san_ [pointed
+out](https://unix.stackexchange.com/questions/611421/arch-linux-setup-with-encryption-lvm-on-luks)
+in a comment on StackExchange, leaving some space open rather than using `-l
+'100%FREE'` for the `/home` partition is useful when partition sizes should be
+increased later.  Shrinking partitions requires to unmount them, whereas growing
+them can happen with the affected partition still being mounted. (Check out
+`lvresize` for details.)
 
 The partitions are going to be formatted using the `swap` and `ext4` format,
 respectively:
