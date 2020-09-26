@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-09-26T11:32:08.627626Z</updated>
+    <updated>2020-09-26T11:32:43.086293Z</updated>
     <entry>
         <title>Arch Linux Setup with Disk Encryption</title>
         <link href="https://paedubucher.ch/articles/2020-09-26-arch-linux-setup-with-disk-encryption.html"/>
@@ -13,7 +13,7 @@
             <name>Patrick Bucher</name>
         </author>
         <id>https://paedubucher.ch/articles/2020-09-26-arch-linux-setup-with-disk-encryption.html</id>
-        <updated>2020-09-26T10:00:00Z</updated>
+        <updated>2020-09-26T13:00:00Z</updated>
         <content type="text/markdown; charset=UTF-8">
 I've been using Arch Linux since 2016. I got to understand the system better
 since then, and installing Arch nowadays is rather a strain on my fingers than
