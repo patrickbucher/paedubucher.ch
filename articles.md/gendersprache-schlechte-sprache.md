@@ -14,7 +14,7 @@ könnte, sondern wohl um ein
 [Gendersternchen](https://de.wikipedia.org/wiki/Gendersternchen). (In der
 Linguistik wird dieses Zeichen zur Kenntlichmachung von ungrammatikalischen
 Konstrukten verwendet. Die Ironie dieses Zufalls dürfte im weiteren Verlauf des
-Artikels hervorstechen.)
+Artikels deutlich werden.)
 
 Was soll nun dieses Gendersternchen bewirken? Es kürzt das umständlichere «für
 Benutzer und Benutzerinnen» ab. Oder war es «für Benutzerinnen und Benutzer»?
@@ -71,45 +71,56 @@ männliche Geschlecht gemeint ist, verrät uns nur der _Kontext_. Wenn sich nun
 das eingangs erwähnte Angebot, das sich an _«Benutzer*innen»_ richtet, sich
 bloss noch an _«Benutzer»_ richten würde, wäre eine Interpretation nötig. Ist
 hier das grammatikalische oder das natürliche männliche Geschlecht gemeint?
-Diese Antwort muss sich _der Leser_ selber überlegen.
+Diese Antwort muss sich _der Leser_ selber überlegen. (Ja, mit «der Leser» sind
+Leute aller Geschlechter gemeint, sowie «die Leserschaft» auch Männer
+beinhalten kann.)
 
-Meine Interpretation der Sache ist, dass die meisten Leute den Kontext
-dahingehend interpretieren, dass sich das Wort «der» nur auf das
-grammatikalische Geschlecht bezieht. Warum sollte denn eine Online-Plattform ca.
-50% der potentiellen _User_ ‒ ein Ausweichen auf Englisch ist hier herrlich
-bequem, und dürfte für den inflationären Gebrauch von Anglizismen mitschuldig
-sein ‒ von seinem Angebot ausschliessen? (Vielleicht weil es ein
-Webseitenbetreib**er**, und keine Webseitenbetreiber**in** ist? Doch ich
-drifte in Sarkasmus ab…)
+Ich denke, dass die meisten Leute den Kontext dahingehend interpretieren
+können, dass sich das Wort «der» hier nur auf das grammatikalische und nicht
+auch auf das natürliche Geschlecht bezieht.  Warum sollte denn eine
+Online-Plattform ca. die Hälfte der potentiellen _User_ ‒ ein Ausweichen auf
+Englisch ist hier herrlich bequem, und dürfte für den inflationären Gebrauch
+von Anglizismen mitschuldig sein ‒ von seinem Angebot ausschliessen?
+(Vielleicht weil es ein Webseitenbetreib**er**, und keine
+Webseitenbetreiber**in** ist?  Doch ich drifte in Sarkasmus ab…) Wer es für
+nötig empfindet, sein Zielpublikum mit «Benutzer\*innen» anzusprechen, spricht
+diesem die entsprechende Interpretationsfähigkeit implizit ab. (Ein ähnliches
+Phänomen ist bei der sogenannten _leichten Sprache_ zu beobachten, bei der man
+sich als Leser so vorkommt, als ob man von oben herab wie ein Kind angesprochen
+werde.) Somit empfinde ich den Gebrauch gendergerechte Sprache als
+bevormundend, ja herablassend.
 
-Um zu einer solchen Fehlinterpretation zu kommen, muss man schon die
-Genderbrille aufgesetzt haben, welche die kontextsensitive Interpretation von
-Sprache erschwert. Wer hinter jedem «der» eine patriarchalische
-Unterdrückungsstruktur wittert, dürfte ohnehin Schwierigkeiten haben,
-Alltagsformulierungen pragmatisch aufzufassen. Schliesslich deutet die
-Verwendung des Wortes «Sonnenuntergang» auch nicht auf die Anhängerschaft des
-Sprechers an das ptolemäische Weltbild hin. (Und wieder drifte ich in Sarkasmus
-ab… Ob es wohl am Thema liegt?)
+Um zu der Fehlinterpretation zu gelangen, dass mit dem Wort «Benutzer» Frauen
+ausgeschlossen sind, muss man schon eine ganz dicke Genderbrille aufgesetzt
+haben, welche die kontextsensitive Interpretation von Sprache erschwert. Wer
+hinter jedem «der» eine patriarchalische Unterdrückungsstruktur wittert, dürfte
+ohnehin Schwierigkeiten haben, Alltagsformulierungen pragmatisch aufzufassen.
+Schliesslich deutet die Verwendung des Wortes «Sonnenuntergang» auch nicht auf
+die Anhängerschaft des Sprechers an das ptolemäische Weltbild hin. (Und wieder
+drifte ich in Sarkasmus ab… Ob es wohl am Thema liegt?)
 
 Wer mit der Genderbrille durch die Welt gehen will, der darf das von mir aus
 tun. Ich möchte das nicht. So ist meine Konsequenz des vorher geschilderten
 Zusammenhanges, dass ich keine gendergerechte Sprache verwende. Wer
 Formulierungen wie «Benutzer*innen» verwenden möchte, darf das gerne tun. Ich
-halte es bloss für umständlich. (Dass ich die als Informatiker beim Asterisk
-zunächst an ein Glob-Pattern denke, ist eine Berufskrankheit. Ich kann den
-Kontext jedoch dahingehend interpretieren, dass hier eben _kein_ Glob-Pattern
-gemeint ist. Auch kann ich bei der Bezeichnung «der Benutzer» kontextsensitiv
-interpretieren, dass hier mit dem bestimmten Artikel «der» nur das
-grammatikalische und nicht das natürliche Geschlecht gemeint ist.)
+halte es bloss für umständlich und bevormundend. (Dass ich die als Informatiker
+beim Asterisk zunächst an ein Glob-Pattern denke, ist eine Berufskrankheit. Ich
+kann den Kontext jedoch dahingehend interpretieren, dass hier eben _kein_
+Glob-Pattern gemeint ist. Auch kann ich bei der Bezeichnung «der Benutzer»
+kontextsensitiv interpretieren, dass hier mit dem bestimmten Artikel «der» nur
+das grammatikalische und nicht das natürliche Geschlecht gemeint ist.)
 
 Sprache ist die Interpretation von Zeichen auf verschiedenen Ebenen. Durch das
 Explizitmachen von natürlichen Geschlechtern durch Gendersternchen gewinnen wir
 höchstens, dass eine verschwindend geringe Menge von Missverständnissen
-ausgeräumt wird; Missverständnisse, die durch eine pragmatische Lesart gar nicht
-auftreten würden. Die Notwendigkeit von Interpretation könnte in diesem Sinne
-noch weiter reduziert werden, indem man etwa auf Metaphern oder sprachlich
-ambivalente Figuren aller Art verzichten würde. Dies mag für bestimmte Textarten
-sinnvoll, ja notwendig sein: etwa bei Gesetzestexten, Verträgen oder technischen
+ausgeräumt wird; Missverständnisse, die durch eine pragmatische Lesart gar
+nicht auftreten würden. (Oder kann mir jemand von einer Informatikerin
+berichten, die auf einem Computer über Administratorenrechte verfügt, sich aber
+unter der Bezeichung «Administrator des Computers» nicht angesprochen fühlt?)
+Die Notwendigkeit von Interpretation könnte in diesem Sinne noch weiter
+reduziert werden, indem man etwa auf Metaphern oder sprachlich ambivalente
+Figuren aller Art verzichten würde. Dies mag für bestimmte Textarten sinnvoll,
+ja notwendig sein: etwa bei Gesetzestexten, Verträgen oder technischen
 Dokumentationen. Im Alltagsgebrauch bedeutete eine solche Einschränkung jedoch
 nur eine Verarmung der Sprache.
 
@@ -118,7 +129,7 @@ könne dem Gendersternchen entgehen, indem man das deutsche Wort «Benutzer» du
 das englische Wort «user» ersetzt, für den habe ich schlechte Nachrichten! Immer
 häufiger sehe ich die Bezeichnung _«User*innen»_, naturgemäss nur auf
 deutschsprachigen Webseiten. Gibt es im Englischen keine verräterischen
-bestimmten Artikel, verliere ich diese hilfreiche Ambivalenz beim Übersetzen ins
+bestimmten Artikel, verliere ich diese nützliche Ambivalenz beim Übersetzen ins
 Deutsche. (Daher kommt es, dass englische Lehnwörter wie «Blog» von
 verschiedenen Leuten mit unterschiedlichen bestimmten Artikeln bezeichnet
 werden: «das Blog» und «der Blog» sind beide anzutreffen.) So mache ich mir das
