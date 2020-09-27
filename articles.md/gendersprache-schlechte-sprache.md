@@ -75,13 +75,13 @@ Diese Antwort muss sich _der Leser_ selber überlegen. (Ja, mit «der Leser» si
 Leute aller Geschlechter gemeint, sowie «die Leserschaft» auch Männer
 beinhalten kann.)
 
-Ich denke, dass die meisten Leute den Kontext dahingehend interpretieren
-können, dass sich das Wort «der» hier nur auf das grammatikalische und nicht
-auch auf das natürliche Geschlecht bezieht.  Warum sollte denn eine
-Online-Plattform ca. die Hälfte der potentiellen _User_ ‒ ein Ausweichen auf
-Englisch ist hier herrlich bequem, und dürfte für den inflationären Gebrauch
-von Anglizismen mitschuldig sein ‒ von seinem Angebot ausschliessen?
-(Vielleicht weil es ein Webseitenbetreib**er**, und keine
+Ich denke, dass die meisten Leute bei einem Online-Angebot «für Benutzer» den
+Kontext dahingehend interpretieren können, dass sich die männliche Form hier nur
+auf das grammatikalische und nicht auch auf das natürliche Geschlecht bezieht.
+Warum sollte denn eine Online-Plattform ca. die Hälfte der potentiellen _User_
+‒ ein Ausweichen auf Englisch ist hier herrlich bequem, und dürfte für den
+inflationären Gebrauch von Anglizismen mitschuldig sein ‒ von seinem Angebot
+ausschliessen?  (Vielleicht weil es ein Webseitenbetreib**er**, und keine
 Webseitenbetreiber**in** ist?  Doch ich drifte in Sarkasmus ab…) Wer es für
 nötig empfindet, sein Zielpublikum mit «Benutzer\*innen» anzusprechen, spricht
 diesem die entsprechende Interpretationsfähigkeit implizit ab. (Ein ähnliches
@@ -95,9 +95,11 @@ ausgeschlossen sind, muss man schon eine ganz dicke Genderbrille aufgesetzt
 haben, welche die kontextsensitive Interpretation von Sprache erschwert. Wer
 hinter jedem «der» eine patriarchalische Unterdrückungsstruktur wittert, dürfte
 ohnehin Schwierigkeiten haben, Alltagsformulierungen pragmatisch aufzufassen.
-Schliesslich deutet die Verwendung des Wortes «Sonnenuntergang» auch nicht auf
-die Anhängerschaft des Sprechers an das ptolemäische Weltbild hin. (Und wieder
-drifte ich in Sarkasmus ab… Ob es wohl am Thema liegt?)
+Natürliche Sprache ist ambivalent und muss zwecks Verständnis wohlwollend
+interpretiert werden. Wer käme denn auf die Idee, einem Sprecher beim Gebrauch
+der Wörter «Sonnenuntergang» und «Sonnenaufgang» die Anhängerschaft an das
+ptolemäische Weltbild zu unterstellen? (Und wieder drifte ich in Sarkasmus ab…
+Ob es wohl am Thema liegt?)
 
 Wer mit der Genderbrille durch die Welt gehen will, der darf das von mir aus
 tun. Ich möchte das nicht. So ist meine Konsequenz des vorher geschilderten
@@ -121,8 +123,8 @@ Die Notwendigkeit von Interpretation könnte in diesem Sinne noch weiter
 reduziert werden, indem man etwa auf Metaphern oder sprachlich ambivalente
 Figuren aller Art verzichten würde. Dies mag für bestimmte Textarten sinnvoll,
 ja notwendig sein: etwa bei Gesetzestexten, Verträgen oder technischen
-Dokumentationen. Im Alltagsgebrauch bedeutete eine solche Einschränkung jedoch
-nur eine Verarmung der Sprache.
+Dokumentationen. Im Alltagsgebrauch oder für den vorliegenden polemischen Text
+führte eine solche Einschränkung jedoch nur zu einer Verarmung der Sprache.
 
 Apropos Anglizismen: Wer denkt, wie ich es weiter oben angesprochen habe, man
 könne dem Gendersternchen entgehen, indem man das deutsche Wort «Benutzer» durch
@@ -134,7 +136,8 @@ Deutsche. (Daher kommt es, dass englische Lehnwörter wie «Blog» von
 verschiedenen Leuten mit unterschiedlichen bestimmten Artikeln bezeichnet
 werden: «das Blog» und «der Blog» sind beide anzutreffen.) So mache ich mir das
 Schreiben einfacher, indem ich sowohl auf Gendersprache als auch auf das
-Umschwenken auf Anglizismen verzichte.
+Umschwenken von geschlechtsneutralen Anglizismen verzichte. (Um Anglizismen
+komme ich als Informatiker ansonsten kaum herum.)
 
 Germanisten und Linguisten mögen meine obige Argumentation gerne zerpflücken.
 Ich bin gerne dazu bereit, etwas neues zu lernen. Wie viel Ambivalenz und
