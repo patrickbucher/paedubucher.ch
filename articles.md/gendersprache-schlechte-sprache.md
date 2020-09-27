@@ -87,7 +87,7 @@ nötig empfindet, sein Zielpublikum mit «Benutzer\*innen» anzusprechen, sprich
 diesem die entsprechende Interpretationsfähigkeit implizit ab. (Ein ähnliches
 Phänomen ist bei der sogenannten _leichten Sprache_ zu beobachten, bei der man
 sich als Leser so vorkommt, als ob man von oben herab wie ein Kind angesprochen
-werde.) Somit empfinde ich den Gebrauch gendergerechte Sprache als
+werde.) Somit empfinde ich den Gebrauch gendergerechter Sprache als
 bevormundend, ja herablassend.
 
 Um zu der Fehlinterpretation zu gelangen, dass mit dem Wort «Benutzer» Frauen
