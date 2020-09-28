@@ -12,7 +12,7 @@ gestossen. Dabei handelt es sich nicht etwa um ein
 Asterisk](https://www.duden.de/rechtschreibung/Asterisk) schliessen lassen
 könnte, sondern wohl um ein
 [Gendersternchen](https://de.wikipedia.org/wiki/Gendersternchen). (In der
-Linguistik wird dieses Zeichen zur Kenntlichmachung von ungrammatikalischen
+Linguistik wird dieses Zeichen zur Kenntlichmachung von ungrammatischen 
 Konstrukten verwendet. Die Ironie dieses Zufalls dürfte im weiteren Verlauf des
 Artikels deutlich werden.)
 
@@ -36,7 +36,7 @@ Individuum bezieht, müsste sich «die Person» auf eine Frau beziehen. Wie kann
 denn nun ein Subjekt gleichermassen männlich und weiblich sein?
 
 Die Antwort ist einfach: die deutsche Sprache unterscheidet zwischen einem
-_grammatikalischen_ und einem _natürlichen_ Geschlecht. So kann «der Benutzer»
+_grammatischen_ und einem _natürlichen_ Geschlecht. So kann «der Benutzer»
 durch «der Mensch», durch «das Individuum» und durch «die Person» ersetzt
 werden. Natürlich lässt sich «der Benutzer» auch durch Namen ersetzen.
 Angenommen, Maria und Martin sind Benutzer, wären die folgenden Sätze
@@ -63,21 +63,21 @@ Formulierung mit «jemand» durch:
 
 Somit kann «der Benutzer» sowohl männliche als auch weibliche Personen
 bezeichnen. Dies gilt jedoch nicht für «die Benutzerin», die sowohl
-_grammatikalisch_ weiblich ist, als auch eine Person _natürlichen weiblichen
+_grammatisch_ weiblich ist, als auch eine Person _natürlichen weiblichen
 Geschlechts_ bezeichnet.
 
-Ob jedoch mit «der Benutzer» nur das grammatikalische oder auch das natürliche
+Ob jedoch mit «der Benutzer» nur das grammatische oder auch das natürliche
 männliche Geschlecht gemeint ist, verrät uns nur der _Kontext_. Wenn sich nun
 das eingangs erwähnte Angebot, das sich an _«Benutzer*innen»_ richtet, sich
 bloss noch an _«Benutzer»_ richten würde, wäre eine Interpretation nötig. Ist
-hier das grammatikalische oder das natürliche männliche Geschlecht gemeint?
+hier das grammatische oder das natürliche männliche Geschlecht gemeint?
 Diese Antwort muss sich _der Leser_ selber überlegen. (Ja, mit «der Leser» sind
 Leute aller Geschlechter gemeint, sowie «die Leserschaft» auch Männer
 beinhalten kann.)
 
 Ich denke, dass die meisten Leute bei einem Online-Angebot «für Benutzer» den
 Kontext dahingehend interpretieren können, dass sich die männliche Form hier nur
-auf das grammatikalische und nicht auch auf das natürliche Geschlecht bezieht.
+auf das grammatische und nicht auch auf das natürliche Geschlecht bezieht.
 Warum sollte denn eine Online-Plattform ca. die Hälfte der potentiellen _User_
 ‒ ein Ausweichen auf Englisch ist hier herrlich bequem, und dürfte für den
 inflationären Gebrauch von Anglizismen mitschuldig sein ‒ von seinem Angebot
@@ -110,7 +110,7 @@ beim Asterisk zunächst an ein Glob-Pattern denke, ist eine Berufskrankheit. Ich
 kann den Kontext jedoch dahingehend interpretieren, dass hier eben _kein_
 Glob-Pattern gemeint ist. Auch kann ich bei der Bezeichnung «der Benutzer»
 kontextsensitiv interpretieren, dass hier mit dem bestimmten Artikel «der» nur
-das grammatikalische und nicht das natürliche Geschlecht gemeint ist.)
+das grammatische und nicht das natürliche Geschlecht gemeint ist.)
 
 Sprache ist die Interpretation von Zeichen auf verschiedenen Ebenen. Durch das
 Explizitmachen von natürlichen Geschlechtern durch Gendersternchen gewinnen wir
