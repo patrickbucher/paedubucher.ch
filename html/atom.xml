@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-09-28T07:30:25.009088Z</updated>
+    <updated>2020-10-02T10:28:13.252568Z</updated>
     <entry>
         <title>Gendersprache, schlechte Sprache</title>
         <link href="https://paedubucher.ch/articles/2020-09-27-gendersprache-schlechte-sprache.html"/>
@@ -45,11 +45,11 @@ Individuum bezieht, müsste sich «die Person» auf eine Frau beziehen. Wie kann
 denn nun ein Subjekt gleichermassen männlich und weiblich sein?
 
 Die Antwort ist einfach: die deutsche Sprache unterscheidet zwischen einem
-_grammatischen_ und einem _natürlichen_ Geschlecht. So kann «der Benutzer»
-durch «der Mensch», durch «das Individuum» und durch «die Person» ersetzt
-werden. Natürlich lässt sich «der Benutzer» auch durch Namen ersetzen.
-Angenommen, Maria und Martin sind Benutzer, wären die folgenden Sätze
-grammatikalisch korrekt:
+_grammatischen_ Geschlecht (_Genus_) und einem _natürlichen_ oder _biologischen_
+Geschlecht (_Sexus_). So kann «der Benutzer» durch «der Mensch», durch «das
+Individuum» und durch «die Person» ersetzt werden. Natürlich lässt sich «der
+Benutzer» auch durch Namen ersetzen.  Angenommen, Maria und Martin sind
+Benutzer, wären die folgenden Sätze grammatikalisch korrekt:
 
 &gt; Maria ist eine Person, _die_ eine Anwendung benutzt.
 
@@ -63,13 +63,6 @@ grammatikalisch korrekt:
 
 &gt; Martin ist ein Individuum, _das_ eine Anwendung benutzt.
 
-Das natürliche Geschlecht drückt nur im Relativsatz der ursprünglichen
-Formulierung mit «jemand» durch:
-
-&gt; Maria ist jemand, _die_ eine Anwendung benutzt.
-
-&gt; Martin ist jemand, _der_ eine Anwendung benutzt.
-
 Somit kann «der Benutzer» sowohl männliche als auch weibliche Personen
 bezeichnen. Dies gilt jedoch nicht für «die Benutzerin», die sowohl
 _grammatisch_ weiblich ist, als auch eine Person _natürlichen weiblichen
@@ -80,9 +73,19 @@ männliche Geschlecht gemeint ist, verrät uns nur der _Kontext_. Wenn sich nun
 das eingangs erwähnte Angebot, das sich an _«Benutzer*innen»_ richtet, sich
 bloss noch an _«Benutzer»_ richten würde, wäre eine Interpretation nötig. Ist
 hier das grammatische oder das natürliche männliche Geschlecht gemeint?
-Diese Antwort muss sich _der Leser_ selber überlegen. (Ja, mit «der Leser» sind
-Leute aller Geschlechter gemeint, sowie «die Leserschaft» auch Männer
-beinhalten kann.)
+
+Das Substantiv «Benutzer» ist vom Verb «benutzen» abgeleitet. Es bezeichnet eine
+Person, die etwas benutzt. Gleichermassen ist ein «Programmierer» eine Person,
+die programmiert, und ein Helfer eine Person, die hilft. Ein Wissenschaftler ist
+eine Person, die Wissenschaft betreibt, und ein Fussballer spielt ganz einfach
+Fussball. Das natürliche oder biologische Geschlecht der Person (der _Sexus_),
+welche diese Handlung verrichtet, ist bei dieser Wortbildung weder relevant,
+noch analytisch daraus erfahrbar.
+
+Im Englischen funktioniert die Substantivbildung aus Verben durch Hinzufügen der
+Wortendung «er» ebenfalls: _A player is a person that plays a game._ Der
+bestimmte Artikel «the» impliziert jedoch keinen Genus, wodurch auch niemand auf
+die Idee kommen würde, daraus auf den Sexus zu schliessen.
 
 Ich denke, dass die meisten Leute bei einem Online-Angebot «für Benutzer» den
 Kontext dahingehend interpretieren können, dass sich die männliche Form hier nur
@@ -90,8 +93,8 @@ auf das grammatische und nicht auch auf das natürliche Geschlecht bezieht.
 Warum sollte denn eine Online-Plattform ca. die Hälfte der potentiellen _User_
 ‒ ein Ausweichen auf Englisch ist hier herrlich bequem, und dürfte für den
 inflationären Gebrauch von Anglizismen mitschuldig sein ‒ von seinem Angebot
-ausschliessen?  (Vielleicht weil es ein Webseitenbetreib**er**, und keine
-Webseitenbetreiber**in** ist?  Doch ich drifte in Sarkasmus ab…) Wer es für
+ausschliessen?  (Vielleicht weil es ein Webseitenbetreib*er*, und keine
+Webseitenbetreiber*in* ist?  Doch ich drifte in Sarkasmus ab…) Wer es für
 nötig empfindet, sein Zielpublikum mit «Benutzer\*innen» anzusprechen, spricht
 diesem die entsprechende Interpretationsfähigkeit implizit ab. (Ein ähnliches
 Phänomen ist bei der sogenannten _leichten Sprache_ zu beobachten, bei der man
