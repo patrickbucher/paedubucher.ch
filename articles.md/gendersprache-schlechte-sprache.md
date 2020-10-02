@@ -129,6 +129,27 @@ ja notwendig sein: etwa bei Gesetzestexten, Verträgen oder technischen
 Dokumentationen. Im Alltagsgebrauch oder für den vorliegenden polemischen Text
 führte eine solche Einschränkung jedoch nur zu einer Verarmung der Sprache.
 
+Gendersternchen («Benutzer*innen») und Binnen-I («BenutzerInnen») funktionieren
+zudem nicht zufriedenstellend mit allen Fällen. Die Formulierung «der
+Anmeldezeitpunkt des Benutzers» (Genitiv) müsste gendergerecht _und_
+syntaktisch/grammatikalisch korrekt etwa als «der Anmeldezeitpunkt der
+Benutzerin bzw. der Anmeldezeitpunkt des Benutzers» formuliert werden.
+Varianten mit Gendersternchen oder Binnen-I funktionieren nicht («der
+Anmeldezeitpunkt der/des Benutzer\*in») oder verkommen zu einer syntaktischen
+Monstrosität («der Anmeldezeitpunkt der/des Benutzer(in/s)»). In der Praxis
+werden solche Formulierungsprobleme mit dem Verzicht auf den Genitiv umgangen.
+Die Sprache verliert weiter an Ausdrucksstärke und Variantenreichtum.
+
+Ein weiteres Problem an «gegenderter» Sprache ist, dass Formulierungen wie
+«Helferinnen und Helfer» explizit ein natürliches Geschlecht suggerieren, wo
+dieses nicht relevant ist. Da «Helferin» immer biologisch weiblich ist, gewöhnt
+sich der Leser durch diese Nebeneinanderstellung zum «Helfer» zusehends an die
+Interpretation, das bei letzterem das männliche biologische Geschlecht gemeint
+sein muss. Da man weibliche oder sachliche Wörter wie «Person» oder «Individuum»
+nicht durch Hinzufügen oder Weglassen einer Silbe «gendern» kann, wird das
+grammatische Maskulinum zusehends sexualisiert, was hingegen bei Femininum und
+Neutrum nicht geschieht.
+
 Apropos Anglizismen: Wer denkt, wie ich es weiter oben angesprochen habe, man
 könne dem Gendersternchen entgehen, indem man das deutsche Wort «Benutzer» durch
 das englische Wort «user» ersetzt, für den habe ich schlechte Nachrichten! Immer
