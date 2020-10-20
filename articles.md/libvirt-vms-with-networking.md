@@ -266,7 +266,7 @@ pointing that out):
     $ chmod 700 ~/.ssh
     $ chmod 600 ~/.ssh/*
 
-Copy the public key to the hosts using `ssh-copy_id` (thanks to meillo again for
+Copy the public key to the hosts using `ssh-copy-id` (thanks to meillo again for
 hinting that utility to me):
 
     $ ssh-copy-id -i ~/.ssh/id_vms_rsa user@master
