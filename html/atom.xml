@@ -5,7 +5,73 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2020-10-20T20:19:42.124899Z</updated>
+    <updated>2021-05-02T08:11:16.124590Z</updated>
+    <entry>
+        <title>Tests Are Not Specifications</title>
+        <link href="https://paedubucher.ch/articles/2021-05-02-tests-are-not-specifications.html"/>
+        <author>
+            <name>Patrick Bucher</name>
+        </author>
+        <id>https://paedubucher.ch/articles/2021-05-02-tests-are-not-specifications.html</id>
+        <updated>2021-05-02T10:00:00Z</updated>
+        <content type="text/markdown; charset=UTF-8">
+In _The Clean Coder_, Chapter 7 (_Acceptance Tests_), Robert C. Martin writes
+(p. 109):
+
+&gt; But the real reason these tests aren't redundant is that their primary
+&gt; function _is not testing_. The fact that they are tests is incidental. […]
+&gt; The fact that they automatically verify the design, structure, and behaviour
+&gt; that they specify is wildly useful, **but the specification is their true
+&gt; purpose**. [Bold emphasis mine.]
+
+OK, boomer, here's your spec:
+
+    assert f(0) == 1
+    assert f(-1) == -2
+    assert f(+1) == 4
+    assert f(+4) == 13
+    assert f(-9) == -26
+
+Now implement `f(x)`. The requirements are clear, aren't they?
+
+You're still here? Where's the implementation!? I told you everything you need.
+You got test cases! They _are_ the specification; you just told me this, and of
+course, _Uncle Bob is always right_, they told me in school.
+
+Still not done? OK, you're fired. Here's the Python implementation. Easy, isn't
+it?
+
+    def f(x):
+        return (x + 2) * 3 - 5
+
+Those young developers are no good, after all. Let's hire one of those old
+programmers, please bring in that old, more-arrogant-than-Uncle-Bob, grumpy
+Dijkstra guy ([EWD
+981](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD09xx/EWD981.html)):
+
+&gt; At this stage I can give you some behavioural advice. Contrary to what
+&gt; misguided—and misguiding—educationists may have told you, don't waste your
+&gt; time looking at specific examples. Trying to come to grips with a large set by
+&gt; looking at a few—hopefully representative—elements of that set is one of the
+&gt; most ineffective ways of spending one's time. Go immediately for the general
+&gt; case, or, in other words, **attack the set not by looking at specific elements
+&gt; but by analysing the definition of the set.** [Bold emphasis mine.]
+
+So you're not interested in some randomly picked elements of both the problem
+and solution set, but in those set's definition? Is that all you need? Well,
+here's that definition:
+
+    y = f(x) = (x + 2) * 3 - 5
+
+But I can also provide you with a set of test cases, or _specs_, as they are
+called by some developers. Oh, you don't need them? But what is QA supposed to
+do all day long then? You mean we can fire them? Wow, that sounds great. You're
+hired, Mr. Dijkstra!
+
+Did I hear this right, Mr. Dijkstra, _tests are not specifications_? Now you're
+talking…
+</content>
+    </entry>
     <entry>
         <title>Gendersprache, schlechte Sprache</title>
         <link href="https://paedubucher.ch/articles/2020-09-27-gendersprache-schlechte-sprache.html"/>
