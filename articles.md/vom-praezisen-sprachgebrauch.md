@@ -9,7 +9,7 @@ lang: de
 > Besides a mathematical inclination, an exceptionally good mastery of one's
 > native tongue is the most vital asset of a competent programmer.
 
-_Edsger W. Dijkstra_, [EWD 498](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD04xx/EWD498.html)
+— _Edsger W. Dijkstra_, [EWD 498](https://www.cs.utexas.edu/users/EWD/transcriptions/EWD04xx/EWD498.html)
 
 Sprache ist für mich sehr wichtig, und zwar nicht _obwohl_, sondern _weil_ ich
 Informatiker bin. Obwohl ich ohne grössere Probleme in den mathematischen
@@ -57,26 +57,26 @@ Doch braucht man gar nicht die stilistische Ebene und die Übersetzungen zwische
 verschiedenen Idiomen heranzuziehen um sprachliche Ungereimtheiten zu finden.
 Oft hapert es schon beim Gebrauch einzelner Wörter:
 
-> ‒ Das läuft auf einem _physikalischen_ Server, nicht auf einem virtuellen.
+> — Das läuft auf einem _physikalischen_ Server, nicht auf einem virtuellen.
 
 Physik ist die Lehre der Körper, und «physikalisch» bezeichnet etwas _die Lehre
 der Körper betreffendes_. Das Gegenteil eines virtuellen Servers ist ein
 _physischer_ Server: ein Server, der _als Körper_ vorhanden ist. Zu einem
 «physikalischen» Server könnte man sich vielleicht einen chemischen oder
-biologischen Server vorstellen. (Ein _physikalischer_ Server wäre einer, auf dem
-physikalische Berechnungen durchgeführt werden.) Hier dürfte es sich nicht
-einmal um ein Übersetzungsproblem aus dem Englischen («physical») handeln, ist
-doch der _physician_ ein Arzt (der sich mit menschlichen Körpern beschäftigt)
-und der _physicist_ ein Physiker (der sich mit der Lehre von Körpern befasst) ‒
-Achtung: Verwechslungsgefahr!
+biologischen Server als Gegensatz vorstellen. (Ein _physikalischer_ Server wäre
+einer, auf dem physikalische Berechnungen durchgeführt werden.) Hier dürfte es
+sich nicht einmal um ein Übersetzungsproblem aus dem Englischen («physical»)
+handeln, ist doch der _physician_ ein Arzt (der sich mit menschlichen Körpern
+beschäftigt) und der _physicist_ ein Physiker (der sich mit der Lehre von
+Körpern befasst) ‒ Achtung: Verwechslungsgefahr!
 
-In englischsprachigen Vorträgen wird oft (zu oft!) das Verb «to consume»
+In englischsprachigen Vorträgen wird oft ‒ zu oft! ‒ das Verb «to consume»
 verwendet:
 
 > We provide services and libraries that you can _consume_.
 
 Das Wort «konsumieren» (denn dieses Wort lässt sich auf Englisch und Deutsch
-gleich verwenden) bedeutet, dass etwas _ver_braucht wird. In der Informatik ist
+gleich verwenden) bedeutet, dass etwas _verbraucht_ wird. In der Informatik ist
 dies etwa im Zusammenhang mit Messaging (korrekterweise) zu lesen:
 
 > The producer sends out messages, which are _consumed_ by multiple workers.
@@ -84,8 +84,8 @@ dies etwa im Zusammenhang mit Messaging (korrekterweise) zu lesen:
 Die Nachrichten _müssen_ konsumiert werden, ansonsten würden sie mehrfach
 verarbeitet. Einen Dienst (engl. service) oder eine Programmbibliothek (engl.
 library) kann man jedoch beliebig oft verwenden, ohne dass diese dabei
-verbraucht werden. (Bei einem Bezahlservice _verbraucht_ man vielleicht Tokens
-oder Credits wenn man den Service _verwendet_.)
+verbraucht werden würden. (Bei einem Bezahlservice _verbraucht_ man vielleicht
+Tokens oder Credits wenn man den Service _verwendet_.)
 
 Natürlich kann man Ausdrücke wie «physikalischer Server» oder «to consume a
 library» pragmatisch deuten und dabei das Gemeinte korrekt vom Gesagten
@@ -93,24 +93,21 @@ unterscheiden. Diese Toleranz führt jedoch dazu, dass die Unterschiede
 zwischen verschiedenen Begriffen («physisch» und «physikalisch»; «konsumieren»
 und «verwenden») verloren gehen und man dadurch weniger klar kommunizieren kann:
 
-> ‒ The message was _consumed_ by all workers.
-> - So we have a race condition in the messaging component?
-> - No. The workers just use `get` instead of `pop` on the message stack. Works
->   as intended…
-> - But then those messages are nod _consumed_, but only _used_.
-> - So what's the difference?
+> — The message was _consumed_ by all workers.<br>
+> — So we have a race condition in the messaging component?<br>
+> — No. The workers just use `get` instead of `pop` on the message stack. Works as intended…<br>
+> — But then those messages are not _consumed_, but only _used_.<br>
+> — So what's the difference?
 
 Oder:
 
-> - Wir brauchen zusätzliches IT-Budget um neue physikalische Server zu
->   beschaffen.
-> - Aber wir haben doch gar kein Physik-Departement an unserer Universität!?
-> - Was tut denn das zur Sache? Wir brauchen die Server um Word-Dateien zu
->   archivieren.
-> - Und was hat denn das mit Physik zu tun?
-> - Gar nichts, aber ich will nicht, dass die Dokumente in die Cloud gelangen.
-> - Ach, sie meinen einen _physischen_ Server?
-> - Natürlich, davon rede ich schon die ganze Zeit!
+> — Wir brauchen zusätzliches IT-Budget um neue physikalische Server zu beschaffen.<br>
+> — Aber wir haben doch gar kein Physik-Departement an unserer Universität!?<br>
+> — Was tut denn das zur Sache? Wir brauchen die Server um Word-Dateien zu archivieren.<br>
+> — Und was hat denn das mit Physik zu tun?<br>
+> — Gar nichts, aber ich will nicht, dass die Dokumente in die Cloud gelangen.<br>
+> — Ach, sie meinen einen _physischen_ Server?<br>
+> — Natürlich, davon rede ich schon die ganze Zeit!
 
 Diese Dialoge sind natürlich weit hergeholt und dürften ‒ hoffentlich ‒ so nie
 zu vernehmen sein. Schliesslich schreibe ich diese Sprachglosse nur, um mich zu

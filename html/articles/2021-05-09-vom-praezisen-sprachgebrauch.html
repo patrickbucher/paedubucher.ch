@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <title>Vom präzisen Sprachgebrauch ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <div class="backlink"><a href="../index.html">paedubucher.ch</a></div>
+        <h1 class="title">Vom präzisen Sprachgebrauch</h1>
+        
+        <h2 class="subtitle">Und warum dieser in der Informatik wichtig ist</h2>
+        
+        <h3 class="author">Patrick Bucher</h3>
+        <h3 class="date">09.05.2021</h3>
+        <div class="content"><blockquote>
+<p>Besides a mathematical inclination, an exceptionally good mastery of one's
+native tongue is the most vital asset of a competent programmer.</p>
+</blockquote>
+<p>— <em>Edsger W. Dijkstra</em>, <a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD04xx/EWD498.html">EWD 498</a></p>
+<p>Sprache ist für mich sehr wichtig, und zwar nicht <em>obwohl</em>, sondern <em>weil</em> ich
+Informatiker bin. Obwohl ich ohne grössere Probleme in den mathematischen
+Fächern durch das Studium gekommen bin, sind meine Fähigkeiten in diesem Fach
+nicht besonders stark ausgeprägt. (Meine Mathematiklehrer vom Gynmanisum können
+dies sicherlich bestätigen.)</p>
+<p>Fremdsprachen lerne ich zwar auch nicht besonders schnell, aber nach längerer
+Beschäftigung mit einer Sprache kann ich in dieser doch recht präzise und
+flüssig kommunizieren. Noch wichtiger finde ich, dass man sich der Unterschiede
+zwischen verschiedenen Sprachen bewusst wird. Denn wortweise Übersetzungen sind
+nicht nur stylistisch schlecht, sondern oft schlichtweg falsch. So lässt sich
+dieser Satz aus dem Deutschen:</p>
+<blockquote>
+<p>Ich glaube, ich spinne.</p>
+</blockquote>
+<p>nicht eins zu eins ins Englische übersetzen:</p>
+<blockquote>
+<p>I believe, I spider.</p>
+</blockquote>
+<p>Dies gilt auch für Programmiersprachen; auch diese sollten <em>idiomatisch</em>
+gebraucht werden: Was in der Programmiersprache C korrekt und idiomatisch sein
+mag:</p>
+<pre><code>for (int i = 0; i &lt; n; i++) {
+    sum += values[i];
+}
+</code></pre>
+<p>Sollte beispielsweise in Clojure ganz anders aussehen:</p>
+<pre><code>(reduce + values)
+</code></pre>
+<p>Von jemandem, der bei Sätzen wie dem folgenden nicht leicht mit den Augen rollen
+muss:</p>
+<blockquote>
+<p>Es macht Sinn hier ausserhalb der Box zu denken und eine Extrameile zu gehen,
+damit wir das Produkt rechtzeitig ausrollen können.</p>
+</blockquote>
+<p>Erwarte ich auch keine stilistischen Meisterleistungen im Programmcode, gerade
+wenn mehrere Programmiersprachen in einem Projekt zum Einsatz kommen.
+(Mangelndes Verständnis für Sprachidiome dürfte wohl auch der Grund sein, dass
+JavaScript nach vielen Jahren doch noch ein <code>class</code>-Schlüsselwort erhalten hat.)</p>
+<p>Doch braucht man gar nicht die stilistische Ebene und die Übersetzungen zwischen
+verschiedenen Idiomen heranzuziehen um sprachliche Ungereimtheiten zu finden.
+Oft hapert es schon beim Gebrauch einzelner Wörter:</p>
+<blockquote>
+<p>— Das läuft auf einem <em>physikalischen</em> Server, nicht auf einem virtuellen.</p>
+</blockquote>
+<p>Physik ist die Lehre der Körper, und «physikalisch» bezeichnet etwas <em>die Lehre
+der Körper betreffendes</em>. Das Gegenteil eines virtuellen Servers ist ein
+<em>physischer</em> Server: ein Server, der <em>als Körper</em> vorhanden ist. Zu einem
+«physikalischen» Server könnte man sich vielleicht einen chemischen oder
+biologischen Server als Gegensatz vorstellen. (Ein <em>physikalischer</em> Server wäre
+einer, auf dem physikalische Berechnungen durchgeführt werden.) Hier dürfte es
+sich nicht einmal um ein Übersetzungsproblem aus dem Englischen («physical»)
+handeln, ist doch der <em>physician</em> ein Arzt (der sich mit menschlichen Körpern
+beschäftigt) und der <em>physicist</em> ein Physiker (der sich mit der Lehre von
+Körpern befasst) ‒ Achtung: Verwechslungsgefahr!</p>
+<p>In englischsprachigen Vorträgen wird oft ‒ zu oft! ‒ das Verb «to consume»
+verwendet:</p>
+<blockquote>
+<p>We provide services and libraries that you can <em>consume</em>.</p>
+</blockquote>
+<p>Das Wort «konsumieren» (denn dieses Wort lässt sich auf Englisch und Deutsch
+gleich verwenden) bedeutet, dass etwas <em>verbraucht</em> wird. In der Informatik ist
+dies etwa im Zusammenhang mit Messaging (korrekterweise) zu lesen:</p>
+<blockquote>
+<p>The producer sends out messages, which are <em>consumed</em> by multiple workers.</p>
+</blockquote>
+<p>Die Nachrichten <em>müssen</em> konsumiert werden, ansonsten würden sie mehrfach
+verarbeitet. Einen Dienst (engl. service) oder eine Programmbibliothek (engl.
+library) kann man jedoch beliebig oft verwenden, ohne dass diese dabei
+verbraucht werden würden. (Bei einem Bezahlservice <em>verbraucht</em> man vielleicht
+Tokens oder Credits wenn man den Service <em>verwendet</em>.)</p>
+<p>Natürlich kann man Ausdrücke wie «physikalischer Server» oder «to consume a
+library» pragmatisch deuten und dabei das Gemeinte korrekt vom Gesagten
+unterscheiden. Diese Toleranz führt jedoch dazu, dass die Unterschiede
+zwischen verschiedenen Begriffen («physisch» und «physikalisch»; «konsumieren»
+und «verwenden») verloren gehen und man dadurch weniger klar kommunizieren kann:</p>
+<blockquote>
+<p>— The message was <em>consumed</em> by all workers.<br>
+— So we have a race condition in the messaging component?<br>
+— No. The workers just use <code>get</code> instead of <code>pop</code> on the message stack. Works as intended…<br>
+— But then those messages are not <em>consumed</em>, but only <em>used</em>.<br>
+— So what's the difference?</p>
+</blockquote>
+<p>Oder:</p>
+<blockquote>
+<p>— Wir brauchen zusätzliches IT-Budget um neue physikalische Server zu beschaffen.<br>
+— Aber wir haben doch gar kein Physik-Departement an unserer Universität!?<br>
+— Was tut denn das zur Sache? Wir brauchen die Server um Word-Dateien zu archivieren.<br>
+— Und was hat denn das mit Physik zu tun?<br>
+— Gar nichts, aber ich will nicht, dass die Dokumente in die Cloud gelangen.<br>
+— Ach, sie meinen einen <em>physischen</em> Server?<br>
+— Natürlich, davon rede ich schon die ganze Zeit!</p>
+</blockquote>
+<p>Diese Dialoge sind natürlich weit hergeholt und dürften ‒ hoffentlich ‒ so nie
+zu vernehmen sein. Schliesslich schreibe ich diese Sprachglosse nur, um mich zu
+unterhalten. (Man beachte: sprachliches Feingefühl kann eine zusätzliche Quelle
+von Ärgernis <em>und</em> Heiterkeit im Alltag sein.)</p></div>
+    </body>
+</html>

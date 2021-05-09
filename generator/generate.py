@@ -122,6 +122,9 @@ def format_date(date, lang):
 
 def normalize(s):
     s = re.sub(r'\s', '-', s)
+    s = re.sub(u'ä', 'ae', s)
+    s = re.sub(u'ö', 'oe', s)
+    s = re.sub(u'ü', 'ue', s)
     s = re.sub('[^-_0-9a-zA-Z]+', '', s)
     s = s.lower()
     return s
