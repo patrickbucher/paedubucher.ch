@@ -57,7 +57,7 @@ Doch braucht man gar nicht die stilistische Ebene und die Übersetzungen zwische
 verschiedenen Idiomen heranzuziehen um sprachliche Ungereimtheiten zu finden.
 Oft hapert es schon beim Gebrauch einzelner Wörter:
 
-> — Das läuft auf einem _physikalischen_ Server, nicht auf einem virtuellen.
+> Das läuft auf einem _physikalischen_ Server, nicht auf einem virtuellen.
 
 Physik ist die Lehre der Körper, und «physikalisch» bezeichnet etwas _die Lehre
 der Körper betreffendes_. Das Gegenteil eines virtuellen Servers ist ein
