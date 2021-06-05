@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2021-06-04T10:52:54.100064Z</updated>
+    <updated>2021-06-05T10:11:00.395409Z</updated>
     <entry>
         <title>Gerald M. Weinberg: “How Software Is Built”</title>
         <link href="https://paedubucher.ch/articles/2021-06-04-gerald-m-weinberg-how-software-is-built.html"/>
@@ -13,20 +13,20 @@
             <name>Patrick Bucher</name>
         </author>
         <id>https://paedubucher.ch/articles/2021-06-04-gerald-m-weinberg-how-software-is-built.html</id>
-        <updated>2021-06-04T12:50:00Z</updated>
+        <updated>2021-06-04T15:30:00Z</updated>
         <content type="text/markdown; charset=UTF-8">
 _This is a rough summary of “How Software Is Built”, Volume 1/6 of the “Quality
 Software Management” by Gerald M. Weinberg. Remarks that are not found in the
 book are written within [square brackets]._
 
-There are three fundamental abilities needed to not lag farther and farther
-behind ever evolving computers:
+# Preface
 
-1. Observing, and understanding the significance of the observed.
-2. Acting congruently in difficoult interpersonal situations.
-3. Understanding complex situations; planning and modifying the plan.
-
-The third point is the subject of this book.
+Computers evolve, and in order to not lag farther and farther behind, there are
+three fundamental abilities needed: First, one needs to be able to observe, and
+to understand the significance of the observed. Second, one needs to act
+congruently, especially in difficoult interpersonal situation. And third, one
+needs to be able to understand complex situations, to make plans, and to modify
+those plans if needed. The third point is the subject of this book
 
 # What Is Quality? Why Is It Important?
 
@@ -36,47 +36,34 @@ Adequate quality to one person may be inadequate quality to another:
 &gt; Every statement about quality is a statement about some person(s).
 &gt; Who is the person behind that statement about quality.
 
-There are different ideas about software quality, some of them (and their
-source) are:
+There are different ideas about software quality, held by different groups.
+Users want zero defects. Some users and marketers like to have a lot of features.
+Developers strive for elegant code. Users and sales value high performance.
+Customers and managers like low development costs. Users and marketers prefer
+rapid over slow development. And different kinds of users have different ideas
+about user-friendliness.
 
-- zero defects (user)
-- lots of features (some users, marketers)
-- elegant code (developers)
-- high performance (users, sales)
-- low development cost (customer, managers)
-- rapid development (users, marketers)
-- user-friendliness (users—different kinds of)
+&gt; More quality for one person may mean less quality for another.  Whose opinion
+&gt; of quality is to count when making decisions?  Quality is value to some
+&gt; person.
 
-&gt; More quality for one person may mean less quality for another.
-&gt; Whose opinion of quality is to count when making decisions?
-&gt; Quality is value to some person.
+Decisions are often hidden from the conscious minds of the person who makes
+them. A quality manager must bring those decisions into consciousness. Internal
+software organizations have little competition and therefore tend to stagnate.
 
-Decisions are often hidden from the conscious minds of the persons who makes
-them. A quality manager must bring those decisions into consciousness.
-
-Internal software organizations have little competition and therefore tend to
-stagnate.
-
-Improving quality is difficult, there is an up- or downward spiral:
-
-1. motivation to measure the cost of quality (influencing point 2)
-2. understanding the value of quality (influencing point 3)
-3. motivation to achieve quality (influencing point 4)
-4. understanding of how to achieve quality (influencing point 1)
+Improving quality is difficult, there is an up- or downward spiral, where each
+stage reinforces the next: First, there is a motivation to measure the cost of
+quality. Second, one strives to understand the value of quality. Third,
+motivation builds up to achieve quality. And, fourth, and understanding of how
+to achieve quality is developed. This circle continues with the first point.
 
 A lock-on effect, e.g. caused by the choice of a programming language, causes
 the cost of change to _increase_, but the motivation and knowledge to change to
-_decrease_ over time. A lock-on effect for a programming language entails:
-
-- software tools
-- hardware systems [less common nowadays]
-- people trained and hired
-- specialized consultants
-- user community
-- managers that grew with it
-- books, trainings
-- philosophy of software engineering
-- user interface philosophy
+_decrease_ over time. A lock-on effect for a programming language entails
+software tools, hardware systems [though less common nowadays], people trained
+and hired, specialized consultants, a user community, managers that grew up with
+that particular language, books and trainings, and sometimes an entire
+philosophy of software engineering and user interface design.
 
 &gt; People will always choose the familiar over the cofortable.
 
