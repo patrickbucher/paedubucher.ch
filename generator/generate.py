@@ -145,7 +145,8 @@ def parse_article(article_path):
 
     yaml_dict = yaml.load(meta_data, Loader=yaml.SafeLoader)
     content_data = content[meta_end+len(sep)+1:]
-    html = markdown.markdown(content_data, output_format='html5')
+    html = markdown.markdown(content_data, output_format='html5',
+                             extensions=['codehilite', 'fenced_code'])
 
     return yaml_dict, html, content_data
 
