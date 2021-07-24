@@ -27,7 +27,7 @@ prescribe the following structure for a test case:</p>
    expectation.</li>
 </ol>
 <p>Such a test case might look as follows (Java):</p>
-<pre><code>public void testAddition() {
+<pre class="codehilite"><code>public void testAddition() {
     // Given/Arrange
     Calculator calc = new Calculator();
     int a = 3;
@@ -38,8 +38,9 @@ prescribe the following structure for a test case:</p>
 
     // Then/Assert
     assertEqual(8, sum);
-}
-</code></pre>
+}</code></pre>
+
+
 <p>A rule often taught is the so-called <em>single assert rule</em> from Robert C. Martin,
 <a href="http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt">whom I refuse to call «Uncle
 Bob»</a>. It states
@@ -59,7 +60,7 @@ sensible to me, except when programming in a purely functional style.</p>
 <p>How should an additional test case to cover, say, negative numbers, be added to
 the one above? The <em>single assert rule</em> wants us to write an additional test
 case:</p>
-<pre><code>public void testAdditionWithNegativeNumbers() {
+<pre class="codehilite"><code>public void testAdditionWithNegativeNumbers() {
     // Given/Arrange
     Calculator calc = new Calculator();
     int a = -1;
@@ -70,15 +71,16 @@ case:</p>
 
     // Then/Assert
     assertEqual(2, sum);
-}
-</code></pre>
+}</code></pre>
+
+
 <p>Who would <em>type</em> in that code, which is almost identical to the one above? Such
 code is rather <em>copied</em> than written again. (Why don't I hear somebody shouting
 <em>«Clean Code!!!!11»</em> now?)</p>
 <h1>Structured Programming to the Rescue</h1>
 <p>Let's violate the <em>single assert rule</em> for a minute and bring back structured
 programming. Let's write a unit test in C!</p>
-<pre><code>typedef struct {
+<pre class="codehilite"><code>typedef struct {
     int a;
     int b;
     int expected;
@@ -95,14 +97,15 @@ void test_addition()
         addition_test_case test = tests[i];
         int actual = add(test.a, test.b);
         if (actual != test.expected) {
-            printf("add(%d, %d): expected %d, got %d\n",
+            printf(&quot;add(%d, %d): expected %d, got %d\n&quot;,
                     test.a, test.b, test.expected, actual);
             exit(1);
         }
     }
-    printf("test_addition: %d tests passed\n", n);
-}
-</code></pre>
+    printf(&quot;test_addition: %d tests passed\n&quot;, n);
+}</code></pre>
+
+
 <p>This test case, which does not make use of any unit testing framework, was
 designed in a <em>table-driven</em> manner. I first got to know the concept of
 <em>table-driven test design</em> when learning Go by reading <a href="http://www.gopl.io/">The Go Programming
@@ -116,42 +119,48 @@ object-oriented programming, as far as I can remember.)</p>
 <p>Let's break down the parts that make up a table-driven test design.</p>
 <p>First, a single test case is defined using a structure that contains all the
 input parameters, and the expected result of the test:</p>
-<pre><code>typedef struct {
+<pre class="codehilite"><code>typedef struct {
     int a;
     int b;
     int expected;
-} addition_test_case;
-</code></pre>
+} addition_test_case;</code></pre>
+
+
 <p>Second, an array ‒ the test <em>table</em> ‒ containing all the test definitions is
 defined (<em>Given</em>/<em>Arrange</em>):</p>
-<pre><code>addition_test_case tests[] = {
+<pre class="codehilite"><code>addition_test_case tests[] = {
     {3, 5, 8},
     {-1, 3, 2},
-};
-</code></pre>
+};</code></pre>
+
+
 <p>Third, the test table is processed using a <em>loop</em> (structured programming,
 remember that?):</p>
-<pre><code>int n = sizeof(tests) / sizeof(tests[0]);
+<pre class="codehilite"><code>int n = sizeof(tests) / sizeof(tests[0]);
 for (int i = 0; i &lt; n; i++) {
     // omitted
-}
-</code></pre>
+}</code></pre>
+
+
 <p>For every test case, the result is computed (<em>Act</em>/<em>When</em>):</p>
-<pre><code>addition_test_case test = tests[i];
-int actual = add(test.a, test.b);
-</code></pre>
+<pre class="codehilite"><code>addition_test_case test = tests[i];
+int actual = add(test.a, test.b);</code></pre>
+
+
 <p>Fourth, the result is validated against the definition (<em>Then</em>/<em>Assert</em>):</p>
-<pre><code>if (actual != test.expected) {
-    printf("add(%d, %d): expected %d, got %d\n",
+<pre class="codehilite"><code>if (actual != test.expected) {
+    printf(&quot;add(%d, %d): expected %d, got %d\n&quot;,
             test.a, test.b, test.expected, actual);
     exit(1);
 }
-printf("test_addition: %d tests passed\n", n);
-</code></pre>
+printf(&quot;test_addition: %d tests passed\n&quot;, n);</code></pre>
+
+
 <p>An error message is printed if the <code>actual</code> value is not equal to the <code>expected</code>
 value (in case <code>add</code> was implemented incorrectly):</p>
-<pre><code>add(3, 5): exptected 8, got 666
-</code></pre>
+<pre class="codehilite"><code>add(3, 5): exptected 8, got 666</code></pre>
+
+
 <p>Note that this test terminates after the first error. No assertions are used.
 The lack of a test framework is compensated by manually defined error and
 success messages.</p>
@@ -160,13 +169,14 @@ point is that this C code covering two test cases is only slightly longer than
 the Java code to cover the same amount of test cases would be. (Using Python or
 Go rather than C would have shaved off some additional lines.)</p>
 <p>Now let's add a third and a fourth test case:</p>
-<pre><code>addition_test_case tests[] = {
+<pre class="codehilite"><code>addition_test_case tests[] = {
     {3, 5, 8},
     {-1, 3, 2},
     {13, 17, 30}, // new
     (-100, 100, 0}, // new
-};
-</code></pre>
+};</code></pre>
+
+
 <p>No code was copied. No existing code was modified. Only <em>two</em> lines of code were
 added to define <em>two</em> additional test cases. The table-driven test is
 <em>extensible</em>.  Robert C. Martin would love it, wouldn't he?</p>

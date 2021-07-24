@@ -36,13 +36,15 @@ between <code>ksh93</code> and OpenBSD's <code>pdksh</code>. So reading the manp
 more accurate information, but also <em>less</em> to read.</p>
 <p>So why not printing out the manpage <code>ksh(1)</code>? I can do so even nicely formatted
 using PostScript:</p>
-<pre><code>$ man -T ps -O paper=a4 ksh &gt;ksh.1.ps
-</code></pre>
+<pre class="codehilite"><code>$ man -T ps -O paper=a4 ksh &gt;ksh.1.ps</code></pre>
+
+
 <p>Now <code>ksh.1.ps</code> can be read with <code>zathura(1)</code>, given that the package
 <code>zathura-ps</code> is installed:</p>
-<pre><code># pkg_add zathura zathura-ps
-$ zathura ksh.1.ps
-</code></pre>
+<pre class="codehilite"><code># pkg_add zathura zathura-ps
+$ zathura ksh.1.ps</code></pre>
+
+
 <p>But why using PostScript and not PDF like anybody else for the last twenty five
 years? Because PostScript is the least common denominator and, thus, supported
 out of the box by OpenBSD. (For fancier printing options, check out <code>cups</code>, but
@@ -54,13 +56,14 @@ Edition)</a> (p. 306-307) by <a href="https://mwl.io/">Michael W
 Lucas</a>. This is how I applied the configuration to my local
 setup.</p>
 <p>First, I created the file <code>/etc/printcap</code> with the following content:</p>
-<pre><code>lp|brother:\
+<pre class="codehilite"><code>lp|brother:\
     :sh=:\
     :rm=192.168.178.52:\
     :sd=/var/spool/output/brother:\
     :lf=/var/log/lpd-errs:\
-    :rp=brother
-</code></pre>
+    :rp=brother</code></pre>
+
+
 <p>There must be a newline at the end of the file. The line breaks are escaped
 using backslashes, except for the last line. The options are defined as follows:</p>
 <ul>
@@ -80,23 +83,27 @@ using backslashes, except for the last line. The options are defined as follows:
 <p>Next, the spooler directory needs to be created. It must be owned by the user
 <code>root</code> and the group <code>daemon</code>. Regular users need write access to this directory
 in order to print documents:</p>
-<pre><code># mkdir /var/spool/output/brother
+<pre class="codehilite"><code># mkdir /var/spool/output/brother
 # chown -R root:daemon /var/spool/output/brother
-# chmod 770 /var/spool/output/brother
-</code></pre>
+# chmod 770 /var/spool/output/brother</code></pre>
+
+
 <p>Now the printer daemon <code>lpd</code> needs to be activated. To do so on system startup,
 add the following line to <code>/etc/rc.conf/local</code>:</p>
-<pre><code>lpd_flags=""
-</code></pre>
+<pre class="codehilite"><code>lpd_flags=&quot;&quot;</code></pre>
+
+
 <p>Then start the service:</p>
-<pre><code># /etc/rc.d/lpd restart
-</code></pre>
+<pre class="codehilite"><code># /etc/rc.d/lpd restart</code></pre>
+
+
 <p><strong>Update (2020-09-21)</strong>: As one reader on
 <a href="https://news.ycombinator.com/item?id=24535357#24538879">Hacker News</a> pointed
 out, the last two steps can be performed using <code>rcctl(8)</code>:</p>
-<pre><code># rcctl enable lpd
-# rcctl restart lpd
-</code></pre>
+<pre class="codehilite"><code># rcctl enable lpd
+# rcctl restart lpd</code></pre>
+
+
 <p>The manpage says that <code>rcctl(8)</code> was introduced in OpenBSD 5.7 back in 2015.
 <em>Absolute OpenBSD (2nd Edition)</em> is from 2013 and, thus, older than that. (At
 the time of this writing, I'm using Version 6.7.)</p>
@@ -110,26 +117,31 @@ above).</p>
 <h1>Printing Documents</h1>
 <p>Now the printer is ready to accept jobs. In order to print the PostScript file
 generated before, just run <code>lpr</code> on the file:</p>
-<pre><code>$ lpr ksh.1.ps
-</code></pre>
+<pre class="codehilite"><code>$ lpr ksh.1.ps</code></pre>
+
+
 <p>It's also possible to send the PostScript output directly to the printer (this
 is Unix, after all), if no preview is needed:</p>
-<pre><code>$ man -T ps -O paper=a4 ksh | lpr
-</code></pre>
+<pre class="codehilite"><code>$ man -T ps -O paper=a4 ksh | lpr</code></pre>
+
+
 <p>Printing plain text files behaved strange on my setup, but could to using the
 <code>pr</code> formatter with <code>lpr</code> as follows:</p>
-<pre><code>$ lpr -p plain.txt
-</code></pre>
+<pre class="codehilite"><code>$ lpr -p plain.txt</code></pre>
+
+
 <p>Instead, I also convert plain text files to PostScript, which looks quite nice
 on paper. I use <code>enscript(1)</code> for this task:</p>
-<pre><code># pkg_add enscript
+<pre class="codehilite"><code># pkg_add enscript
 $ enscript plain.txt -o plain.ps
-$ lpr plain.ps
-</code></pre>
+$ lpr plain.ps</code></pre>
+
+
 <p>PDFs can also be converted to PostScript using <code>pdf2ps(1)</code>, which comes with
 GhostScript, i.e. the <code>ghostscript</code> package:</p>
-<pre><code>$ pdf2ps document.pdf document.ps
-</code></pre>
+<pre class="codehilite"><code>$ pdf2ps document.pdf document.ps</code></pre>
+
+
 <p>Unfortunately, this doesn't work with all PDFs. But for the time being, I have
 enough manpages to read. Printing PostScript works extremely fast, by the way.
 When I press return at the end of a <code>lpr</code> command, I can see the status LED on

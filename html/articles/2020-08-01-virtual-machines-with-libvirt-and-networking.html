@@ -39,64 +39,74 @@ for such a setup.)</p>
 <h1>Setting up the Virtualization</h1>
 <p>Given a fresh Debian setup with the lightweight LXQt desktop, a couple of
 packages need to be installed in order to get virtualization to work:</p>
-<pre><code># apt-get install \
+<pre class="codehilite"><code># apt-get install \
     qemu-kvm \
     libvirt-clients \
     libvirt-daemon-system \
     virtinst \
-    bridge-utils
-</code></pre>
+    bridge-utils</code></pre>
+
+
 <p>Make sure to activate virtualization in the BIOS. Check if the <code>kvm</code> kernel
 module is activated:</p>
-<pre><code>$ lsmod | grep ^kvm
-kvm                 835584  1 kvm_intel
-</code></pre>
+<pre class="codehilite"><code>$ lsmod | grep ^kvm
+kvm                 835584  1 kvm_intel</code></pre>
+
+
 <p>If there is a number not equal to 0 in the third column, <code>kvm</code> is up and
 running.</p>
 <h1>Setting up the Virtual Network</h1>
 <p>Usually a <code>default</code> network is pre-defined, which can be checked as follows:</p>
-<pre><code># virsh net-list --all
+<pre class="codehilite"><code># virsh net-list --all
  Name      State      Autostart   Persistent
 ----------------------------------------------
- default   inactive   no          yes
-</code></pre>
+ default   inactive   no          yes</code></pre>
+
+
 <p>The <code>default</code> network can be configured to be started up automatically:</p>
-<pre><code># virsh net-autostart default
-Network default marked as autostarted
-</code></pre>
+<pre class="codehilite"><code># virsh net-autostart default
+Network default marked as autostarted</code></pre>
+
+
 <p>Until the next system restart, it is started up manually:</p>
-<pre><code># virsh net-start default
-Network default started
-</code></pre>
+<pre class="codehilite"><code># virsh net-start default
+Network default started</code></pre>
+
+
 <p>A bridge interface <code>virbr0</code> should have been created:</p>
-<pre><code># brctl show
+<pre class="codehilite"><code># brctl show
 bridge name     bridge id               STP enabled     interfaces
-virbr0          8000.5254005f4e6b       yes             virbr0-nic
-</code></pre>
+virbr0          8000.5254005f4e6b       yes             virbr0-nic</code></pre>
+
+
 <p>Make sure that NAT is activated:</p>
-<pre><code># sudo sysctl -a | grep 'net.ipv4.ip_forward ='
-net.ipv4.ip_forward = 1
-</code></pre>
+<pre class="codehilite"><code># sudo sysctl -a | grep 'net.ipv4.ip_forward ='
+net.ipv4.ip_forward = 1</code></pre>
+
+
 <p>The value of the above property must be <code>1</code>.</p>
 <h2>Possible Issues</h2>
 <p>If <code>iptables</code> is in use, make sure to forward the traffic from the guests over
 the bridge <code>virbr0</code>, so that the guests also have internet access:</p>
-<pre><code># iptables -I FORWARD -i virbr0 -o virbr0 -j ACCEPT
-</code></pre>
+<pre class="codehilite"><code># iptables -I FORWARD -i virbr0 -o virbr0 -j ACCEPT</code></pre>
+
+
 <h1>Setting up the Virtual Machines</h1>
 <p>Since networking over the bridge interface requires <code>root</code> privileges, all
 virtual machine files are put into the <code>/opt/vms</code> directory, which first needs
 to be created:</p>
-<pre><code># mkdir /opt/vms
-# cd /opt/vms
-</code></pre>
+<pre class="codehilite"><code># mkdir /opt/vms
+# cd /opt/vms</code></pre>
+
+
 <p>The network installer for Debian Buster can be downloaded from the official
 website:</p>
-<pre><code># wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/\
-debian-10.4.0-amd64-netinst.iso
-</code></pre>
+<pre class="codehilite"><code># wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/\
+debian-10.4.0-amd64-netinst.iso</code></pre>
+
+
 <p>The <code>master</code> virtual machine is now setup using <code>virt-install</code>:</p>
-<pre><code># virt-install \
+<pre class="codehilite"><code># virt-install \
     --name master \
     --memory 1024 \
     --vcpus=1,maxvcpus=2 \
@@ -104,8 +114,9 @@ debian-10.4.0-amd64-netinst.iso
     --cdrom debian-10.4.0-amd64-netinst.iso \
     --disk /opt/vms/master.qcow2,size=8,format=qcow2 \
     --network network=default \
-    --virt-type kvm
-</code></pre>
+    --virt-type kvm</code></pre>
+
+
 <p>The machine gets 1 GB of memory and a 8 GB disk. Most importantly, the network
 is set to the <code>default</code> network.</p>
 <p>A window showing the Debian installer appears. Just install the standard system
@@ -117,25 +128,29 @@ configured:</p>
 </ul>
 <p>After the setup is finished, just let the system boot, and login as <code>root</code>. Then
 shut the virtual machine down:</p>
-<pre><code># shutdown -h now
-</code></pre>
+<pre class="codehilite"><code># shutdown -h now</code></pre>
+
+
 <p>The two additional guest nodes can be created by cloning the <code>master</code> virtual
 machine just set up:</p>
-<pre><code># virt-clone --original master --name node1 --file node1.qcow2
-# virt-clone --original master --name node2 --file node2.qcow2
-</code></pre>
+<pre class="codehilite"><code># virt-clone --original master --name node1 --file node1.qcow2
+# virt-clone --original master --name node2 --file node2.qcow2</code></pre>
+
+
 <p>Now start up all the nodes:</p>
-<pre><code># virsh --connect qemu:///session start master
+<pre class="codehilite"><code># virsh --connect qemu:///session start master
 # virsh --connect qemu:///session start node1
-# virsh --connect qemu:///session start node2
-</code></pre>
+# virsh --connect qemu:///session start node2</code></pre>
+
+
 <h1>Configuring the Virtual Network</h1>
 <p>In order to conveniently access the guests, static IPs should be assigned to
 them. The network configuration can be edited as follows:</p>
-<pre><code># virsh net-edit default
-</code></pre>
+<pre class="codehilite"><code># virsh net-edit default</code></pre>
+
+
 <p>An editor showing an XML configuration appears:</p>
-<pre><code>&lt;network&gt;
+<pre class="codehilite"><code>&lt;network&gt;
   &lt;name&gt;default&lt;/name&gt;
   &lt;uuid&gt;fecb90d5-9b46-48f6-8b93-e57032f8ba6a&lt;/uuid&gt;
   &lt;forward mode='nat'/&gt;
@@ -146,29 +161,32 @@ them. The network configuration can be edited as follows:</p>
       &lt;range start='192.168.122.2' end='192.168.122.254'/&gt;
     &lt;/dhcp&gt;
   &lt;/ip&gt;
-&lt;/network&gt;
-</code></pre>
+&lt;/network&gt;</code></pre>
+
+
 <p>The <code>dhcp</code> section needs to be extended with static IP definitions, which map
 the MAC addresses of the guest's virtual network interfaces to the static IP
 addresses to be used.</p>
 <p>The MAC addresses of the virtual machines can be extracted from their
 configuration as follows:</p>
-<pre><code># virsh dumpxml master | grep -i '&lt;mac'
+<pre class="codehilite"><code># virsh dumpxml master | grep -i '&lt;mac'
     &lt;mac address='52:54:00:db:07:7c'/&gt;
 # virsh dumpxml node1 | grep -i '&lt;mac'
     &lt;mac address='52:54:00:a4:77:a9'/&gt;
 # virsh dumpxml node2 | grep -i '&lt;mac'
-    &lt;mac address='52:54:00:51:e8:ef'/&gt;
-</code></pre>
+    &lt;mac address='52:54:00:51:e8:ef'/&gt;</code></pre>
+
+
 <p>Using those MAC addresses, new static host definitions can be created as
 follows:</p>
-<pre><code>&lt;host mac='52:54:00:db:07:7c' name='master' ip='192.168.122.2'/&gt;
+<pre class="codehilite"><code>&lt;host mac='52:54:00:db:07:7c' name='master' ip='192.168.122.2'/&gt;
 &lt;host mac='52:54:00:a4:77:a9' name='node1' ip='192.168.122.3'/&gt;
-&lt;host mac='52:54:00:51:e8:ef' name='node2' ip='192.168.122.4'/&gt;
-</code></pre>
+&lt;host mac='52:54:00:51:e8:ef' name='node2' ip='192.168.122.4'/&gt;</code></pre>
+
+
 <p>The XML network definition should now look as follows (the <code>uuid</code> and <code>mac
 address</code> of the host will vary):</p>
-<pre><code>&lt;network&gt;
+<pre class="codehilite"><code>&lt;network&gt;
   &lt;name&gt;default&lt;/name&gt;
   &lt;uuid&gt;fecb90d5-9b46-48f6-8b93-e57032f8ba6a&lt;/uuid&gt;
   &lt;forward mode='nat'/&gt;
@@ -182,68 +200,80 @@ address</code> of the host will vary):</p>
       &lt;host mac='52:54:00:51:e8:ef' name='node2' ip='192.168.122.4'/&gt;
     &lt;/dhcp&gt;
   &lt;/ip&gt;
-&lt;/network&gt;
-</code></pre>
+&lt;/network&gt;</code></pre>
+
+
 <p>After saving the configuration, the network <code>default</code> needs to be restarted:</p>
-<pre><code># virsh net-destroy default
-# virsh net-start default
-</code></pre>
+<pre class="codehilite"><code># virsh net-destroy default
+# virsh net-start default</code></pre>
+
+
 <p>The guest virtual machines must also be restarted so that they will get the new
 IP addresses assigned:</p>
-<pre><code># virsh shutdown master
+<pre class="codehilite"><code># virsh shutdown master
 # virsh shutdown node1
 # virsh shutdown node2
 
 # virsh --connect qemu:///session start master
 # virsh --connect qemu:///session start node1
-# virsh --connect qemu:///session start node2
-</code></pre>
+# virsh --connect qemu:///session start node2</code></pre>
+
+
 <p>The virtual machines should now be accessible through SSH:</p>
-<pre><code>$ ssh user@192.168.122.2
+<pre class="codehilite"><code>$ ssh user@192.168.122.2
 $ ssh user@192.168.122.3
-$ ssh user@192.168.122.4
-</code></pre>
+$ ssh user@192.168.122.4</code></pre>
+
+
 <p>Make sure that the network communication is working between the guests:</p>
-<pre><code>[user@master]$ ping node1
-[user@master]$ ping node2
-</code></pre>
+<pre class="codehilite"><code>[user@master]$ ping node1
+[user@master]$ ping node2</code></pre>
+
+
 <p>Also make sure to define the proper hostname in <code>/etc/hostname</code>, for it is still
 <code>master</code> for the two guests that have been cloned from the initial image:</p>
-<pre><code>[root@node1]# echo 'node1' &gt; /etc/hostname
-[root@node2]# echo 'node2' &gt; /etc/hostname
-</code></pre>
+<pre class="codehilite"><code>[root@node1]# echo 'node1' &gt; /etc/hostname
+[root@node2]# echo 'node2' &gt; /etc/hostname</code></pre>
+
+
 <h2>Adding Some Comfort</h2>
 <p>Consider adding the following definitions to <code>/etc/hosts</code>:</p>
-<pre><code>192.168.122.2   master
+<pre class="codehilite"><code>192.168.122.2   master
 192.168.122.3   node1
-192.168.122.4   node2
-</code></pre>
+192.168.122.4   node2</code></pre>
+
+
 <p>So that you can access your virtual machines by their host names:</p>
-<pre><code>$ ssh user@master
+<pre class="codehilite"><code>$ ssh user@master
 $ ssh user@node1
-$ ssh user@node2
-</code></pre>
+$ ssh user@node2</code></pre>
+
+
 <p>In order to login to the guests without typing a password, create an SSH key
 locally without any passphrase:</p>
-<pre><code>$ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_vms_rsa
-</code></pre>
+<pre class="codehilite"><code>$ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_vms_rsa</code></pre>
+
+
 <p>Make sure that your <code>~/.ssh</code> folder has the access mode <code>700</code>, and the contained
 files all have the access mode <code>600</code> (thanks to <a href="http://marmaro.de/">meillo</a> for
 pointing that out):</p>
-<pre><code>$ chmod 700 ~/.ssh
-$ chmod 600 ~/.ssh/*
-</code></pre>
+<pre class="codehilite"><code>$ chmod 700 ~/.ssh
+$ chmod 600 ~/.ssh/*</code></pre>
+
+
 <p>Copy the public key to the hosts using <code>ssh-copy-id</code> (thanks to meillo again for
 hinting that utility to me):</p>
-<pre><code>$ ssh-copy-id -i ~/.ssh/id_vms_rsa user@master
+<pre class="codehilite"><code>$ ssh-copy-id -i ~/.ssh/id_vms_rsa user@master
 $ ssh-copy-id -i ~/.ssh/id_vms_rsa user@node1
-$ ssh-copy-id -i ~/.ssh/id_vms_rsa user@node2
-</code></pre>
+$ ssh-copy-id -i ~/.ssh/id_vms_rsa user@node2</code></pre>
+
+
 <p>Check that the SSH connection now works without any password:</p>
-<pre><code>$ ssh -i ~/.ssh/id_vms_rsa user@master
+<pre class="codehilite"><code>$ ssh -i ~/.ssh/id_vms_rsa user@master
 $ ssh -i ~/.ssh/id_vms_rsa user@node1
-$ ssh -i ~/.ssh/id_vms_rsa user@node2
-</code></pre>
+$ ssh -i ~/.ssh/id_vms_rsa user@node2</code></pre>
+
+
 <h1>Conclusion</h1>
 <p>Three virtual machines running Debian GNU/Linux have been installed on a
 rather old laptop running Debian GNU/Linux itself. Those virtual machines can be

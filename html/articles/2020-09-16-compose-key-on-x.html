@@ -45,17 +45,18 @@ needed. I'm very familier with this approach, because I use the Russian keyboard
 layout once in a while. I modified my <a href="http://dwm.suckless.org/">dwm</a>
 configuration so that pressing Super+Tab changes my keyboard layout using the
 following script (<code>switchkb</code>):</p>
-<pre><code>#!/bin/sh
+<pre class="codehilite"><code class="language-sh linenums">#!/bin/sh
 
-layout="$(setxkbmap -query | grep layout | egrep -o [a-z]{2}$)"
-if [ "$layout" == "ch" ]; then
+layout=&quot;$(setxkbmap -query | grep layout | egrep -o [a-z]{2}$)&quot;
+if [ &quot;$layout&quot; == &quot;ch&quot; ]; then
     setxkbmap ru
-elif [ "$layout" = "ru" ]; then
+elif [ &quot;$layout&quot; = &quot;ru&quot; ]; then
     setxkbmap us 
-elif [ "$layout" = "us" ]; then
+elif [ &quot;$layout&quot; = &quot;us&quot; ]; then
     setxkbmap ch
-fi
-</code></pre>
+fi</code></pre>
+
+
 <p>This lets me cycle through the keyboard layouts I need very quickly. I also
 display the currently active keyboard layout in my status bar using
 <a href="http://tools.suckless.org/slstatus/">slstatus</a>, which I described in a
@@ -111,14 +112,15 @@ FreeBSD, but I didn't check yet). However, there's some additional information
 required to do a basic setup, so here's a quick guide.</p>
 <p>First, a compose key needs to be picked. There are various options, which can be
 looked up as follows:</p>
-<pre><code># OpenBSD
+<pre class="codehilite"><code># OpenBSD
 $ grep 'compose:' /usr/X11R6/share/X11/xkb/rules/base.lst
 
 # Arch Linux
-$ grep 'compose:' /usr/share/X11/xkb/rules/base.lst
-</code></pre>
+$ grep 'compose:' /usr/share/X11/xkb/rules/base.lst</code></pre>
+
+
 <p>Which shows a list of keys that could be used for the compose key:</p>
-<pre><code>  compose:ralt         Right Alt
+<pre class="codehilite"><code>  compose:ralt         Right Alt
   compose:lwin         Left Win
   compose:lwin-altgr   3rd level of Left Win
   compose:rwin         Right Win
@@ -131,28 +133,31 @@ $ grep 'compose:' /usr/share/X11/xkb/rules/base.lst
   compose:rctrl-altgr  3rd level of Right Ctrl
   compose:caps         Caps Lock
   compose:caps-altgr   3rd level of Caps Lock
-  compose:102          &amp;lt;Less/Greater&amp;gt;
-  compose:102-altgr    3rd level of &amp;lt;Less/Greater&amp;gt;
+  compose:102          &lt;Less/Greater&gt;
+  compose:102-altgr    3rd level of &lt;Less/Greater&gt;
   compose:paus         Pause
   compose:prsc         PrtSc
-  compose:sclk         Scroll Lock
-</code></pre>
+  compose:sclk         Scroll Lock</code></pre>
+
+
 <p>Caps Lock is a good choice, but would make it harder to type anonymous hate mail
 in all-caps to people not agreeing on my operating system preferences.
 Therefore I pick the Menu key, which I didn't even use once in my dark Windows
 days. The compose key can be defined in <code>~/.xinitrc</code>, ideally together with the
 choice of the aforementioned imperialistic keyboard layout:</p>
-<pre><code>setxkbmap us
-setxkbmap -option compose:menu
-</code></pre>
+<pre class="codehilite"><code>setxkbmap us
+setxkbmap -option compose:menu</code></pre>
+
+
 <p>On my Thinkpad (running Arch Linux), I prefer the PrtSc key, which is placed
 between AltGr and Ctrl on the right hand side of the Space bar. I don't often
 take screenshots, since the content of my screen is mostly text, which is
 better captured using primary selection. (Did I already mention that I use
 Arch, btw.?)</p>
-<pre><code>setxkbmap us
-setxkbmap -option compose:prtsc
-</code></pre>
+<pre class="codehilite"><code>setxkbmap us
+setxkbmap -option compose:prtsc</code></pre>
+
+
 <p>After restarting X, the compose key is ready for action. Now I can type <code>Menu "
 O</code> to enter <em>Ö</em> on my PC (OpenBSD), or <code>PrtSc ' e</code> to enter <em>é</em> on my Laptop
 (Arch Linux). Not all together at the same time, but as a sequence, which is
@@ -161,18 +166,19 @@ files under <code>/usr/X11/share/X11/locale/[locale]/Compose</code> on OpenBSD, 
 <code>/us/share/X11/locale/[locale]/Compose</code> on Arch Linux, respectively. As locale,
 I simply use <code>en_US.UTF-8</code> (imperialism, remember?), which gives me a wide
 range of sequences (hand-picked examples):</p>
-<pre><code>&lt;Multi_key&gt; &lt;C&gt; &lt;o&gt;             : "©"   copyright # COPYRIGHT SIGN
-&lt;Multi_key&gt; &lt;R&gt; &lt;o&gt;             : "®"   registered # REGISTERED SIGN
-&lt;Multi_key&gt; &lt;plus&gt; &lt;minus&gt;      : "±"   plusminus # PLUS-MINUS SIGN
-&lt;Multi_key&gt; &lt;s&gt; &lt;s&gt;             : "ß"   ssharp # LATIN SMALL LETTER SHARP S
-&lt;Multi_key&gt; &lt;E&gt; &lt;equal&gt;         : "€"   EuroSign # EURO SIGN
-&lt;Multi_key&gt; &lt;u&gt; &lt;slash&gt;         : "µ"   mu # MICRO SIGN
-&lt;Multi_key&gt; &lt;quotedbl&gt; &lt;A&gt;      : "Ä"   Adiaeresis # LATIN CAPITAL LETTER A WITH DIAERESIS
-&lt;Multi_key&gt; &lt;acute&gt; &lt;E&gt;         : "É"   Eacute # LATIN CAPITAL LETTER E WITH ACUTE
-&lt;Multi_key&gt; &lt;asciitilde&gt; &lt;N&gt;    : "Ñ"   Ntilde # LATIN CAPITAL LETTER N WITH TILDE
-&lt;Multi_key&gt; &lt;comma&gt; &lt;c&gt;         : "ç"   ccedilla # LATIN SMALL LETTER C WITH CEDILLA
-&lt;Multi_key&gt; &lt;v&gt; &lt;z&gt;             : "ž"   U017E # LATIN SMALL LETTER Z WITH CARON
-</code></pre>
+<pre class="codehilite"><code>&lt;Multi_key&gt; &lt;C&gt; &lt;o&gt;             : &quot;©&quot;   copyright # COPYRIGHT SIGN
+&lt;Multi_key&gt; &lt;R&gt; &lt;o&gt;             : &quot;®&quot;   registered # REGISTERED SIGN
+&lt;Multi_key&gt; &lt;plus&gt; &lt;minus&gt;      : &quot;±&quot;   plusminus # PLUS-MINUS SIGN
+&lt;Multi_key&gt; &lt;s&gt; &lt;s&gt;             : &quot;ß&quot;   ssharp # LATIN SMALL LETTER SHARP S
+&lt;Multi_key&gt; &lt;E&gt; &lt;equal&gt;         : &quot;€&quot;   EuroSign # EURO SIGN
+&lt;Multi_key&gt; &lt;u&gt; &lt;slash&gt;         : &quot;µ&quot;   mu # MICRO SIGN
+&lt;Multi_key&gt; &lt;quotedbl&gt; &lt;A&gt;      : &quot;Ä&quot;   Adiaeresis # LATIN CAPITAL LETTER A WITH DIAERESIS
+&lt;Multi_key&gt; &lt;acute&gt; &lt;E&gt;         : &quot;É&quot;   Eacute # LATIN CAPITAL LETTER E WITH ACUTE
+&lt;Multi_key&gt; &lt;asciitilde&gt; &lt;N&gt;    : &quot;Ñ&quot;   Ntilde # LATIN CAPITAL LETTER N WITH TILDE
+&lt;Multi_key&gt; &lt;comma&gt; &lt;c&gt;         : &quot;ç&quot;   ccedilla # LATIN SMALL LETTER C WITH CEDILLA
+&lt;Multi_key&gt; &lt;v&gt; &lt;z&gt;             : &quot;ž&quot;   U017E # LATIN SMALL LETTER Z WITH CARON</code></pre>
+
+
 <p>Those sequences are very intuitive to type, so looking them up will hardly be
 needed. This configuration also allows me to type in scientific
 transliterations of Russian words, such as <em>Č</em> in <em>Čechov</em> (<code>Menu &lt; C</code>) instead
@@ -182,27 +188,31 @@ and <em>Ž</em> in <em>Dr. Živago</em>.</p>
 be defined in the file <code>~/.XCompose</code>. When doing so, it is important to also
 include the original definitions mentioned above as follows, so that it's not
 needed to re-define them all:</p>
-<pre><code>include "%S/en_US.UTF-8/Compose"
-</code></pre>
+<pre class="codehilite"><code>include &quot;%S/en_US.UTF-8/Compose&quot;</code></pre>
+
+
 <p>The <code>%S</code> resolves to the path <code>/usr/X11R6/share/X11/locale</code> on OpenBSD and
 <code>/usr/share/X11/locale</code> on Arch Linux. (<code>%L</code> would resolve to the current
 locale and, thus, would be shorter, but I prefer the more explicit way using
 <code>%S</code>.) Additional rules can be defined as follows:</p>
-<pre><code>&lt;Multi_key&gt; &lt;colon&gt; &lt;minus&gt; &lt;parenright&gt; : "☺" U263A # WHITE SMILING FACE
-</code></pre>
+<pre class="codehilite"><code>&lt;Multi_key&gt; &lt;colon&gt; &lt;minus&gt; &lt;parenright&gt; : &quot;☺&quot; U263A # WHITE SMILING FACE</code></pre>
+
+
 <p>This allows to type the smiley using <code>Menu : - )</code> on my OpenBSD machine, and
 <code>PrtSc : - )</code> on my Arch Linux laptop. The left hand side of the colon defines
 the key sequence. The right hand side defines a key symbol (<code>keysym</code> in X
 lingo), a string, or both, followed by an optional comment. It is also possible
 to enter whole strings in that manner:</p>
-<pre><code>&lt;Multi_key&gt; &lt;m&gt; &lt;a&gt; &lt;c&gt; : "fanboy"
-</code></pre>
+<pre class="codehilite"><code>&lt;Multi_key&gt; &lt;m&gt; &lt;a&gt; &lt;c&gt; : &quot;fanboy&quot;</code></pre>
+
+
 <p>Whose effect I leave for you to figure out.</p>
 <h1>Update (2020-09-17)</h1>
 <p>A former <a href="https://github.com/chefe">fellow student</a> just made me aware of the
 keyboard variant <code>altgr-intl</code> for the US layout. It can be set as follows:</p>
-<pre><code>$ setxkbmap us -variant altgr-intl
-</code></pre>
+<pre class="codehilite"><code>$ setxkbmap us -variant altgr-intl</code></pre>
+
+
 <p>This layout variant offers some useful shortcuts, all to be entered in
 combination with AltGr:</p>
 <ul>

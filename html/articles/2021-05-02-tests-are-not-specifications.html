@@ -25,21 +25,23 @@ that they specify is wildly useful, <strong>but the specification is their true
 purpose</strong>. [Bold emphasis mine.]</p>
 </blockquote>
 <p>OK, boomer, here's your spec:</p>
-<pre><code>assert f(0) == 1
+<pre class="codehilite"><code>assert f(0) == 1
 assert f(-1) == -2
 assert f(+1) == 4
 assert f(+4) == 13
-assert f(-9) == -26
-</code></pre>
+assert f(-9) == -26</code></pre>
+
+
 <p>Now implement <code>f(x)</code>. The requirements are clear, aren't they?</p>
 <p>You're still here? Where's the implementation!? I told you everything you need.
 You got test cases! They <em>are</em> the specification; you just told me this, and of
 course, <em>Uncle Bob is always right</em>, they told me in school.</p>
 <p>Still not done? OK, you're fired. Here's the Python implementation. Easy, isn't
 it?</p>
-<pre><code>def f(x):
-    return (x + 2) * 3 - 5
-</code></pre>
+<pre class="codehilite"><code>def f(x):
+    return (x + 2) * 3 - 5</code></pre>
+
+
 <p>Those young developers are no good, after all. Let's hire one of those old
 programmers, please bring in that old, more-arrogant-than-Uncle-Bob, grumpy
 Dijkstra guy (<a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD09xx/EWD981.html">EWD
@@ -56,8 +58,9 @@ but by analysing the definition of the set.</strong> [Bold emphasis mine.]</p>
 <p>So you're not interested in some randomly picked elements of both the problem
 and solution set, but in those set's definition? Is that all you need? Well,
 here's that definition:</p>
-<pre><code>y = f(x) = (x + 2) * 3 - 5
-</code></pre>
+<pre class="codehilite"><code>y = f(x) = (x + 2) * 3 - 5</code></pre>
+
+
 <p>But I can also provide you with a set of test cases, or <em>specs</em>, as they are
 called by some developers. Oh, you don't need them? But what is QA supposed to
 do all day long then? You mean we can fire them? Wow, that sounds great. You're

@@ -94,13 +94,15 @@ partitioning scheme was never the cause of any trouble for me, so far.</p>
 link</a>
 from the <a href="https://www.archlinux.org/download/">download</a> page and verify its
 checksum against the one on the website:</p>
-<pre><code>$ sha1sum archlinux-2020.09.01-x86_64.iso
-95ebacd83098b190e8f30cc28d8c57af0d0088a0
-</code></pre>
+<pre class="codehilite"><code>$ sha1sum archlinux-2020.09.01-x86_64.iso
+95ebacd83098b190e8f30cc28d8c57af0d0088a0</code></pre>
+
+
 <p>Then I copy the image on a USB dongle with a capacity of at least 700 MB:</p>
-<pre><code>$ sudo dd if=archlinux-2020.09.01-x86_64.iso of=/dev/sda bs=4M
-$ sync
-</code></pre>
+<pre class="codehilite"><code>$ sudo dd if=archlinux-2020.09.01-x86_64.iso of=/dev/sda bs=4M
+$ sync</code></pre>
+
+
 <p>Then I unplug my USB dongle and plug it into the Thinkpad X1 I'd like to setup,
 and boot from it (UEFI boot). Once the installation environment is loaded, let's
 continue with the setup.</p>
@@ -108,18 +110,21 @@ continue with the setup.</p>
 use</a> nowadays.
 However, it's possible to change the keyboard layout as follows (for Swiss
 German), if wanted:</p>
-<pre><code># loadkeys de_CH-latin1
-</code></pre>
+<pre class="codehilite"><code># loadkeys de_CH-latin1</code></pre>
+
+
 <p>Next, I establish a WiFi connection with <code>frzbxpdb5</code> being my network SSID, 
 <code>wlan0</code> being my WiFi device, and <code>[topsecret]</code> being my password:</p>
-<pre><code># iwctl --passphrase '[topsecret]' station wlan0 connect frzbxpdb5
-</code></pre>
+<pre class="codehilite"><code># iwctl --passphrase '[topsecret]' station wlan0 connect frzbxpdb5</code></pre>
+
+
 <p>Let's continue with the partitioning of the disk.</p>
 <h2>Partitioning</h2>
 <p>In order to partition the hard disk, one first needs to know the device name,
 which can be found using <code>lsblk</code>:</p>
-<pre><code># lsblk
-</code></pre>
+<pre class="codehilite"><code># lsblk</code></pre>
+
+
 <p>This lists <code>sda</code>, the USB dongle, and <code>nvme0n1</code>, the 475 GB solid state drive
 aforementioned.</p>
 <h3>Filling the Disk with Junk Data</h3>
@@ -128,20 +133,23 @@ haven't used this laptop productively yet, and so there's no sensitive data
 stored on it, it is still a good practice to fill it up once with random data.
 This makes it harder for an attacker to distinguish between encrypted data and
 random junk.</p>
-<pre><code># shred --random-source=/dev/urandom --iterations=1 /dev/nvme0n1
-</code></pre>
+<pre class="codehilite"><code># shred --random-source=/dev/urandom --iterations=1 /dev/nvme0n1</code></pre>
+
+
 <p>In my case, using only one single iteration is sufficient. If there was actual
 data stored on the disk, multiple iterations should be considered.</p>
 <h3>Creating a Boot Partition</h3>
 <p>Next, I create a new GPT partition scheme on that disk:</p>
-<pre><code># parted -s /dev/nvme0n1 mklabel gpt
-</code></pre>
+<pre class="codehilite"><code># parted -s /dev/nvme0n1 mklabel gpt</code></pre>
+
+
 <p>I'm not going to encrypt my boot partition, so I create it as I do for a regular
 setup without encryption (as a FAT 32 boot partition, that is):</p>
-<pre><code># parted -s /dev/nvme0n1 mkpart boot fat32 1MiB 257MiB
+<pre class="codehilite"><code># parted -s /dev/nvme0n1 mkpart boot fat32 1MiB 257MiB
 # parted -s /dev/nvme0n1 set 1 esp on
-# mkfs.fat -F 32 /dev/nvme0n1p1
-</code></pre>
+# mkfs.fat -F 32 /dev/nvme0n1p1</code></pre>
+
+
 <p>I leave a gap of 1 MB at the beginning, so no matter what block size my SSD
 uses, the boot partition will always be properly aligned. The <code>esp</code> flag
 identifies the partition as a UEFI system partition.</p>
@@ -149,35 +157,41 @@ identifies the partition as a UEFI system partition.</p>
 <p>Now comes the crucial part. All the encrypted data is put into a single big
 partition (<code>nvmen1p2</code>), taking up all of the remaining disk space, which is then
 partitioned using a volume manager:</p>
-<pre><code># parted -s /dev/nvme0n1 mkpart cryptlvm 257MiB '100%'
-</code></pre>
+<pre class="codehilite"><code># parted -s /dev/nvme0n1 mkpart cryptlvm 257MiB '100%'</code></pre>
+
+
 <p>The encryption is set up on this partition:</p>
-<pre><code># cryptsetup luksFormat /dev/nvme0n1p2
-</code></pre>
+<pre class="codehilite"><code># cryptsetup luksFormat /dev/nvme0n1p2</code></pre>
+
+
 <p>Enter "YES" if asked for confirmation, and pick a strong passphrase to be
 entered twice. (At this point, remember exactly which keyboard layout you're
 on!).</p>
 <p>To further work with the encrypted partition, let's open it, which requires to
 enter the password chosen before:</p>
-<pre><code># cryptsestup open /dev/nvme0n1p2 cryptlvm
-</code></pre>
+<pre class="codehilite"><code># cryptsestup open /dev/nvme0n1p2 cryptlvm</code></pre>
+
+
 <p>Now a physical volume for the volume mapping needs to be created:</p>
-<pre><code># pvcreate /dev/mapper/cryptlvm
-</code></pre>
+<pre class="codehilite"><code># pvcreate /dev/mapper/cryptlvm</code></pre>
+
+
 <p>The partitions are going to be managed in a volume group, which I simply call
 <code>volgrp</code> for the sake of brevity:</p>
-<pre><code># vgcreate volgrp /dev/mapper/cryptlvm
-</code></pre>
+<pre class="codehilite"><code># vgcreate volgrp /dev/mapper/cryptlvm</code></pre>
+
+
 <p>Now everything is set up to create the remaining, i.e. the encrypted partitions.</p>
 <h3>Creating the Remaining Partitions</h3>
 <p>Those are created using <code>lvcreate</code> by setting a size (<code>-L</code>/<code>-l</code> parameter) and a
 name (<code>-n</code> parameter):</p>
-<pre><code># lvcreate -L 16G volgrp -n swap
+<pre class="codehilite"><code># lvcreate -L 16G volgrp -n swap
 # lvcreate -L 128G volgrp -n root
 # lvcreate -L 64G volgrp -n var
 # lvcreate -L 8G volgrp -n tmp
-# lvcreate -l '100%FREE' volgrp -n home
-</code></pre>
+# lvcreate -l '100%FREE' volgrp -n home</code></pre>
+
+
 <p><strong>Update</strong>: As the user <em>fra-san</em> <a href="https://unix.stackexchange.com/questions/611421/arch-linux-setup-with-encryption-lvm-on-luks">pointed
 out</a>
 in a comment on StackExchange, leaving some space open rather than using <code>-l
@@ -187,15 +201,16 @@ them can happen with the affected partition still being mounted. (Check out
 <code>lvresize</code> for details.)</p>
 <p>The partitions are going to be formatted using the <code>swap</code> and <code>ext4</code> format,
 respectively:</p>
-<pre><code># mkswap /dev/volgrp/swap
+<pre class="codehilite"><code># mkswap /dev/volgrp/swap
 # mkfs.ext4 -F /dev/volgrp/root
 # mkfs.ext4 -F /dev/volgrp/var
 # mkfs.ext4 -F /dev/volgrp/tmp
-# mkfs.ext4 -F /dev/volgrp/home
-</code></pre>
+# mkfs.ext4 -F /dev/volgrp/home</code></pre>
+
+
 <p>For the actual setup, those partitions (and the <code>/boot</code> partition created
 before) need to be mounted to <code>/mnt</code>:</p>
-<pre><code># mount /dev/volgrp/root /mnt
+<pre class="codehilite"><code># mount /dev/volgrp/root /mnt
 
 # mkdir /mnt/boot
 # mount /dev/nvme0n1p1 /mnt/boot
@@ -209,59 +224,70 @@ before) need to be mounted to <code>/mnt</code>:</p>
 # mount /dev/volgrp/tmp /mnt/tmp
 
 # mkdir /mnt/home
-# mount /dev/volgrp/home /mnt/home
-</code></pre>
+# mount /dev/volgrp/home /mnt/home</code></pre>
+
+
 <p>Now the partitions are ready for a regular bootstrap installation. (Setting up
 the boot loader will require some more specific instructions to disk encryption
 later on.)</p>
 <h2>Bootstrap Installation</h2>
 <p>Now let's install the base system, together with the <code>lvm2</code> package:</p>
-<pre><code># pacstrap /mnt base linux linux-firmware lvm2
-</code></pre>
+<pre class="codehilite"><code># pacstrap /mnt base linux linux-firmware lvm2</code></pre>
+
+
 <p>In order to get the mounting done automatically upon restart, let's save it in
 the <code>fstab</code> file:</p>
-<pre><code># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
-</code></pre>
+<pre class="codehilite"><code># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</code></pre>
+
+
 <p>When this is done, let's switch into the installed environment:</p>
-<pre><code># arch-chroot /mnt
-</code></pre>
+<pre class="codehilite"><code># arch-chroot /mnt</code></pre>
+
+
 <p>A password needs to be set for the <code>root</code> user:</p>
-<pre><code># passwd
-</code></pre>
+<pre class="codehilite"><code># passwd</code></pre>
+
+
 <p>In order to have a WiFi connection after rebooting, let's install a couple of
 networking packages (some of those specific to my Intel hardware):</p>
-<pre><code># pacman -S iw wpa_supplicant dialog intel-ucode netctl dhcpcd
-</code></pre>
+<pre class="codehilite"><code># pacman -S iw wpa_supplicant dialog intel-ucode netctl dhcpcd</code></pre>
+
+
 <p>I set the time zone to Zurich (Europe), update and save the system time:</p>
-<pre><code># ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
+<pre class="codehilite"><code># ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
 # timedatectl set-ntp true
-# hwclock --systohc
-</code></pre>
+# hwclock --systohc</code></pre>
+
+
 <p>For language and locale, I simply use <code>en_US.UTF-8</code> and <code>en_US-UTF-8 UTF-8</code>,
 respectively:</p>
-<pre><code># echo 'en_US.UTF-8 UTF-8' &gt;&gt; /etc/locale.gen
+<pre class="codehilite"><code># echo 'en_US.UTF-8 UTF-8' &gt;&gt; /etc/locale.gen
 # locale-gen
-# echo 'LANG=en_US.UTF-8' &gt; /etc/locale.conf
-</code></pre>
+# echo 'LANG=en_US.UTF-8' &gt; /etc/locale.conf</code></pre>
+
+
 <p>Due to the lack of imagination, I call my laptop simply <em>carbon</em>:</p>
-<pre><code># echo carbon &gt; /etc/hostname
-</code></pre>
+<pre class="codehilite"><code># echo carbon &gt; /etc/hostname</code></pre>
+
+
 <p>This is a very basic setup. Now let's make sure it can be booted by installing
 the boot loader:</p>
 <h2>Configuring the Boot Loader</h2>
 <p>I've always been using the systemd boot loader on Arch Linux, which is quite
 simple to configure. First, the computer needs to get a unique id, then the boot
 loader can be installed into the <code>/boot</code> partition:</p>
-<pre><code># systemd-machine-id-setup
-# bootctl --path=/boot install
-</code></pre>
+<pre class="codehilite"><code># systemd-machine-id-setup
+# bootctl --path=/boot install</code></pre>
+
+
 <p>Now comes the tricky part: The UUID of the boot partition needs to be figured
 out. <code>blkid</code> lists various partitions, but which one to choose? It's the
 LUKS partition containing the encrypted volume: <code>/dev/nvme0n1p2</code>. Its UUID can
 be extracted as follows, and shall be saved into a variable for later use:</p>
-<pre><code># uuid=$(blkid | grep 'crypto_LUKS' | egrep -o ' UUID="[^"]+"')
-# uuid=$(echo $uuid | awk -F '=' '{ print $2 }' | tr -d '"')
-</code></pre>
+<pre class="codehilite"><code># uuid=$(blkid | grep 'crypto_LUKS' | egrep -o ' UUID=&quot;[^&quot;]+&quot;')
+# uuid=$(echo $uuid | awk -F '=' '{ print $2 }' | tr -d '&quot;')</code></pre>
+
+
 <p>The first line lists the partitions (<code>blkid</code>), extracts the line with the
 encrypted partition (<code>grep</code>), and further extracts the part of the line defining
 the UUID (<code>egrep</code>). Don't forget the space in front of <code>UUID</code>, otherwise the
@@ -273,44 +299,51 @@ partition.</p>
 <p><strong>Update</strong>: As the user <em>fra-san</em> <a href="https://unix.stackexchange.com/a/611507/223188">pointed
 out</a>, there's an easier way to
 extract the UUID:</p>
-<pre><code># uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)
-</code></pre>
+<pre class="codehilite"><code># uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)</code></pre>
+
+
 <p>Having this information, the entry for the boot loader can be created as
 follows:</p>
-<pre><code># cat &lt;&lt;EOF &gt;/boot/loader/entries/arch.conf
+<pre class="codehilite"><code># cat &lt;&lt;EOF &gt;/boot/loader/entries/arch.conf
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
 options cryptdevice=UUID=${uuid}:cryptlvm root=/dev/volgrp/root
-EOF
-</code></pre>
+EOF</code></pre>
+
+
 <p>Now a simple bootloader configuration needs to be created:</p>
-<pre><code># cat &lt;&lt;EOF &gt;/boot/loader/loader.conf
+<pre class="codehilite"><code># cat &lt;&lt;EOF &gt;/boot/loader/loader.conf
 default arch
 timeout 0
 editor  0
-EOF
-</code></pre>
+EOF</code></pre>
+
+
 <h2>Creating the Ramdisk Environment</h2>
 <p>As mentioned earlier, there are some further adjustments for disk encryptions to
 be made. Let's open <code>/etc/mkinitcpio.conf</code> and go to the <code>HOOKS</code> definition:</p>
-<pre><code>HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)
-</code></pre>
+<pre class="codehilite"><code>HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)</code></pre>
+
+
 <p>Which needs to be extended with <code>encrypt</code> and <code>lvm2</code>:</p>
-<pre><code>HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt lvm2)
-</code></pre>
+<pre class="codehilite"><code>HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt lvm2)</code></pre>
+
+
 <p>Then the ramdisk environment can be created:</p>
-<pre><code># mkinitcpio -P
-</code></pre>
+<pre class="codehilite"><code># mkinitcpio -P</code></pre>
+
+
 <p>Which generated the <code>initramfs-linux.img</code> file referred to from the boot loader
 entry created before, as well as a fallback <code>initramfs-linux-fallback.img</code>.</p>
 <h2>Finishing</h2>
 <p>Now that everything is set up, leave the <code>chroot</code> environment, unmount the new
 system's partitions, and shut down the computer:</p>
-<pre><code># exit
+<pre class="codehilite"><code># exit
 # umount -R /mnt
-# shutdown -h now
-</code></pre>
+# shutdown -h now</code></pre>
+
+
 <p>After removing the USB dongle, start the system again.</p>
 <p>Early in the boot process, you'll be asked to enter the passphrase for
 <code>/dev/nvme0n1p2</code>. After doing so, the system will boot. If not, you did
