@@ -16,8 +16,8 @@
             {% for article in articles %}
             <li lang="{{article.lang}}">
                 <span class="tt">{{ article.date_raw }}</span>
-                <a href="{{article.href}}">{{article.title}}</a>
                 ({{article.lang}})
+                <a href="{{article.href}}">{{article.title}}</a>
             </li>
             {% endfor %}
         </ul>
