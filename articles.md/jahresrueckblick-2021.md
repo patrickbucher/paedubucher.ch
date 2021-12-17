@@ -240,7 +240,7 @@ doch zur Anschaffung eines _Montblanc Meisterstück 149_ durchringen: bereut hab
 ich es nicht, obwohl ich leider in der zweiten Jahreshälfte bedeutend weniger
 zum Schreiben gekommen bin, als ich das gewollt hätte.
 
-# Parerga und Paralipomina
+# Parerga und Paralipomena
 
 Endlich habe ich mich im Frühling/Sommer einmal gründlich mit TLS befasst: Das
 eBook [TLS Mastery](https://www.tiltedwindmillpress.com/product/tls/), das ich
