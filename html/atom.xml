@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2021-12-21T19:38:43.382507Z</updated>
+    <updated>2021-12-21T20:07:08.331227Z</updated>
     <entry>
         <title>Jahresrückblick 2021</title>
         <link href="https://paedubucher.ch/articles/2021-12-17-jahresrueckblick-2021.html"/>
@@ -412,6 +412,52 @@ grösstenteils bei guter Gesundheit und in den Supermärkten erhält man immer n
 geniessbare Nahrungsmittel zu einigermassen stabilen Preisen. Das reduzierte
 gesellschaftliche Leben lässt mir Zeit zum Lesen, Lernen und Spazieren. Ich
 sollte diese Zeit nutzen; das ist das Beste, was ich tun kann.
+
+# Nachtrag (21.12.2021)
+
+Langsam lichtet sich der Schatten; einige Sachen sind bei meiner Aufstellung
+vergessen gegangen:
+
+- Ich habe mich kurz mit der Programmiersprache [Io](https://iolanguage.org/)
+  befasst, um in der Berufsschule eine Lücke in der Jahresplanung schliessen zu
+  können. Immerhin hat sich ein Schüler über die neue Perspektive auf OOP
+  gefreut ‒ und darüber, dass schon sehr grosse Geister Kritik an OOP geübt
+  haben. Ein paar Notizen und Übungen dazu kann ich gelegentlich
+  veröffentlichen.
+- Für die Bewertung einer kleinen Projektarbeit komme ich kaum um Excel herum.
+  Ich möchte aber den Schülern ein Dokument mit der Bewertung abgeben können. So
+  habe ich mir mit Python, OpenPyXL,
+  [Jinja-Templates](https://jinja.palletsprojects.com/en/3.0.x/) und
+  [Pandoc](https://pandoc.org/) ein kleines Werkzeug namens
+  [gradedocs](https://github.com/patrickbucher/gradedocs) gebaut, das ich gerade
+  erfolgreich einsetzen konnte.
+- Nach der Lektüre von _Hackers_ habe ich endlich mal das [Game of
+  Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in JavaScript
+  ausprogrammiert. Man kann es unter
+  [paeedubucher.ch/gol](https://paedubucher.ch/gol/) ausprobieren
+  ([Code](https://github.com/patrickbucher/js-game-of-life) auf GitHub).
+- Vor Jahren habe ich einmal bei Nassim Taleb gelesen, dass man Pi berechnen
+  könne, indem man Pfeile auf ein Quadrat werfe, und dann schaue, welche
+  innerhalb eines davon eingelassenen Kreises mit maximalem Durchmesser landen.
+  Nun habe ich das einmal selber ausprogrammiert
+  ([paedubucher.ch/simpi](https://paedubucher.ch/simpi/),
+  [Code](https://github.com/patrickbucher/simulate-pi) auf GitHub). Es scheint
+  tatsächlich einigermassen zu funktionieren.
+- Ich wollte mich einmal umschauen, ob es für Go auch ein paar vernünftige
+  Bibliotheken zur PDF-Generierung gibt. Ich bin dann auf
+  [gopdf](https://github.com/signintech/gopdf) gestossen und habe daraus einen
+  kleinen Flash-Card-Generator namens
+  [verzettler](https://github.com/patrickbucher/verzettler) geschrieben. Das
+  ganze ist ein Proof-of-Concept; mit langen Strings funktioniert es (noch)
+  nicht; aber 2022 muss ich ja auch noch etwas zu tun haben…
+- Obwohl es mir länger vorkommt, war es diesen Februar, als ich ein paar
+  Routinen zum extrahieren von Daten aus dem DOM-Tree zu einer Go-Library
+  verpackt habe: [htmlsqueeze](https://github.com/patrickbucher/htmlsqueeze).
+  Ich setze das persönlich für ein Projekt ein. Die Weiterentwicklung könnte
+  jedoch recht kompliziert werden, sofern ich noch weitere CSS-Selektoren
+  (korrekt) umsetzen möchte.
+
+Unproduktiv war das Jahr also nicht.
 </content>
     </entry>
     <entry>
