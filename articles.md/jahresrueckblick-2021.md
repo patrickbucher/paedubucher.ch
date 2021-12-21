@@ -17,10 +17,16 @@ erlaubt, um diesen Eindruck zu prüfen.
 
 Was Fremdsprachen und Literatur betrifft, ist der Rückblick schnell abgehandelt.
 Französisch und Russisch habe ich kaum verwendet; Englisch höchstens für die
-Informatik. An Literatur kann ich mich dieses Jahr kaum erinnern. Ayn Rands
-_Anthem_ habe ich auf dem Kindle gelesen. Viele andere Romane habe ich wohl
-_an-_ aber nicht _durchgelesen_. Den Kindle habe ich schliesslich wieder in den
-Keller verbannt, da ich damit nur oberflächlich lese.
+Informatik.
+
+An Literatur kann ich mich dieses Jahr kaum erinnern. Ayn Rands _Anthem_ habe
+ich auf dem Kindle gelesen. In den Sommerferien in Arosa habe ich Michel
+Houellebecqs _Unterwerfung_ aus einer Bibliotheksbox gezogen und dann in dieser
+Woche gleich durchgelesen, ich musste es ja schliesslich vor meiner Abreise
+wieder zurücklegen. Gontscharews _Oblomow_, den ich im Gepäck hatte, blieb dafür
+ungelesen. Viele andere Romane habe ich _an-_ aber nicht _durchgelesen_.  Den
+Kindle habe ich schliesslich wieder in den Keller verbannt, da ich damit nur
+oberflächlich lese.
 
 Was meinen Beruf und die Informatik angeht, weiss ich doch etwas mehr zu
 berichten.
@@ -117,7 +123,7 @@ bewältigen.
 Lehrreich war auch die Ablösung von [Bitbucket](https://bitbucket.org/product),
 das ja seit Herbst nur noch in der Cloud und nicht mehr _on-premise_ läuft,
 durch [Gitea](https://gitea.io/en-us/) ‒ eine deutlich schlankere Lösung, die in
-Go geschrieben ist.
+[Go](https://go.dev) geschrieben ist.
 
 Das wichtigste Projekt war jedoch der
 [Flugzeugkonfigurator](https://www.seantis.ch/success-stories/aircraft-configurator-pilatus/),
@@ -254,10 +260,11 @@ einigermassen sattelfest, sondern verstehe auch ACME (Let's Encrypt) und habe
 zum ersten mal einen kleinen DNS-Server aufgesetzt.
 
 Leider war dann für mich in diesem Jahr was Systemadministration betrifft so
-ziemlich die Luft raus. Mit FreeBSD und OpenBSD habe ich mich dieses Jahr kaum
-beschäftigt. Zwar leistet mein Datei- und Backupserver basierend auf billigster
-Hardware und FreeBSD mit ZFS gute Dienste, daran angepasst habe ich jedoch
-wenig. Immerhin laufen jetzt darauf verschiedenste Backup-Scripts, unter anderem
+ziemlich die Luft raus. Mit [FreeBSD](https://www.freebsd.org/) und
+[OpenBSD](https://www.openbsd.org/) habe ich mich dieses Jahr kaum beschäftigt.
+Zwar leistet mein Datei- und Backupserver basierend auf billigster Hardware und
+FreeBSD mit ZFS gute Dienste, daran angepasst habe ich jedoch wenig. Immerhin
+laufen jetzt darauf verschiedenste Backup-Scripts, unter anderem
 [back-my-git-up](https://github.com/patrickbucher/back-my-git-up), wozu ich die
 [Suitable-Library](https://github.com/seantis/suitable) meines Arbeitgebers
 verwenden konnte.
@@ -303,7 +310,7 @@ mal siehe ich ihren positiven Nutzen; dennoch graut mir vor der ganzen
 Komplexität, die dadurch erzeugt und damit versteckt wird.
 
 Ansonsten habe ich mich noch kurz mit PHP und JavaScript befasst, dies in erster
-Linie für meine Unterrichtstätigkeit im nächstne Frühling, wo ich ein
+Linie für meine Unterrichtstätigkeit im nächsten Frühling, wo ich ein
 Praxismodul zum Thema Web-Entwicklung betreuen werde. Mit PHP habe ich innerlich
 abgeschlossen und werde wohl eher die Idee von Full-Stack-JavaScript, d.h. nicht
 nur im Browser, sondern auch serverseitig mit [Node.js](https://nodejs.org/en/)
