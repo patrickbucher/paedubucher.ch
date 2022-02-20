@@ -43,13 +43,13 @@ configuration shall be kept extremely simple. I'd like to permit all users from
 the <code>wheel</code> group (which is just me on my computers) to use <code>doas</code> without
 entering the password every time but only once when executing a command that
 requires <code>root</code> permissions. This is only a single line in <code>/etc/doas.conf</code>:</p>
-<pre class="codehilite"><code>permit persist :wheel</code></pre>
-
+<pre class="codehilite"><code>permit persist :wheel
+</code></pre>
 
 <p>Let's check this setup by logging in as a user of the wheel group and trying to
 update the packages:</p>
-<pre class="codehilite"><code>$ doas pkg_add -u</code></pre>
-
+<pre class="codehilite"><code>$ doas pkg_add -u
+</code></pre>
 
 <p>This works, so bye bye <code>root</code> account.</p>
 <h1>Fonts for dwm, dmenu, and st</h1>
@@ -60,42 +60,42 @@ I'd rather use something more minimalistic: the <a href="http://terminus-font.so
 font</a>.</p>
 <p>As <code>pkg_info -Q terminus</code> shows, this font comes in different versions. I prefer
 the version with the centered tilde, which I install:</p>
-<pre class="codehilite"><code>$ doas pkg_add terminus-font-4.47p0-centered_tilde</code></pre>
-
+<pre class="codehilite"><code>$ doas pkg_add terminus-font-4.47p0-centered_tilde
+</code></pre>
 
 <p>Let's reconfigure <code>st</code> first, for testing changes doesn't require a restart of
 the window manager. I stored my suckless sources in <code>~/suckless</code>, so the
 font for <code>st</code> can be configured in <code>~/suckless/config.h</code>. I replace the existing
 font configuration</p>
-<pre class="codehilite"><code>static char *font = &quot;Liberation Mono:pixelsize=12:antialias=true:autohint=true&quot;;</code></pre>
-
+<pre class="codehilite"><code>static char *font = &quot;Liberation Mono:pixelsize=12:antialias=true:autohint=true&quot;;
+</code></pre>
 
 <p>with</p>
-<pre class="codehilite"><code>static char *font = &quot;Terminus:pixelsize=24&quot;;</code></pre>
-
+<pre class="codehilite"><code>static char *font = &quot;Terminus:pixelsize=24&quot;;
+</code></pre>
 
 <p>The options <code>antialias</code> and <code>autohinting</code> are not needed for a bitmap font, so I
 left them away. 24 pixels is rather big, but my screen is big enough to show two
 text editors with more than 80 characters per line next to each other, so let's
 keep it this way. I rebuild and reinstall <code>st</code>, then switch to <code>dwm</code>:</p>
 <pre class="codehilite"><code>$ doas make install
-$ cd ../dwm</code></pre>
-
+$ cd ../dwm
+</code></pre>
 
 <p>The font configuration in the <code>config.h</code> file looks a bit different here:</p>
 <pre class="codehilite"><code>static const char *fonts =      { &quot;monospace:size=10&quot; };
-static const char dmenufont =   &quot;monospace:size=10&quot;;</code></pre>
-
+static const char dmenufont =   &quot;monospace:size=10&quot;;
+</code></pre>
 
 <p>Let's just use the same font as for <code>st</code> here:</p>
 <pre class="codehilite"><code>static const char *fonts =      { &quot;Terminus:pixelsize=24&quot; };
-static const char dmenufont =   &quot;Terminus:pixelsize=24&quot;;</code></pre>
-
+static const char dmenufont =   &quot;Terminus:pixelsize=24&quot;;
+</code></pre>
 
 <p>Note that I'm using <code>pixelsize</code> instead of <code>size</code> here. (24pt would be much
 bigger than 24px.) Then I rebuild and reinstall <code>dwm</code>.</p>
-<pre class="codehilite"><code># make install</code></pre>
-
+<pre class="codehilite"><code># make install
+</code></pre>
 
 <p>This configuration appllies also to <code>dmenu</code> and <code>slstatus</code>, so we're done with
 the fonts.</p>
@@ -104,8 +104,8 @@ the fonts.</p>
 a strain to the eye. Even though I rarely look at an empty desktop for long, I'd
 rather change this to a solid color. This can be done by adding a command to
 <code>~/.xinitrc</code>:</p>
-<pre class="codehilite"><code>xsetroot -solid black</code></pre>
-
+<pre class="codehilite"><code>xsetroot -solid black
+</code></pre>
 
 <p>Right before <code>dwm</code> is executed.</p>
 <h1>USB Flash Drive</h1>
@@ -116,65 +116,65 @@ involved, or if the network does not allow SSH.</p>
 whereas <code>*</code> stands for the number of the disk. The disks can be listed as
 follows:</p>
 <pre class="codehilite"><code>$ sysctl hw.disknames
-hw.disknames=sd0:ef0268c97ae7a246</code></pre>
-
+hw.disknames=sd0:ef0268c97ae7a246
+</code></pre>
 
 <p>Only <code>sd0</code> is active, even though I already plugged in my USB dongle. However,
 the system already figured out that there is a second disk:</p>
 <pre class="codehilite"><code>$ sysctl hw.diskcount
-hw.diskcount=2</code></pre>
-
+hw.diskcount=2
+</code></pre>
 
 <p>The next free disk would have the name <code>sd1</code>. The device nodes can be created by
 running the <code>MAKEDV</code> script in <code>/dev</code>:</p>
 <pre class="codehilite"><code>$ cd /dev
-$ doas sh MAKEDEV sd1</code></pre>
-
+$ doas sh MAKEDEV sd1
+</code></pre>
 
 <p>Let's initialize a new MBR partition schema on <code>sd1</code>:</p>
-<pre class="codehilite"><code>$ doas fdisk -iy sd1</code></pre>
-
+<pre class="codehilite"><code>$ doas fdisk -iy sd1
+</code></pre>
 
 <p>The new disk layout can be checked using <code>disklabel</code>:</p>
 <pre class="codehilite"><code>$ doas disklabel sd1
 # /dev/rsd1c
-...</code></pre>
-
+...
+</code></pre>
 
 <p>The first line of the output tells us that there's a partition under
 <code>/dev/rsd1c</code>. (The <code>r</code> refers to «raw», as opposed to «block».) The partition
 can be formatted using <code>newfs</code> by referring to that partition name:</p>
-<pre class="codehilite"><code>$ doas newfs sd1c</code></pre>
-
+<pre class="codehilite"><code>$ doas newfs sd1c
+</code></pre>
 
 <p>This creates a default FFS (Fast File System) partition, which is useful to
 exchange data between BSD operating systems. The formatted partition is then
 ready to be mounted:</p>
-<pre class="codehilite"><code>$ doas mount /dev/sd1c /mnt</code></pre>
-
+<pre class="codehilite"><code>$ doas mount /dev/sd1c /mnt
+</code></pre>
 
 <h2>Other Partition Types</h2>
 <p>Other partition types are available under other utilities.</p>
 <h3>FAT32</h3>
 <p>The following command creates a FAT32 partition:</p>
-<pre class="codehilite"><code>$ doas newfs_msdos -F 32 sd1c</code></pre>
-
+<pre class="codehilite"><code>$ doas newfs_msdos -F 32 sd1c
+</code></pre>
 
 <p>The <code>-F 32</code> parameter specifies FAT32 (as opposed to FAT16 or FAT8). To mount
 the partition, use the according <code>mount</code> command:</p>
-<pre class="codehilite"><code>$ doas mount_msdos /dev/sd1c /mnt</code></pre>
-
+<pre class="codehilite"><code>$ doas mount_msdos /dev/sd1c /mnt
+</code></pre>
 
 <h3>EXT2</h3>
 <p>In order to create an <code>ext2fs</code> file system, the partition type needs to be
 specified accordingly. First, you might consider a GPT partition schema instead
 of MBR (additional <code>-g</code> parameter):</p>
-<pre class="codehilite"><code>$ doas fdisk -igy sd1</code></pre>
-
+<pre class="codehilite"><code>$ doas fdisk -igy sd1
+</code></pre>
 
 <p>Then use <code>disklabel</code> interactively to define a new partition:</p>
-<pre class="codehilite"><code>$ doas disklabel -E sd1</code></pre>
-
+<pre class="codehilite"><code>$ doas disklabel -E sd1
+</code></pre>
 
 <p>First, delete all the partitions with <code>z</code>. Then, create a new partition with
 <code>a</code>, and make sure to specify the type as <code>ext2fs</code> instead of the default
@@ -182,13 +182,13 @@ of MBR (additional <code>-g</code> parameter):</p>
 you need to use <code>sd1a</code> instead of <code>sd1c</code> for the next steps. Write the changes
 by typing <code>w</code>, then exit with <code>q</code>. Now you can format and mount the partition:</p>
 <pre class="codehilite"><code>$ doas newfs_ext2fs sd1a
-$ doas mount_ext2fs /dev/sd1a /mnt</code></pre>
-
+$ doas mount_ext2fs /dev/sd1a /mnt
+</code></pre>
 
 <h1>SSH Key (GitHub)</h1>
 <p>In order to access my GitHub repositories, I first create a new SSH key:</p>
-<pre class="codehilite"><code>$ ssh-keygen -t rsa -b 4096</code></pre>
-
+<pre class="codehilite"><code>$ ssh-keygen -t rsa -b 4096
+</code></pre>
 
 <p>Since I manage my passwords with <code>pass</code> (of which more later), I don't know most
 of them by heart. So I can't just login to GitHub and add my public key.
@@ -196,20 +196,20 @@ Therefore, I copy my public key to my laptop, on which I'm already logged in to
 GitHub.</p>
 <p>This can be either done using <code>scp</code>, for which <code>sshd</code> has to be running on my
 laptop (which currently has the IP <code>192.168.178.53</code>):</p>
-<pre class="codehilite"><code>$ scp ~/.ssh/id_rsa.pub 192.168.178.53:/home/patrick</code></pre>
-
+<pre class="codehilite"><code>$ scp ~/.ssh/id_rsa.pub 192.168.178.53:/home/patrick
+</code></pre>
 
 <p>Or using the USB flash drive formatted with <code>ext2</code> from before:</p>
 <pre class="codehilite"><code>$ doas newfs_ext2fs -I sd1a
 $ doas mount_ext2fs /dev/sd1a /mnt
-$ doas cp ~/.ssh/id_rsa.pub /mnt/</code></pre>
-
+$ doas cp ~/.ssh/id_rsa.pub /mnt/
+</code></pre>
 
 <p>Then <code>id_rsa.pub</code> can be copied into the according <a href="https://github.com/settings/ssh/new">GitHub Settings
 Page</a>, after which cloning GitHub
 repositories should work on the OpenBSD machine:</p>
-<pre class="codehilite"><code>$ git clone git@github.com:patrickbucher/conf</code></pre>
-
+<pre class="codehilite"><code>$ git clone git@github.com:patrickbucher/conf
+</code></pre>
 
 <h1>GPG Key</h1>
 <p>My passwords are encrypted using GPG. To encrypt them, I need to copy my private
@@ -218,50 +218,50 @@ key from my other machine. First, I list my private keys:</p>
 pub   rsa2048/73CE6620 2016-11-11 [SC]
       22F91EE20D641CBCF5B8678E82B7FE3A73CE6620
 uid         [ultimate] Patrick Bucher &lt;patrick.bucher@mailbox.org&gt;
-sub   rsa2048/AF6246E3 2016-11-11 [E]</code></pre>
-
+sub   rsa2048/AF6246E3 2016-11-11 [E]
+</code></pre>
 
 <p>Then I export both public and private key to an according file using the armored
 key format:</p>
 <pre class="codehilite"><code>$ gpg --export --armor 73CE6620 &gt; public.key
-$ gpg --export-secret-key --armor 73CE6620 &gt; private.key</code></pre>
-
+$ gpg --export-secret-key --armor 73CE6620 &gt; private.key
+</code></pre>
 
 <p>The two key files can be copied via SSH or the USB flash disk again, which I
 won't show here.</p>
 <p>Back on my OpenBSD machine, I need to install GnuPG first, because OpenBSD only
 has <code>signify</code> installed by default:</p>
-<pre class="codehilite"><code>$ doas pkg_add gnupg</code></pre>
-
+<pre class="codehilite"><code>$ doas pkg_add gnupg
+</code></pre>
 
 <p>I pick the 2.2 version. Now I can import my keys:</p>
 <pre class="codehilite"><code>$ gpg2 --import private.key
-$ gpg2 --import public.key</code></pre>
-
+$ gpg2 --import public.key
+</code></pre>
 
 <p>The key is not trusted so far, so I need to change that:</p>
 <pre class="codehilite"><code>$ gpg2 --edit-key 73CE6620
 &gt; trust
 &gt; 5
 &gt; y
-&gt; quit</code></pre>
-
+&gt; quit
+</code></pre>
 
 <p>5 stands for ultimate trust, which seems appropriate.</p>
 <h1>Password Manager</h1>
 <p>I use <code>pass</code> as a password manager, which can be installed as the
 <code>password_store</code> package in OpenBSD:</p>
-<pre class="codehilite"><code>$ doas pkg_add password-store</code></pre>
-
+<pre class="codehilite"><code>$ doas pkg_add password-store
+</code></pre>
 
 <p>Now that I have both my GPG private key and a working SSH key for GitHub, I can
 clone my passwords stored on a private GitHub repository:</p>
-<pre class="codehilite"><code>$ git clone git@github.com:patrickbucher/pass .password-store</code></pre>
-
+<pre class="codehilite"><code>$ git clone git@github.com:patrickbucher/pass .password-store
+</code></pre>
 
 <p>Now I can copy my GitHub password to the clipboard as follows:</p>
-<pre class="codehilite"><code>$ pass -c github</code></pre>
-
+<pre class="codehilite"><code>$ pass -c github
+</code></pre>
 
 <h1>Aliases</h1>
 <p>I use a lot of aliases, such as <code>gcl</code> as a shortcut for <code>git clone</code>, and <code>gad</code>
@@ -270,13 +270,13 @@ the <code>.bashrc</code> configuration from my Linux machines won't work here, u
 switch to <code>bash</code>, which is not exactly the point of using OpenBSD.</p>
 <p>I define my aliases in <code>~/.kshrc</code> (excerpt):</p>
 <pre class="codehilite"><code>alias gcl='git clone'
-alias gad='git add'</code></pre>
-
+alias gad='git add'
+</code></pre>
 
 <p>In order to load those settings, an according <code>ENV</code> parameter needs to be
 defined in <code>~/.profile</code> (see <code>man 1 ksh</code> for details):</p>
-<pre class="codehilite"><code>export ENV=$HOME/.kshrc</code></pre>
-
+<pre class="codehilite"><code>export ENV=$HOME/.kshrc
+</code></pre>
 
 <p>After the next login, <code>~/.profile</code> is reloaded, and the aliases are ready to be
 used.</p>

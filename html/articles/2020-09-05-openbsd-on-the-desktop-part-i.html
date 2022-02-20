@@ -29,8 +29,8 @@ checksums</a> from the
 Swiss mirror, and verify the downloaded image, before I copy it on my dongle:</p>
 <pre class="codehilite"><code>$ sha256sum -c --ignore-missing SHA256 
 miniroot67.fs: OK
-$ sudo dd if=miniroot67.fs of=/dev/sda bs=1M</code></pre>
-
+$ sudo dd if=miniroot67.fs of=/dev/sda bs=1M
+</code></pre>
 
 <h1>Installation</h1>
 <p>The Thinkpad X270 is connected to my network through Ethernet. The WiFi firmware
@@ -91,14 +91,14 @@ been installed automatically. Very nice, indeed.</p>
 WiFi network <code>frzbxpdb5</code>. I create a file called <code>/etc/hostname.iwm0</code>, wich
 <code>hostname</code> being a literal string, and <code>iwm0</code> being the WiFi network card. The
 connection to my WiFi network consists of a single line:</p>
-<pre class="codehilite"><code>dhcp nwid frzbxpdb5 wpakey [my-wpakey]</code></pre>
-
+<pre class="codehilite"><code>dhcp nwid frzbxpdb5 wpakey [my-wpakey]
+</code></pre>
 
 <p>Whereas <code>frzbxpdb5</code> is my WiFi network's ESSID, and <code>[my-wpakey]</code> needs to be
 replaced by the actual WPA key.</p>
 <p>Then the networking can be restarted for that device:</p>
-<pre class="codehilite"><code># sh /etc/netstart iwm0</code></pre>
-
+<pre class="codehilite"><code># sh /etc/netstart iwm0
+</code></pre>
 
 <p>This script is kind enough to set the file permissions of <code>/etc/hostname.iwm0</code>
 to <code>640</code>, and then connects to my WiFi network.</p>
@@ -114,50 +114,50 @@ Even though OpenBSD offers <code>dwm</code> as a package, customizing and config
 window manager requires to build it from source.</p>
 <h2>Building <code>dwm</code> and Friends</h2>
 <p>First, I need to install <code>git</code> to fetch the source code:</p>
-<pre class="codehilite"><code># pkg_add git</code></pre>
-
+<pre class="codehilite"><code># pkg_add git
+</code></pre>
 
 <p>Then I fetch the source code for <code>dwm</code>, <code>dmenu</code>, <code>st</code>, and <code>slstatus</code> from <a href="http://suckless.org/">Suckless</a>:</p>
 <pre class="codehilite"><code>$ git clone https://git.suckless.org/dwm
 $ git clone https://git.suckless.org/dmenu
 $ git clone https://git.suckless.org/st
-$ git clone https://git.suckless.org/slstatus</code></pre>
-
+$ git clone https://git.suckless.org/slstatus
+</code></pre>
 
 <h3>Building <code>dwm</code></h3>
 <p>Next, I try to build <code>dwm</code>:</p>
 <pre class="codehilite"><code>$ cd dwm
-$ make</code></pre>
-
+$ make
+</code></pre>
 
 <p>This fails with an error message (<code>'ft2build.h' file not found</code>), which reminds
 me of building <code>dwm</code> on FreeBSD roughly a month before. Since I can finde the
 header file at another location:</p>
 <pre class="codehilite"><code># find / -type f -name ft2build.h
-/usr/X11R6/include/freetype2/ft2build.h</code></pre>
-
+/usr/X11R6/include/freetype2/ft2build.h
+</code></pre>
 
 <p>I simply can modify the <code>config.mk</code> accordingly by changing</p>
-<pre class="codehilite"><code>FREETYPEINC = /usr/include/freetype2</code></pre>
-
+<pre class="codehilite"><code>FREETYPEINC = /usr/include/freetype2
+</code></pre>
 
 <p>to</p>
-<pre class="codehilite"><code>FREETYPEINC = $(X11INC}/freetype2</code></pre>
-
+<pre class="codehilite"><code>FREETYPEINC = $(X11INC}/freetype2
+</code></pre>
 
 <p>Actually, I only need to comment the above line, and uncomment the line below</p>
-<pre class="codehilite"><code># OpenBSD (uncomment)</code></pre>
-
+<pre class="codehilite"><code># OpenBSD (uncomment)
+</code></pre>
 
 <p>The Suckless folks obviously are friendly towards OpenBSD, which is also
 noticable in other places (more evidence to be shown further below).</p>
 <p>The next compilation attempt succeeds:</p>
-<pre class="codehilite"><code>$ make</code></pre>
-
+<pre class="codehilite"><code>$ make
+</code></pre>
 
 <p>So let's install <code>dwm</code>, too:</p>
-<pre class="codehilite"><code># make install</code></pre>
-
+<pre class="codehilite"><code># make install
+</code></pre>
 
 <p>By default, and as to be seen in <code>config.h</code>, the keyboard combination
 <code>[Alt]+[Shift]+[Enter]</code> (deeply engraved into the muscle memories of many <code>dwm</code>
@@ -165,54 +165,54 @@ users) starts the <code>st</code> terminal. This will be built in a while. Howev
 prefer to use the <em>Super</em> or <em>Windows</em> key instead of <code>Alt</code>, since the former
 is of no use in OpenBSD, and the latter still comes in handy when working with
 the emacs readline mode. Therefore, I change the <code>MODKEY</code> from</p>
-<pre class="codehilite"><code>#define MODKEY Mod1Mask</code></pre>
-
+<pre class="codehilite"><code>#define MODKEY Mod1Mask
+</code></pre>
 
 <p>to</p>
-<pre class="codehilite"><code>#define MODKEY Mod4Mask</code></pre>
-
+<pre class="codehilite"><code>#define MODKEY Mod4Mask
+</code></pre>
 
 <p>Then I rebuild and reinstall <code>dwm</code>:</p>
-<pre class="codehilite"><code># make install</code></pre>
-
+<pre class="codehilite"><code># make install
+</code></pre>
 
 <h3>Building <code>st</code></h3>
 <p>Let's switch over to the <code>st</code> source directory and just try to compile it:</p>
 <pre class="codehilite"><code>$ cd ../st
-$ make</code></pre>
-
+$ make
+</code></pre>
 
 <p>Here, we get a warning that the function <code>pledge</code> (an OpenBSD mitigation, which
 is built into the <code>master</code> branch, but surrounded by an <code>ifdef</code> preprocessor
 statement, so that it will only be compiled for OpenBSD) is imported implicitly.
 Let's just ignore this warning for now.</p>
 <p>What's worse, the compilation fails with the error message:</p>
-<pre class="codehilite"><code>ld: error: unable to find library -lrt</code></pre>
-
+<pre class="codehilite"><code>ld: error: unable to find library -lrt
+</code></pre>
 
 <p>Here, the FAQ comes in handy, stating that</p>
 <pre class="codehilite"><code>If you want to compile st for OpenBSD you have to remove -lrt from
-config.mk, ...</code></pre>
-
+config.mk, ...
+</code></pre>
 
 <p>Having done so in <code>config.mk</code>, <code>st</code> compiles without any further issues, and,
 thus, can be rebuilt and installed:</p>
-<pre class="codehilite"><code># make install</code></pre>
-
+<pre class="codehilite"><code># make install
+</code></pre>
 
 <h3>Building <code>dmenu</code></h3>
 <p>Even OpenBSD users with Suckless tools have to open another GUI application than
 a terminal emulator once in a while. For this purpose, Suckless offers <code>dmenu</code>.
 Let's switch over to it and compile it:</p>
 <pre class="codehilite"><code>$ cd ../dmenu
-$ make</code></pre>
-
+$ make
+</code></pre>
 
 <p>Again, we have the issue with <code>ft2build.h</code>, which can be resolved as above with
 <code>dwm</code>: by using the proper path for <code>FREETYPEINC</code> in <code>config.mk</code>. Afterwards,
 the build succeeds, and <code>dmenu</code> can be installed:</p>
-<pre class="codehilite"><code># make install</code></pre>
-
+<pre class="codehilite"><code># make install
+</code></pre>
 
 <h3>Building <code>slstatus</code></h3>
 <p><code>dwm</code> has a status bar on the top right, which can be used to show various
@@ -223,43 +223,43 @@ approach generates a multitude of processes every couple of seconds.</p>
 less useful information. Let's switch over to <code>slstatus</code> and see, what is
 available in <code>config.def.h</code>:</p>
 <pre class="codehilite"><code>$ cd ../slstatus
-$ less config.def.h</code></pre>
-
+$ less config.def.h
+</code></pre>
 
 <p>The comments section lists different functions (<code>battery_perc</code> for the battery
 percentage, <code>datetime</code> for date and time information, <code>temp</code> for thermal
 information, etc.). I usually display the CPU load, the battery percentage, the
 memory usage, the current keyboard layout, and the current date and time.</p>
 <p>Before configuring those, let's try to compile <code>slstatus</code>:</p>
-<pre class="codehilite"><code>$ make</code></pre>
-
+<pre class="codehilite"><code>$ make
+</code></pre>
 
 <p>This worked fine, so let's configure the information to be displayed in
 <code>config.h</code>:</p>
 <pre class="codehilite"><code>static const struct arg args[] = {
     /* function    format    argument */
     { datetime,    &quot;%s&quot;,     &quot;%F %T&quot; },
-};</code></pre>
-
+};
+</code></pre>
 
 <p>This renders the current date as follows:</p>
 <pre class="codehilite"><code>$ date +&quot;%F %T&quot;
-2020-09-05 19:26:38</code></pre>
-
+2020-09-05 19:26:38
+</code></pre>
 
 <p>I also like to have the weekday included, but not the seconds, so I define a
 different argument string:</p>
 <pre class="codehilite"><code>$ date +&quot;%a %Y-%m-%d %H:%M&quot;
-Sat 2020-09-05 19:27</code></pre>
-
+Sat 2020-09-05 19:27
+</code></pre>
 
 <p>That's better, so let's use it in <code>config.h</code> (surrounded with some spaces in the
 format string):</p>
 <pre class="codehilite"><code>static const struct arg args[] = {
     /* function    format    argument */
     { datetime,    &quot; %s &quot;,   &quot;%a %Y-%m-%d %H:%M&quot; },
-};</code></pre>
-
+};
+</code></pre>
 
 <p>The other settings I like to have do not require any arguments, at least not on
 OpenBSD, so I only need to define a decent format string (with <code>|</code> as a
@@ -271,31 +271,31 @@ seperator) for those:</p>
     { ram_used,     &quot; mem: %s |&quot;,   NULL },
     { keymap,       &quot; %s |&quot;         NULL },
     { datetime,     &quot; %s &quot;,         &quot;%a %Y-%m-%d %H:%M&quot; },
-};</code></pre>
-
+};
+</code></pre>
 
 <p>This actually compiles, so let's install it:</p>
-<pre class="codehilite"><code># make install</code></pre>
-
+<pre class="codehilite"><code># make install
+</code></pre>
 
 <h2>Configuring X Startup</h2>
 <p>Now that all software is compiled and installed, let's run X. To do so, a file
 <code>.xinitrc</code> in the user's directory is required (<code>/home/patrick/.xinitrc</code>):</p>
 <pre class="codehilite"><code>setxkbmap ch
 slstatus &amp;
-exec dwm</code></pre>
-
+exec dwm
+</code></pre>
 
 <p>This sets the keyboard map for X to Swiss German, starts <code>slstatus</code> in the
 background, and then executes <code>dwm</code>.</p>
 <p>X can now be started by typing <code>startx</code>. This is a bit cumbersome to type every
 time, so let's define a symbolic link to it:</p>
-<pre class="codehilite"><code># ln -s &quot;$(which startx)&quot; /usr/bin/x</code></pre>
-
+<pre class="codehilite"><code># ln -s &quot;$(which startx)&quot; /usr/bin/x
+</code></pre>
 
 <p>Now let's start X:</p>
-<pre class="codehilite"><code>$ x</code></pre>
-
+<pre class="codehilite"><code>$ x
+</code></pre>
 
 <p>If everything was configured properly, <code>dwm</code> shows up, and the status line says
 that the whole system only uses roughly 60 megabytes of RAM. That's slim. The

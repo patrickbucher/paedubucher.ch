@@ -38,8 +38,8 @@ prescribe the following structure for a test case:</p>
 
     // Then/Assert
     assertEqual(8, sum);
-}</code></pre>
-
+}
+</code></pre>
 
 <p>A rule often taught is the so-called <em>single assert rule</em> from Robert C. Martin,
 <a href="http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt">whom I refuse to call «Uncle
@@ -71,8 +71,8 @@ case:</p>
 
     // Then/Assert
     assertEqual(2, sum);
-}</code></pre>
-
+}
+</code></pre>
 
 <p>Who would <em>type</em> in that code, which is almost identical to the one above? Such
 code is rather <em>copied</em> than written again. (Why don't I hear somebody shouting
@@ -103,8 +103,8 @@ void test_addition()
         }
     }
     printf(&quot;test_addition: %d tests passed\n&quot;, n);
-}</code></pre>
-
+}
+</code></pre>
 
 <p>This test case, which does not make use of any unit testing framework, was
 designed in a <em>table-driven</em> manner. I first got to know the concept of
@@ -123,29 +123,29 @@ input parameters, and the expected result of the test:</p>
     int a;
     int b;
     int expected;
-} addition_test_case;</code></pre>
-
+} addition_test_case;
+</code></pre>
 
 <p>Second, an array ‒ the test <em>table</em> ‒ containing all the test definitions is
 defined (<em>Given</em>/<em>Arrange</em>):</p>
 <pre class="codehilite"><code>addition_test_case tests[] = {
     {3, 5, 8},
     {-1, 3, 2},
-};</code></pre>
-
+};
+</code></pre>
 
 <p>Third, the test table is processed using a <em>loop</em> (structured programming,
 remember that?):</p>
 <pre class="codehilite"><code>int n = sizeof(tests) / sizeof(tests[0]);
 for (int i = 0; i &lt; n; i++) {
     // omitted
-}</code></pre>
-
+}
+</code></pre>
 
 <p>For every test case, the result is computed (<em>Act</em>/<em>When</em>):</p>
 <pre class="codehilite"><code>addition_test_case test = tests[i];
-int actual = add(test.a, test.b);</code></pre>
-
+int actual = add(test.a, test.b);
+</code></pre>
 
 <p>Fourth, the result is validated against the definition (<em>Then</em>/<em>Assert</em>):</p>
 <pre class="codehilite"><code>if (actual != test.expected) {
@@ -153,13 +153,13 @@ int actual = add(test.a, test.b);</code></pre>
             test.a, test.b, test.expected, actual);
     exit(1);
 }
-printf(&quot;test_addition: %d tests passed\n&quot;, n);</code></pre>
-
+printf(&quot;test_addition: %d tests passed\n&quot;, n);
+</code></pre>
 
 <p>An error message is printed if the <code>actual</code> value is not equal to the <code>expected</code>
 value (in case <code>add</code> was implemented incorrectly):</p>
-<pre class="codehilite"><code>add(3, 5): exptected 8, got 666</code></pre>
-
+<pre class="codehilite"><code>add(3, 5): exptected 8, got 666
+</code></pre>
 
 <p>Note that this test terminates after the first error. No assertions are used.
 The lack of a test framework is compensated by manually defined error and
@@ -174,8 +174,8 @@ Go rather than C would have shaved off some additional lines.)</p>
     {-1, 3, 2},
     {13, 17, 30}, // new
     (-100, 100, 0}, // new
-};</code></pre>
-
+};
+</code></pre>
 
 <p>No code was copied. No existing code was modified. Only <em>two</em> lines of code were
 added to define <em>two</em> additional test cases. The table-driven test is
