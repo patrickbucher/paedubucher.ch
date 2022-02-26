@@ -15,8 +15,7 @@
         <ul id="articles">
             {% for article in articles %}
             <li lang="{{article.lang}}">
-                <span class="tt">{{ article.date_raw }}</span>
-                ({{article.lang}})
+                <span class="tt">{{ article.date_raw }} [{{article.lang}}]</span>
                 <a href="{{article.href}}">{{article.title}}</a>
             </li>
             {% endfor %}
