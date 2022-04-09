@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>paedubucher.ch</title>
         <meta charset="utf-8">
@@ -12,16 +12,40 @@
     <body>
         <h1>paedubucher.ch</h1>
         <p class="slogan"><cite>Move slow and try to understand things</cite></p>
-        <ul id="articles">
-            {% for article in articles %}
-            <li lang="{{article.lang}}">
-                <span class="tt">{{ article.date_raw }} [{{article.lang}}]</span>
-                <a href="{{article.href}}">{{article.title}}</a>
-            </li>
-            {% endfor %}
-        </ul>
-        <p class="contact">
-            Contact: <a href="mailto:patrick.bucher@mailbox.org">patrick.bucher@mailbox.org</a>
-        </p>
+        <section>
+            <h2>Articles</h2>
+            <ul id="articles">
+                {% for article in articles %}
+                <li lang="{{article.lang}}">
+                    <span class="tt">{{ article.date_raw }} [{{article.lang}}]</span>
+                    <a href="{{article.href}}">{{article.title}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2>Miscellaneous</h2>
+            <ul>
+                <li lang="en">
+                    <span class="tt">[en]</span>
+                    <a href="/gol">gol</a>: Conway's <em>Game of Life</em>
+                </li>
+                <li lang="en">
+                    <span class="tt">[en]</span>
+                    <a href="/simpi">simpi</a>: Compute Pi by picking random dots
+                </li>
+                <li lang="de">
+                    <span class="tt">[de]</span>
+                    <a href="/jassete">jassete</a>: Glückspiel mit Jasskarten und folkloristischen Elementen
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Contact</h2>
+            <ul>
+                <li>E-Mail: <a href="mailto:patrick.bucher@mailbox.org">patrick.bucher@mailbox.org</a></li>
+                <li>GitHub: <a href="https://github.com/patrickbucher" target="_blank">patrickbucher</a></li>
+            </ul>
+        </section>
     </body>
 </html>
