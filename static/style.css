@@ -22,19 +22,24 @@ p.slogan {
     margin-bottom: 1em;
 }
 
-ul#articles {
+ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-ul#articles li {
+ul li {
     margin: 0.5em 0;
 }
 
-p, li {
+p {
     font-family: serif;
     text-align: justify;
+    hyphens: auto;
+}
+
+li {
+    font-family: serif;
     hyphens: auto;
 }
 
