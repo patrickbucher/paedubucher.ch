@@ -1,13 +1,29 @@
 body {
-    font-family: sans-serif;
-    font-size: 12pt;
+    font-family: "Lato", sans-serif;
+    line-height: 1.25;
+    color: #23373b;
+    background-color: #fafafa;
+    padding: 0;
+    margin: 0;
+}
+
+header, footer {
+    background-color: #23373b;
+    color: #fafafa;
+    text-align: center;
+    line-height: 120%;
+    padding: 1em 0;
+}
+
+header a {
+    color: #fafafa;
+}
+
+main {
     margin: 0 auto;
     padding: 1em;
     min-width: 20em;
-    max-width: 55em;
-    line-height: 1.5;
-    color: #23373b;
-    background-color: #fafafa;
+    max-width: 50em;
 }
 
 a:link, a:visited {
@@ -16,10 +32,6 @@ a:link, a:visited {
 
 a:active, a:hover {
     text-decoration: underline;
-}
-
-p.slogan {
-    margin-bottom: 1em;
 }
 
 ul {
@@ -33,52 +45,47 @@ ul li {
 }
 
 p {
-    font-family: serif;
+    font-family: "Crimson Pro", serif;
+    font-size: 120%;
     text-align: justify;
     hyphens: auto;
 }
 
-li {
-    font-family: serif;
-    hyphens: auto;
+.content h1 {
+    font-size: 180%;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
-h1 {
-    font-size: 20pt;
-    margin-top: 30pt;
+.content h2 {
+    font-size: 150%;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
-h2 {
-    font-size: 16pt;
-    margin-top: 24pt;
-}
-
-h3 {
-    font-size: 12pt;
-    margin-top: 18pt;
+.content h3 {
+    font-size: 120%;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
 h1.title {
     text-align: center;
-    font-size: 24pt;
-    margin-top: 0;
 }
 
 h2.subtitle {
     text-align: center;
-    font-size: 16pt;
-    margin-top: 0;
 }
 
 h3.author, h3.date {
     text-align: center;
-    font-size: 12pt;
     font-weight: normal;
-    margin-top: 0;
 }
 
-div.content {
-    margin-top: 2em;
+li {
+    font-family: "Crimson Pro", serif;
+    font-size: 120%;
+    hyphens: auto;
 }
 
 div.content:after {
@@ -88,13 +95,8 @@ div.content:after {
     padding: 2em 0 4em 0;
 }
 
-div.backlink {
-    font-size: 80%;
-    margin: 0 0 2em 0;
-}
-
 .tt, code {
-    font-family: monospace;
+    font-family: "Inconsolata", monospace;
 }
 
 pre, pre>code {
@@ -105,7 +107,7 @@ pre, pre>code {
 pre {
     padding: 1em;
     border-radius: 0.5em;
-    font-size: 90%;
+    overflow-x: auto;
 }
 
 pre>code {
@@ -122,5 +124,4 @@ blockquote em {
 
 hr {
     width: 5em;
-    margin: 2em auto;
 }

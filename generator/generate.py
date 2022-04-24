@@ -73,10 +73,19 @@ def scaffold(page_dir):
 
     static_dir = os.path.join(page_dir, 'static')
 
-    for entry in ['style.css', 'favicon.ico', 'robots.txt']:
+    for entry in ['fonts.css', 'style.css', 'favicon.ico', 'robots.txt']:
         source = os.path.join(static_dir, entry)
         target = os.path.join(html_dir, entry)
         shutil.copyfile(source, target)
+
+    font_src_dir = os.path.join(static_dir, 'fonts')
+    font_dst_dir = os.path.join(html_dir, 'fonts')
+    os.mkdir(font_dst_dir)
+    for _, _, entries in os.walk(font_src_dir):
+        for entry in entries:
+            source = os.path.join(font_src_dir, entry)
+            target = os.path.join(font_dst_dir, entry)
+            shutil.copyfile(source, target)
 
     return html_dir, article_dir
 
