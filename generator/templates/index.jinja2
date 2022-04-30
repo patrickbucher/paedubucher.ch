@@ -17,18 +17,19 @@
             <p class="slogan"><cite>Move slow and try to understand things</cite></p>
             <section>
                 <h2>Articles</h2>
-                <ul id="articles">
+                <ul id="articles" class="nav">
                     {% for article in articles %}
                     <li lang="{{article.lang}}">
-                        <span class="tt">{{ article.date_raw }} [{{article.lang}}]</span>
+                        <span class="tt">[{{article.lang}}]</span>
                         <a href="{{article.href}}">{{article.title}}</a>
+                        <span class="tt">({{ article.date_raw }})</span>
                     </li>
                     {% endfor %}
                 </ul>
             </section>
             <section>
                 <h2>Documents</h2>
-                <ul>
+                <ul class="nav">
                     <li lang="en">
                         <span class="tt">[en]</span>
                         <a href="https://raw.githubusercontent.com/patrickbucher/docs/master/clean-agile/clean-agile.pdf"
@@ -92,7 +93,7 @@
             </section>
             <section>
                 <h2>Miscellaneous</h2>
-                <ul>
+                <ul class="nav">
                     <li lang="en">
                         <span class="tt">[en]</span>
                         <a href="/gol">gol</a>: Conway's <em>Game of Life</em>
@@ -109,12 +110,12 @@
             </section>
             <section>
                 <h2>Contact</h2>
-                <ul>
+                <ul class="nav">
                     <li>E-Mail: <a href="mailto:patrick.bucher@mailbox.org">patrick.bucher@mailbox.org</a></li>
                     <li>GitHub: <a href="https://github.com/patrickbucher" target="_blank">patrickbucher</a></li>
                 </ul>
             </section>
         </main>
-        <footer class="backlink">© 2022 by Patrick Bucher</footer>
+        <footer class="backlink"><a href="index.html">paedubucher.ch</a> | © 2022 by Patrick Bucher</footer>
     </body>
 </html>
