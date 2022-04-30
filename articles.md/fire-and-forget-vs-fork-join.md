@@ -1,5 +1,5 @@
 ---
-title: '«Fire and Forget» oder «Fork and Join»'?
+title: '«Fire and Forget» oder «Fork and Join»?'
 subtitle: 'Gesellschaftsanalyse aus der Perspektive der Nebenläufigkeit '
 author: 'Patrick Bucher'
 date: 2022-04-30T11:35:00
@@ -7,12 +7,12 @@ lang: de
 ---
 
 In der nebenläufigen Programmierung ist _Fire and Forget_ ein Prinzip, bei dem
-nebenläufige Aufgaben gestartet und anschliessend nicht mehr auf deren
+untergeordnete Aufgaben gestartet werden und anschliessend nicht mehr auf deren
 Beendigung gewartet wird. Man kann davon ausgehen, dass der Task dann irgendwann
-zu Ende sein wird, und das Ergebnis wird dann schon am richtigen Ort landen. Das
-Beispiel ist z.B. eine Datensicherung, die von einem lang laufenden Server
-gestartet wird. Sofern der Server nicht neu gestartet wird, dürfte der Vorgang
-dann schon zu Ende laufen.
+zu Ende sein wird, und das Ergebnis wird dann schon stimmen. Eine Beispiel
+hierfür wäre eine Datensicherung, die von einem lang laufenden Server gestartet
+wird. Sofern der Server nicht neu gestartet wird, dürfte der Vorgang dann schon
+zu Ende laufen.
 
 Beim Prinzip _Fork and Join_ wird ein Task (bzw. werden mehrere Tasks)
 nebenläufig gestartet. Man wartet aber anschliessend auf ihr Ergebnis, um den
@@ -22,8 +22,8 @@ Unterarrays aufgeteilt (Fork) wird, und dessen sortierte Unterarrays dann
 zusammengeführt werden (Join), wie etwa beim Merge Sort.
 
 Beide Modelle haben ihre Berechtigung. Man sollte sich aber dessen bewusst sein,
-welches Modell für eine gegebene Aufgabe das richtige ist. Und genau hier
-beginnt das Problem: Nicht unbedingt ein technisches, sondern ein alltägliches.
+welches Modell für eine gestellte Aufgabe das richtige ist. Und genau hier
+beginnt das Problem: Nicht unbedingt ein technisches, sondern ein alltägliches:
 Wie einfach ist es, mit einer neuen Sache zu beginnen, und wie schwierig ist es,
 die Sache dann auch wirklich zu einem Abschluss zu bringen!
 
@@ -71,28 +71,29 @@ Sammeltag am Strassenrand steht, und die Müllabfuhr holt dann alles ab. Dahinte
 verbirgt sich eine gewaltige logistische Leistung, denke man nur an den Umfang
 des Entsorgungskalenders, der einem einmal jährlich per Post zugestellt wird.
 (Hierfür soll es ja mittlerweile Apps geben, welche die ganze Lieferkette noch
-wesentlich länger macht, zumal noch IT darin involviert ist.)
+wesentlich komplizierer machen, zumal noch IT darin involviert ist.)
 
 Der _Forget_-Teil ist hier aber oftmals subjektiver Natur; d.h. wir denken nicht
-länger an die vorabends in den Müll geworfene Chipstüte, die Müllabfuhr und die
+länger an die vorabends in den Müll geworfene Chipstüte. Die Müllabfuhr und die
 Kehrichtverbrennungsanlage muss sich aber noch darum kümmern. Dort setzt das
 Vergessen erst ein, wenn der Abfall verbrannt ist. Die dabei ausgestossenen Gase
-und der sich an der Verbrennungsanlage absetzende Russ sind dann wiederum die
-Ausgangsstoffe anderer Industriezweige (Zertifikatshändler und Kaminfeger).
-Solange aber die Müllverbrennungsanlage ordnungsgemäss gelagert wird, braucht
-man auch hier nicht mehr an den konkreten Müll zu denken: _Fire and Forget_.
+und der sich an der Verbrennungsanlage absetzende Russ sind dann wiederum die zu
+lösenden Probleme anderer Industriezweige (etwa von Zertifikatshändlern und
+Kaminfegern).  Solange aber die Müllverbrennungsanlage ordnungsgemäss gewartet 
+wird, braucht man auch hier nicht mehr an den konkreten Müll zu denken: _Fire
+and Forget_.
 
-Komplizierter ist die Sache bei der Entsorgung von Elektronikartikel oder
+Komplizierter ist die Sache bei der Entsorgung von Elektronikartikeln oder
 Fahrzeugen. Sobald diese nicht mehr leistungsfähig genug sind oder nicht mehr
 den strengen Regelwerken unserer fortgeschrittenen Zivilisation
 (Sicherheitsanforderungen, Strassenverkehrsordnung) entsprechen, werden sie
 nicht etwa entsorgt, sondern in einen anderen Weltteil mit weniger hohen
 Leistungs- und Sicherheitsanforderungen exportiert. Elektronik wird teilweise in
 offenen Feuern verbrannt, um an die Kupferkabel zu gelangen.  Fahrzeuge hingegen
-werden oft noch jahrelang betrieben, bevor sie dann zwecks Metallgewinnung auch
-zerlegt werden. Zwischen _Fire_ und _Forget_ können hier also Jahrzehnte liegen;
-Gesundheitsschäden durch eingeatmete Verbrennungsgase können gar ein Leben lang
-nachwirken.
+werden teilweise noch jahrelang betrieben, bevor sie dann zwecks Metallgewinnung
+auch zerlegt werden. Zwischen _Fire_ und _Forget_ können hier also Jahrzehnte
+liegen; Gesundheitsschäden durch eingeatmete Verbrennungsgase können gar ein
+Leben lang nachwirken, wenn nicht sogar auf Folgegenerationen.
 
 Wir machen es uns also oft etwas zu leicht mit dem _Fire and Forget_-Ansatz, wo
 wir wieder zurück beim Programmieren wären: Sollte ein asynchron gestarteter
@@ -103,21 +104,21 @@ eines Memory Leaks) neu gestartet, dürfte der lange andauernde Backup-Vorgang
 (Kindprozess) nicht erfolgreich ablaufen. Bemerkt wird dies erst dann, wenn man
 durch Datenverlust zu einem Restore gezwungen wird: wann es also bereits schon
 zu spät ist. Erscheint uns hier _Fire and Forget_ zunächst als legitim, kommen
-wir wohl bald zur Erkenntnis, dass _Fork and Join_ wohl doch die bessere, wenn
-auch schwierigere Lösung gewesen wäre.
+wir bald zur Erkenntnis, dass _Fork and Join_ wohl doch die bessere, wenn auch
+schwierigere Lösung gewesen wäre.
 
 Mein wachsender Stapel angelesener Bücher und der weniger werdende, da durch
 Elektronik eingenommene Platz in meiner Wohnung weisen mich immer öfters darauf
 hin, dass ich es mir mit _Fire and Forget_ wohl etwas zu einfach mache.
 
-Bei Elektronikartikel haben wir seit vielen Jahren die beim Kauf zu entrichtende
-Entsorgungsgebühr eingeführt. So kann man ausgediente Geräte einfach zur
-Verkaufsstelle zurückbringen, die den Artikel dann der ordnungsgemässen
+Bei Elektronikartikeln haben wir vor vielen Jahren die beim Kauf zu entrichtende
+vorgezogene Entsorgungsgebühr eingeführt. So kann man ausgediente Geräte einfach
+zur Verkaufsstelle zurückbringen, die den Artikel dann der ordnungsgemässen
 Entsorgung zuführen sollte: Brennende Haufen von Elektroschrott auf
 afrikansichen Müllkippen sollten dann eigentlich nicht mehr von unserer
-Elektronik befeuert werdenl («Sollten», denn wir haben es hier ja mit _Fire and
-Forget_ zu tun; ich persönlich habe die Elektronik-Entsorgungskette noch nie
-versucht nachzuverfolgen.)
+Elektronik befeuert werden. («Sollten», denn aus Sicht des Kunden haben wir es
+hier ja mit _Fire and Forget_ zu tun; ich persönlich habe die
+Elektronik-Entsorgungskette noch nie versucht nachzuverfolgen.)
 
 Bei persönlichen Interaktionen, etwa beim Vorgesetztenverhalten am Arbeitsplatz
 oder beim Lehrer-Schüler-Verhältnis in Schulen, lässt sich das Problem nicht so
@@ -127,7 +128,7 @@ entrichten, wodurch dann dieser abschliessende Vorgang garantiert durchgeführt
 wird. Stattdessen muss hier auf einem virtuellen Zeitkonto eine entsprechende
 Ressource in der Zukunft reserviert werden, die dann nicht von einem anderen
 Vorgang eingenommen werden darf. Wir müssen also mit dem Erteilen einer Aufgabe
-auch immer ein Versprechen für die Zukunft machen, und deren Erledigung
+auch immer ein Versprechen für die Zukunft machen, um deren Erledigung
 kontrollieren zu können. Hält man sich nicht an dieses Versprechen, oder gibt
 man es zu Beginn gar nicht ab, verwenden wir das bequemere _Fire and Forget_ wo,
 wir stattdessen _Fork and Join_ machen müssten.
@@ -139,19 +140,20 @@ and Forget_ begnügt, wo man mit _Fork and Join_ arbeiten müsste. Etwas
 überspitzt könnte man den Begriff _Verantwortung_ mit dem Prinzip _Fork and
 Join_ gleichsetzen: Man löst nicht nur einen Vorgang aus, sondern kümmert sich
 dann auch um dessen Folgen. Oder genauer: beim Auslösen eines Vorgangs ist man
-sich nicht nur dessen bewusst, dass man zu einem späteren Zeitpunkt Folgen zu
-bewältigen haben wird, und dass man auch für verschiedene eingetretene Szenarien
-einen Plan bereithält. (Hat der Schüler die Aufgabe zufriedenstellen gelöst,
-wird er dafür gelobt; andernfalls fordert man ihn zur Nacharbeit auf: ein
-erneuter _Fork and Join_-Vorgang wird initiiert.)
+sich nicht nur dessen bewusst, dass man zu einem späteren Zeitpunkt die Folgen
+desselben zu bewältigen haben wird, sondern auch, dass man für verschiedene
+eingetretene Szenarien einen Plan bereithalten muss. (Hat der Schüler die
+Aufgabe zufriedenstellen gelöst, wird er dafür gelobt; andernfalls fordert man
+ihn zur Nacharbeit auf: ein erneuter _Fork and Join_-Vorgang wird initiiert.)
 
 Auch hier ist ein Blick auf die Softwareentwicklung erleuchtend, zumal
 gewisse Programmiersprachen bei der Auswertung von Funktionsergebnissen ein
 _erschöpfendes_, d.h. alle Fälle berücksichtigendes _Pattern Matching_
 erfordern; bzw. man explizit angeben muss, dass man für gewisse Ausgänge keine
-Reaktion vorgesehen hat. Als Programmierer muss man somit über die Probleme
-nachdenken, bevor sie eingetreten sind. Zurück in den Alltag übersetzt, könnte
-man sich also bei einer Handlung folgende Fragen stellen:
+Reaktion vorgesehen hat, um so von Compilerwarnungen verschont zu bleiben. Als
+Programmierer muss man somit über die Probleme nachdenken, bevor sie eingetreten
+sind. Zurück in den Alltag übersetzt, könnte man sich also bei einer Handlung
+folgende Fragen stellen:
 
 1. Genügt das Prinzip _Fire and Forget_, oder benötige ich einen Plan, wie ich
    mit den Konsequenzen meiner Handlung umgehen muss (_Fork and Join_)?
