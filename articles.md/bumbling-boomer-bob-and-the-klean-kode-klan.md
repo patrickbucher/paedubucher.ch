@@ -19,7 +19,8 @@ first was fascinated by it, but never managed to read more than one or two
 chapters. I also rarely bothered to read specific sections offering solutions to
 problems I faced on a daily basis. Probably the solutions offered weren't too
 helpful, even though I worked as a Java programmer during that time, and _Clean
-Code_ is very much about Java. So _Clean Code_ collected dust in my bookshelf.
+Code_ is very much about the kind of Java we wrote back in that particular time.
+So _Clean Code_ collected dust in my bookshelf.
 
 # Clean Code and the Klean Kode Kult
 
@@ -41,7 +42,7 @@ My friend [meillo](http://marmaro.de/) pointed out the [cult-like nature of
 _Clean Code_](http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt)
 roughly at that time when its disciples came after me. A leader being called
 «Uncle Bob», a scripture that doesn't require a second edition after many years
-(but spawns sequals as _The Clean Coder_, _Clean Architecture_, _Clean Agile_,
+(but spawns sequels as _The Clean Coder_, _Clean Architecture_, _Clean Agile_,
 and _Clean Craftsmanship_), disciples willing to align themselves into
 [grades](https://clean-code-developer.com/grades/) and wear
 [bracelets](https://clean-code-developer.com/die-initiative/bracelets/) for self
@@ -65,7 +66,7 @@ Code_, chapter 3, p. 40):
 > The ideal number of arguments for a function is zero (niladic). Next comes one
 > (monadic), followed closely by two (dyadic). Three arguments (triadic) should
 > be avoided where possible. More than three (polyadic) requires very special
-> justification—and then shouldn’t be used anyway
+> justification—and then shouldn’t be used anyway.
 
 This is misleading on so many levels that I need to dissect it in multiple
 paragraphs.
@@ -112,8 +113,8 @@ culture of the mid-2000s.
 
 (If you didn't figure out where my exegesis went from serious to sarcastic, stop
 reading this text and just forget about it. Put on the _Clean Code_ bracelet of
-the day and refactor that cryptic `x += 3;` statement to a _clean_ `x =
-increaseByThree();` niladic function instead.)
+the day and refactor that cryptic `this.x += 3;` statement to a _clean_
+`increaseXByThree();` niladic method instead.)
 
 But Bumbler Bob is here to help (_Clean Code_, p. 43):
 
@@ -122,14 +123,14 @@ But Bumbler Bob is here to help (_Clean Code_, p. 43):
 > (p. 43)
 
 I wonder how many arguments a constructor for such a class might require.
-Certainly, the introduction of the Builder Pattern would be The Right Solution
+Certainly, the introduction of the Builder Pattern would be The Right Solution™
 for this issue. Much clearer than having a function with four arguments. (My
 healing progress is starting!)
 
 ## Niladic (Im)purity
 
-Boomer Bob is clearly familiar with pure functions, otherwise he wouldn't object
-so strongly against side effects (_Clean Code_, p. 44):
+Boomer Bob is clearly familiar with the concept of _pure functions_, otherwise
+he wouldn't object so strongly against side effects (_Clean Code_, p. 44):
 
 > Side effects are lies. Your function promises to do one thing, but it also
 > does other hidden things. Sometimes it will make unexpected changes to the
@@ -154,11 +155,14 @@ functions/methods.
 
 In order for a function to do something useful without side-effects, function
 arguments are needed. The amount of arguments needed is determined by the
-_domain_ of the function. Shall a function compute the `x` of a quadratic
-equation, the arguments `a`, `b`, and `c` are needed. Shall a function draw an
-arc on a canvas? You need to define the coordinates of the circle's center (`x`
-and `y`), its radius (`r`), start and end angle, and whether or not the arc
-shall be drawn clockwise or counter-clockwise.
+_domain_ of the function, i.e. by what the function is actually supposed to
+do. Shall a function compute the solutoins to a quadratic equation, the
+arguments `a`, `b`, and `c` are needed. Shall a function draw an arc on a
+canvas? You need to define the coordinates of the circle's center (`x` and `y`),
+its radius (`r`), start and end angle, and whether or not the arc shall be drawn
+clockwise or counter-clockwise.
+
+### Complexity: Inherent and Accidental
 
 Admittedly, _Clean Code_ offers some useful advice to make such APIs easier to
 understand, e.g.:
@@ -170,16 +174,27 @@ understand, e.g.:
 
 But Boomer Bob entirely misses the point: The difference between _inherent_ and
 _accidental_ complexity. Solving a square equation _requires_ three arguments.
-An arc is _defined_ by its mid-point, its radius, and its curve orientation.
+An arc is _defined_ by its mid-point, radius, angles, and curve orientation.
 This is complexity _inherent_ to the problem at hand.
 
 The thickness, colour, and opacity of an arc being drawn on a canvas has to do
 with a specific application of the concept. So while I consider it good advice
 to wrap drawing details (thickness, colour, opacity) into an argument object, or
 to use a `Point` abstraction instead of two loose `x` and `y` arguments, there's
-no way to deal with arcs with niladic functions.
+no reasonable way to deal with arcs using _niladic_ or _monadic_ functions, save
+for curried functions, which clearly aren't Babbling Bob's mind here.
 
-### Reduce by Increasing the Numbers of Arguments
+You might also separate the computation of an arc from actually drawing it.
+Here, the computation returns the coordinates to be drawn, which you can pass
+into the `draw` method of the canvas object, maybe together with the drawing
+details. A pair of _monadic_ methods for setting coordinates and drawing details
+on that object won't make anything clearer, but only introduce more side
+effects: _accidental_ side effects this time, which change the state of the
+object without any palpable benefit. Calling the `draw` method to actually draw
+on the canvas is the only _desired_ side-effect: the complexity introduced
+thereby being of an _inherent_ nature.
+
+### More Arguments Make Better Abstractions
 
 Another example: Consider a `reduce` function. (This is a higher-order function,
 but obviously not at the height of _Clean Code_, for such concepts are not
@@ -195,11 +210,12 @@ Where `combiner` is itself a function with the following interface:
 
     combine(accumulator, x)
 
-The _dyadic_ `reduce` function must assume a value out of the given `values` as
-the initial value to be used for the `accumulator`. So the _dyadic_ `reduce` can
-only return something of the same type as the elements of `values` have. (E.g.
-`values` is the integer array `[1, 2, 3]`, and `combine` sums up the `accumulator`
-with the current value argument `x`, then `reduce` must return an integer.)
+The _dyadic_ `reduce` function must assume a value out of the given `values`
+(usually its first element) as the initial value to be used for the
+`accumulator`. So the _dyadic_ `reduce` can only return something of the same
+type as the elements of `values` have. (E.g.  `values` is the integer array `[1,
+2, 3]`, and `combine` sums up the `accumulator` with the current value argument
+`x`, then `reduce` must return an integer.)
 
 The _triadic_ `reduce` function can accept any initial value, as long as the
 `combine` function is capable of dealing properly with that value. (E.g.
@@ -226,15 +242,16 @@ their perspective is too narrow.
 I'm convinced that Robert C. Martin would write a totally different book on the
 subject nowadays than he did back in 2008. But a second edition of _Clean Code_
 would have very little in common with the first edition still being in print.
-Rewriting the entire book probably would be less work than to re-edit it. And
+Rewriting the entire book probably would be less work than re-editing it. And
 its fellowship would feel cheated by reading a book full of advice contrary to
 its original.
 
 If you feel offended by this text, please take an hour to watch Brian
-Kernighan's lecture on [Elements of Programming
-Style](https://www.youtube.com/watch?v=8SUkrR7ZfTA) and let this advice sink in.
-Reconsider yelling _«Clean Code!!!1»_ or «Train Wreck!!!1» at other programmers
-without first trying to understand the code having familiarized yourself with
+Kernighan's lecture on [The Elements of Programming
+Style](https://www.youtube.com/watch?v=8SUkrR7ZfTA) and let his advice sink in.
+Reconsider your habit of yelling _«Clean Code!!!1»_, _«Train Wreck!!!1»_, or
+even _«SOLID!!!1»_ (what doess the «L» stand for, again?) at other programmers
+without first having tried to understand the code and familiarized yourself with
 the concepts being used therein. Try out a functional programming language or
 two, e.g. Haskell and Scheme, and consider their up- and downsides compared
 to, say, Java or C#. Then read _Clean Code_ again (or: _actually_ read it), but
