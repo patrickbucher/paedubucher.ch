@@ -19,14 +19,14 @@ first was fascinated by it, but never managed to read more than one or two
 chapters. I also rarely bothered to read specific sections offering solutions to
 problems I faced on a daily basis. Probably the solutions offered weren't too
 helpful, even though I worked as a Java programmer during that time, and _Clean
-Code_ is very much about the kind of Java we wrote back in that particular time.
-So _Clean Code_ collected dust in my bookshelf.
+Code_ is very much about the kind of Java we wrote back then. So _Clean Code_
+collected dust in my bookshelf.
 
 # Clean Code and the Klean Kode Kult
 
 When I studied computer science at the local technical college, I was exposed to
-_Clean Code_ again. Or rather it was shoved down the student's throats as a
-gospel by disciples of the _Klean Kode Kult_, as I like to call it.
+_Clean Code_ again. Or rather it was shoved down the students throats as a
+gospel by disciples of the _Klean Kode Kult_, as I like to call them.
 
 The members of the _Klean Kode Kult_ strengthen their belief by joining up for a
 ritual called _Clean Code Shaming_, where they superficially look at a piece of
@@ -35,14 +35,14 @@ at its author in order to give proof of their superiority and sophistication.
 
 Remember: Code you initially don't understand is _always_ just bad code and
 certainly not a chance to improve your understanding of programming, especially
-if pointless techniques like memoization or lexical closures are used, i.e.
+if pointless techniques like _Memoization_ or _Lexical Closures_ are used, i.e.
 techniques you haven't been exposed to yet.
 
 My friend [meillo](http://marmaro.de/) pointed out the [cult-like nature of
 _Clean Code_](http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt)
 roughly at that time when its disciples came after me. A leader being called
 «Uncle Bob», a scripture that doesn't require a second edition after many years
-(but spawns sequels as _The Clean Coder_, _Clean Architecture_, _Clean Agile_,
+(but spawns sequels such as _The Clean Coder_, _Clean Architecture_, _Clean Agile_,
 and _Clean Craftsmanship_), disciples willing to align themselves into
 [grades](https://clean-code-developer.com/grades/) and wear
 [bracelets](https://clean-code-developer.com/die-initiative/bracelets/) for self
@@ -61,7 +61,7 @@ failing to do so!—will hopefully bring me back to the Right Path, so that I ca
 finally abondon my wrongthink and give up on my hellish ends.
 
 Let's hear what The Englightened has to say about function arguments (_Clean
-Code_, chapter 3, p. 40):
+Code_, Chapter 3, p. 40):
 
 > The ideal number of arguments for a function is zero (niladic). Next comes one
 > (monadic), followed closely by two (dyadic). Three arguments (triadic) should
@@ -88,7 +88,7 @@ And:
 
 This difference is clearly of a _quantitative_ nature, because adding another
 argument only makes the function «harder to understand», no matter if you go
-from one to two of from two to three.
+from one to two of from two to three arguments.
 
 Having been exposed to Haskell for a couple of hours, I'd expect to read about
 _Curried Functions_ here: functions of arity `n` that return a function of arity
@@ -97,19 +97,22 @@ guys must be stupid, because they also bother with _Partial Function
 Application_, which only makes sense when you have multiple arguments, i.e.
 _diadic_, _triadic_, or even—Bob forbid—_polyadic_ functions!
 
-This must also the reason why _SICP_ makes for such a bad introductory textbook,
-because the Professors Abelson and Sussman clearly haven't read _Clean Code_
-when coming up with this abomination (_Structure and Interpretation of Computer
-Programs_, exercise 1.32, chapter 1, p. 61):
+This must also the reason why
+[SICP](https://mitpress.mit.edu/9780262510875/structure-and-interpretation-of-computer-programs/)
+makes for such a bad introductory textbook, because the Professors Abelson and
+Sussman clearly haven't read _Clean Code_ when coming up with this abomination
+(_Structure and Interpretation of Computer Programs_, Exercise 1.32, Chapter 1,
+p. 61):
 
     (accumulate combiner null-value term a next b)
 
 Six arguments, are you kidding me? Polyadic _ad nauseam_! Bob hates it.
 
 SICP is such a horrible book that it even required a second edition. It even was
-adapted from MIT Scheme to JavaScript recently, whereas _Clean Code_ clearly
-would withstand such blasphemous attempts, being firmly grounded in the Java
-culture of the mid-2000s.
+[adapted](https://mitpress.mit.edu/9780262543231/structure-and-interpretation-of-computer-programs/)
+from MIT Scheme to JavaScript recently, whereas _Clean Code_ clearly would
+withstand such blasphemous attempts, being firmly grounded in the Java culture
+of the mid-2000s.
 
 (If you didn't figure out where my exegesis went from serious to sarcastic, stop
 reading this text and just forget about it. Put on the _Clean Code_ bracelet of
@@ -129,17 +132,17 @@ healing progress is starting!)
 
 ## Niladic (Im)purity
 
-Boomer Bob is clearly familiar with the concept of _pure functions_, otherwise
+Boomer Bob is clearly familiar with the concept of _Pure Functions_, otherwise
 he wouldn't object so strongly against side effects (_Clean Code_, p. 44):
 
 > Side effects are lies. Your function promises to do one thing, but it also
 > does other hidden things. Sometimes it will make unexpected changes to the
 > variables of its own class. Sometimes it will make them to the parameters
-> passed into the function or to system glo- bals. In either case they are
-> devious and damaging mistruths that often result in strange temporal couplings
-> and order dependencies.
+> passed into the function or to system globals. In either case they are devious
+> and damaging mistruths that often result in strange temporal couplings and
+> order dependencies.
 
-Unless Bobby-O considers lies as good, he clearly speaks out _in favour of_
+Unless Bobby-O considers lies as good, he clearly speaks out _in favour__ of
 functions without arguments and _against_ side effects. So we should all be
 writing side-effect free functions without arguments. But what can such a
 function return?
@@ -182,7 +185,7 @@ with a specific application of the concept. So while I consider it good advice
 to wrap drawing details (thickness, colour, opacity) into an argument object, or
 to use a `Point` abstraction instead of two loose `x` and `y` arguments, there's
 no reasonable way to deal with arcs using _niladic_ or _monadic_ functions, save
-for curried functions, which clearly aren't Babbling Bob's mind here.
+for curried functions, which clearly aren't on Babbling Bob's mind here.
 
 You might also separate the computation of an arc from actually drawing it.
 Here, the computation returns the coordinates to be drawn, which you can pass
@@ -194,7 +197,7 @@ object without any palpable benefit. Calling the `draw` method to actually draw
 on the canvas is the only _desired_ side-effect: the complexity introduced
 thereby being of an _inherent_ nature.
 
-### More Arguments Make Better Abstractions
+### More Arguments Can Make For Better Abstractions
 
 Another example: Consider a `reduce` function. (This is a higher-order function,
 but obviously not at the height of _Clean Code_, for such concepts are not
@@ -218,11 +221,11 @@ type as the elements of `values` have. (E.g.  `values` is the integer array `[1,
 `x`, then `reduce` must return an integer.)
 
 The _triadic_ `reduce` function can accept any initial value, as long as the
-`combine` function is capable of dealing properly with that value. (E.g.
+`combine` function is capable of dealing properly with that type of value. (E.g.
 `reduce` can be used to partition the integer array of `[1, 2, 3, 4]` into two
 arrays of odd and even numbers. The `initialValue` then could be a tuple of two
-empty arrays. Those arrays are filled by the combine function: odd numbers in
-the first array, even numbers in the second array.)
+empty arrays: `([],[])`. Those arrays are filled by the `combine` function: odd
+numbers in the first array, even numbers in the second array: `([1,3],[2,4])`.)
 
 Not only is a _triadic_ `reduce` function more powerful than the _dyadic_ one,
 it is also more _general_, i.e. a higher abstraction. If you want to do repeated
@@ -251,11 +254,11 @@ Kernighan's lecture on [The Elements of Programming
 Style](https://www.youtube.com/watch?v=8SUkrR7ZfTA) and let his advice sink in.
 Reconsider your habit of yelling _«Clean Code!!!1»_, _«Train Wreck!!!1»_, or
 even _«SOLID!!!1»_ (what doess the «L» stand for, again?) at other programmers
-without first having tried to understand the code and familiarized yourself with
+without first having tried to understand their code and familiarized yourself with
 the concepts being used therein. Try out a functional programming language or
 two, e.g. Haskell and Scheme, and consider their up- and downsides compared
 to, say, Java or C#. Then read _Clean Code_ again (or: _actually_ read it), but
 with the grain of salt extracted from your recent encounters with different
 ideas and concepts. Read it critically, not as a gospel, and you'll extract some
-extra value out of it: by carefully considering each advice and its proper area
-of application.
+real value out of it: by carefully considering each advice and its proper area
+of application—as limited that might be.
