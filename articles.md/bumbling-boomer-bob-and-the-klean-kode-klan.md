@@ -261,4 +261,4 @@ to, say, Java or C#. Then read _Clean Code_ again (or: _actually_ read it), but
 with the grain of salt extracted from your recent encounters with different
 ideas and concepts. Read it critically, not as a gospel, and you'll extract some
 real value out of it: by carefully considering each advice and its proper area
-of application—as limited that might be.
+of application—as limited as that might be.
