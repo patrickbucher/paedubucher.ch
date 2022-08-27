@@ -142,7 +142,7 @@ he wouldn't object so strongly against side effects (_Clean Code_, p. 44):
 > and damaging mistruths that often result in strange temporal couplings and
 > order dependencies.
 
-Unless Bobby-O considers lies as good, he clearly speaks out _in favour__ of
+Unless Bobby-O considers lies as good, he clearly speaks out _in favour_ of
 functions without arguments and _against_ side effects. So we should all be
 writing side-effect free functions without arguments. But what can such a
 function return?
