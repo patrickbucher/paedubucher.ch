@@ -151,7 +151,7 @@ functions/methods.</p>
 <p>In order for a function to do something useful without side-effects, function
 arguments are needed. The amount of arguments needed is determined by the
 <em>domain</em> of the function, i.e. by what the function is actually supposed to
-do. Shall a function compute the solutoins to a quadratic equation, the
+do. Shall a function compute the solutions to a quadratic equation, the
 arguments <code>a</code>, <code>b</code>, and <code>c</code> are needed. Shall a function draw an arc on a
 canvas? You need to define the coordinates of the circle's center (<code>x</code> and <code>y</code>),
 its radius (<code>r</code>), start and end angle, and whether or not the arc shall be drawn
@@ -174,7 +174,7 @@ with a specific application of the concept. So while I consider it good advice
 to wrap drawing details (thickness, colour, opacity) into an argument object, or
 to use a <code>Point</code> abstraction instead of two loose <code>x</code> and <code>y</code> arguments, there's
 no reasonable way to deal with arcs using <em>niladic</em> or <em>monadic</em> functions, save
-for curried functions, which clearly aren't on Babbling Bob's mind here.</p>
+for <em>Curried Functions</em>, which clearly aren't on Babbling Bob's mind here.</p>
 <p>You might also separate the computation of an arc from actually drawing it.
 Here, the computation returns the coordinates to be drawn, which you can pass
 into the <code>draw</code> method of the canvas object, maybe together with the drawing
@@ -202,15 +202,15 @@ mentioned in The Masterpiece.) Consider the following interfaces:</p>
 <p>The <em>dyadic</em> <code>reduce</code> function must assume a value out of the given <code>values</code>
 (usually its first element) as the initial value to be used for the
 <code>accumulator</code>. So the <em>dyadic</em> <code>reduce</code> can only return something of the same
-type as the elements of <code>values</code> have. (E.g.  <code>values</code> is the integer array <code>[1,
+type as the elements of <code>values</code> have. E.g. <code>values</code> is the integer array <code>[1,
 2, 3]</code>, and <code>combine</code> sums up the <code>accumulator</code> with the current value argument
-<code>x</code>, then <code>reduce</code> must return an integer.)</p>
+<code>x</code>, then <code>reduce</code> must return an integer.</p>
 <p>The <em>triadic</em> <code>reduce</code> function can accept any initial value, as long as the
-<code>combine</code> function is capable of dealing properly with that type of value. (E.g.
+<code>combine</code> function is capable of dealing properly with that type of value. E.g.
 <code>reduce</code> can be used to partition the integer array of <code>[1, 2, 3, 4]</code> into two
 arrays of odd and even numbers. The <code>initialValue</code> then could be a tuple of two
 empty arrays: <code>([],[])</code>. Those arrays are filled by the <code>combine</code> function: odd
-numbers in the first array, even numbers in the second array: <code>([1,3],[2,4])</code>.)</p>
+numbers in the first array, even numbers in the second array: <code>([1,3],[2,4])</code>.</p>
 <p>Not only is a <em>triadic</em> <code>reduce</code> function more powerful than the <em>dyadic</em> one,
 it is also more <em>general</em>, i.e. a higher abstraction. If you want to do repeated
 modifications to a vector in Clojure, you need something like a triadic reduce
