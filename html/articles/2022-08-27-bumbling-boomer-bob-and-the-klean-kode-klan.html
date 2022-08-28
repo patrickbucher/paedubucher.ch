@@ -22,8 +22,9 @@ subject since 2009, you probably were subjected to Robert C. Martin's book
 <em>Clean Code: A Handbook of Agile Software Craftsmanship</em>. (As of this day, the
 <a href="https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884">first
 edition</a>
-from 2008 hasn't been updated yet. Clearly, <em>Clean Code</em> must be a—nay,
-<em>the</em>—perfect book, which does not require improvements or adjustments).</p>
+from 2008 hasn't been updated. Clearly, <em>Clean Code</em> must be a—nay,
+<em>the</em>—perfect book, which does not require improvements or adjustments after all
+those years).</p>
 <p>I bought the book out of personal interest, probably in 2009. As many others, I
 first was fascinated by it, but never managed to read more than one or two
 chapters. I also rarely bothered to read specific sections offering solutions to
@@ -58,9 +59,9 @@ witness the angry reaction caused by your blasphemous remark.</p>
 <h1>Bumbling Boomer Bob on Function Arguments</h1>
 <p>Working as a programmer for almost twenty years, I am still a layperson when it
 comes to the exegesis of <em>Clean Code</em>, because I obviously still haven't been
-englightened by this masterpiece yet. But trying to slay a straw man—and
-failing to do so!—will hopefully bring me back to the Right Path, so that I can
-finally abondon my wrongthink and give up on my hellish ends.</p>
+englightened by this masterpiece yet. By trying to slay a straw man—and failing
+to do so!—will hopefully bring me back to the Right Path, so that I can finally
+abondon my wrongthink and give up on my hellish ends.</p>
 <p>Let's hear what The Englightened has to say about function arguments (<em>Clean
 Code</em>, Chapter 3, p. 40):</p>
 <blockquote>
@@ -86,9 +87,9 @@ arities, to wit (<em>Clean Code</em>, p. 42):</p>
 than dyads. The issues of ordering, pausing, and ignoring are more than
 doubled. I suggest you think very carefully before creating a triad.</p>
 </blockquote>
-<p>This difference is clearly of a <em>quantitative</em> nature, because adding another
-argument only makes the function «harder to understand», no matter if you go
-from one to two of from two to three arguments.</p>
+<p>This difference is clearly just of a <em>quantitative</em>, not of a <em>qualitative</em>
+nature, because adding another argument only makes the function «harder to
+understand», no matter if you go from one to two of from two to three arguments.</p>
 <p>Having been exposed to Haskell for a couple of hours, I'd expect to read about
 <em>Curried Functions</em> here: functions of arity <code>n</code> that return a function of arity
 <code>n-1</code> when being invoked with a single argument. But obviously those Haskell
@@ -122,8 +123,8 @@ that some of those arguments ought to be wrapped into a class of their own.
 </blockquote>
 <p>I wonder how many arguments a constructor for such a class might require.
 Certainly, the introduction of the Builder Pattern would be The Right Solution™
-for this issue. Much clearer than having a function with four arguments. (My
-healing progress is starting!)</p>
+for this issue. Much clearer than having a function with four arguments.
+(Behold, the englightment is kicking in!)</p>
 <h2>Niladic (Im)purity</h2>
 <p>Boomer Bob is clearly familiar with the concept of <em>Pure Functions</em>, otherwise
 he wouldn't object so strongly against side effects (<em>Clean Code</em>, p. 44):</p>
@@ -144,8 +145,8 @@ function return?</p>
 <li>A constant value</li>
 <li>A random value</li>
 </ul>
-<p><em>Unless</em> the function also operates on global variables or an object's
-properties. But then those functions (or methods) are <em>not</em> really side-effect
+<p><em>Unless</em> the function also operates on global variables or on the properties of
+an object. But then those functions (or methods) are <em>not</em> really side-effect
 free, because their semantics is influenced by side-effects of other
 functions/methods.</p>
 <p>In order for a function to do something useful without side-effects, function
@@ -169,12 +170,13 @@ understand, e.g.:</p>
 <em>accidental</em> complexity. Solving a square equation <em>requires</em> three arguments.
 An arc is <em>defined</em> by its mid-point, radius, angles, and curve orientation.
 This is complexity <em>inherent</em> to the problem at hand.</p>
-<p>The thickness, colour, and opacity of an arc being drawn on a canvas has to do
-with a specific application of the concept. So while I consider it good advice
-to wrap drawing details (thickness, colour, opacity) into an argument object, or
-to use a <code>Point</code> abstraction instead of two loose <code>x</code> and <code>y</code> arguments, there's
-no reasonable way to deal with arcs using <em>niladic</em> or <em>monadic</em> functions, save
-for <em>Curried Functions</em>, which clearly aren't on Babbling Bob's mind here.</p>
+<p>The thickness, colour, and opacity of an arc being drawn on a canvas all have to
+do with a specific application of the concept. So while I consider it good
+advice to wrap drawing details (thickness, colour, opacity) into an argument
+object, or to use a <code>Point</code> abstraction instead of two loose <code>x</code> and <code>y</code>
+arguments, there's no reasonable way to deal with arcs using <em>niladic</em> or
+<em>monadic</em> functions, save for <em>Curried Functions</em>, which clearly aren't on
+Babbling Bob's mind here.</p>
 <p>You might also separate the computation of an arc from actually drawing it.
 Here, the computation returns the coordinates to be drawn, which you can pass
 into the <code>draw</code> method of the canvas object, maybe together with the drawing
@@ -195,19 +197,19 @@ mentioned in The Masterpiece.) Consider the following interfaces:</p>
 <pre class="codehilite"><code>reduce(combine, values, initialValue)
 </code></pre>
 
-<p>Where <code>combiner</code> is itself a function with the following interface:</p>
+<p>Where <code>combine</code> is itself a function with the following interface:</p>
 <pre class="codehilite"><code>combine(accumulator, x)
 </code></pre>
 
 <p>The <em>dyadic</em> <code>reduce</code> function must assume a value out of the given <code>values</code>
 (usually its first element) as the initial value to be used for the
 <code>accumulator</code>. So the <em>dyadic</em> <code>reduce</code> can only return something of the same
-type as the elements of <code>values</code> have. E.g. <code>values</code> is the integer array <code>[1,
-2, 3]</code>, and <code>combine</code> sums up the <code>accumulator</code> with the current value argument
-<code>x</code>, then <code>reduce</code> must return an integer.</p>
+type as the elements of <code>values</code> have. E.g. <code>values</code> is the integer array
+<code>[1,2,3]</code>, and <code>combine</code> sums up the <code>accumulator</code> with the current value
+argument <code>x</code>, then <code>reduce</code> must return an integer.</p>
 <p>The <em>triadic</em> <code>reduce</code> function can accept any initial value, as long as the
 <code>combine</code> function is capable of dealing properly with that type of value. E.g.
-<code>reduce</code> can be used to partition the integer array of <code>[1, 2, 3, 4]</code> into two
+<code>reduce</code> can be used to partition the integer array of <code>[1,2,3,4]</code> into two
 arrays of odd and even numbers. The <code>initialValue</code> then could be a tuple of two
 empty arrays: <code>([],[])</code>. Those arrays are filled by the <code>combine</code> function: odd
 numbers in the first array, even numbers in the second array: <code>([1,3],[2,4])</code>.</p>
@@ -219,7 +221,7 @@ judging by his <a href="https://blog.cleancoder.com/uncle-bob/2019/08/22/WhyCloj
 Clojure</a>.</p>
 <h1>Conclusion</h1>
 <p>I ranted away half of my Saturday morning on roughly half a page of Bob's
-Timeless Scripture. The problem is not that <em>Clean Code</em> is a book with advice
+Timeless Wisdom. The problem is not that <em>Clean Code</em> is a book with advice
 that aged poorly, because it was written from a mid 2000s-Java perspective. The
 problem is its uncritical fellowship taking this advice at face value, because
 their perspective is too narrow.</p>
@@ -232,11 +234,13 @@ its original.</p>
 <p>If you feel offended by this text, please take an hour to watch Brian
 Kernighan's lecture on <a href="https://www.youtube.com/watch?v=8SUkrR7ZfTA">The Elements of Programming
 Style</a> and let his advice sink in.
-Reconsider your habit of yelling <em>«Clean Code!!!1»</em>, <em>«Train Wreck!!!1»</em>, or
-even <em>«SOLID!!!1»</em> (what doess the «L» stand for, again?) at other programmers
-without first having tried to understand their code and familiarized yourself with
-the concepts being used therein. Try out a functional programming language or
-two, e.g. Haskell and Scheme, and consider their up- and downsides compared
+(A former professor of mine once «improved» Kernighan's code from <em>The C
+Programming Language</em>, for the reason you might guess: <em>Clean Code!!!1</em>)</p>
+<p>So reconsider your habit of yelling <em>«Clean Code!!!1»</em>, <em>«Train Wreck!!!1»</em>,
+or <em>«SOLID!!!1»</em> (what doess the «L» stand for, again?) at other programmers
+without first having tried to understand their code and familiarized yourself
+with the concepts being used therein. Try out a functional programming language
+or two, e.g. Haskell and Scheme, and consider their up- and downsides compared
 to, say, Java or C#. Then read <em>Clean Code</em> again (or: <em>actually</em> read it), but
 with the grain of salt extracted from your recent encounters with different
 ideas and concepts. Read it critically, not as a gospel, and you'll extract some
