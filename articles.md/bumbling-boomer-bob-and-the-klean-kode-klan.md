@@ -89,8 +89,8 @@ And:
 
 This difference is clearly just of a _quantitative_, not of a _qualitative_
 nature, because adding another argument only makes the function «harder to
-understand», no matter if you go from one to two of from two to three arguments.
-You just move up one step on a continuum.
+understand», no matter if you go from one to two, or from two to three
+arguments. You just move up one step on a continuum.
 
 Having been exposed to Haskell for a couple of hours, I'd expect to read about
 _Curried Functions_ here: functions of arity `n` that return a function of arity
@@ -144,10 +144,10 @@ he wouldn't object so strongly against side effects (_Clean Code_, p. 44):
 > and damaging mistruths that often result in strange temporal couplings and
 > order dependencies.
 
-Unless Bobby-O considers lies as good, he clearly speaks out _in favour_ of
-functions without arguments and _against_ side effects. So we should all be
-writing side-effect free functions without arguments. But what can such a
-function return?
+Unless Bobby-O considers lies good, he clearly speaks out _against_ side effects
+here, as he spoke out _in favour_ of functions without arguments before. So we
+should all be writing side-effect free functions without arguments. But what can
+such a function return?
 
 - Nothing
 - A constant value
@@ -255,8 +255,9 @@ its original.
 If you feel offended by this text, please take an hour to watch Brian
 Kernighan's lecture on [The Elements of Programming
 Style](https://www.youtube.com/watch?v=8SUkrR7ZfTA) and let his advice sink in.
-(A former professor of mine once «improved» Kernighan's code from _The C
-Programming Language_, for the reason you might guess: _Clean Code!!!1_)
+A former professor of mine once «improved» Kernighan's code from _The C
+Programming Language_ (second edition, again…), for the reason you might guess:
+_Clean Code!!!1_
 
 So reconsider your habit of yelling _«Clean Code!!!1»_, _«Train Wreck!!!1»_,
 or _«SOLID!!!1»_ (what does the «L» stand for, again?) at other programmers
