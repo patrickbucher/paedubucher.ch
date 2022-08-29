@@ -31,7 +31,7 @@ chapters. I also rarely bothered to read specific sections offering solutions to
 problems I faced on a daily basis. Probably the solutions offered weren't too
 helpful, even though I worked as a Java programmer during that time, and <em>Clean
 Code</em> is very much about the kind of Java we wrote back then. So <em>Clean Code</em>
-collected dust in my bookshelf.</p>
+collected dust on my bookshelf.</p>
 <h1>Clean Code and the Klean Kode Kult</h1>
 <p>When I studied computer science at the local technical college, I was exposed to
 <em>Clean Code</em> again. Or rather it was shoved down the students throats as a
@@ -59,8 +59,8 @@ witness the angry reaction caused by your blasphemous remark.</p>
 <h1>Bumbling Boomer Bob on Function Arguments</h1>
 <p>Working as a programmer for almost twenty years, I am still a layperson when it
 comes to the exegesis of <em>Clean Code</em>, because I obviously still haven't been
-englightened by this masterpiece yet. By trying to slay a straw man—and failing
-to do so!—will hopefully bring me back to the Right Path, so that I can finally
+englightened by this masterpiece yet. Trying to slay a straw man—and failing to
+do so!—will hopefully bring me back to the Right Path, so that I can finally
 abondon my wrongthink and give up on my hellish ends.</p>
 <p>Let's hear what The Englightened has to say about function arguments (<em>Clean
 Code</em>, Chapter 3, p. 40):</p>
@@ -74,22 +74,23 @@ justification—and then shouldn’t be used anyway.</p>
 paragraphs.</p>
 <p>Uncle Bob™ uses the terms <em>niladic</em>, <em>monadic</em>, <em>dyadic</em>, <em>triadic</em>, and
 <em>polyadic</em> for functions with arities of 0, 1, 2, 3, and n, respectively. There
-certainly is a <em>qualitative</em> difference betweeen 0, 1, and n, the difference
-between, 2, 3, and n is only of a <em>quantitative</em> nature. But judging by the
-terms used, the author sees a <em>qualitative</em> difference between all those
-arities, to wit (<em>Clean Code</em>, p. 42):</p>
+certainly is a <em>qualitative</em> difference betweeen 0, 1, and n (nothing,
+something, and many things), the difference between, 2, 3, and n is only of a
+<em>quantitative</em> nature. But judging by the terms being used, the author sees a
+<em>qualitative</em> difference between all those arities, to wit (<em>Clean Code</em>, p.
+42):</p>
 <blockquote>
 <p>A function with two arguments is harder to understand than a monadic function.</p>
 </blockquote>
 <p>And:</p>
 <blockquote>
 <p>Functions that take three arguments are significantly harder to understand
-than dyads. The issues of ordering, pausing, and ignoring are more than
-doubled. I suggest you think very carefully before creating a triad.</p>
+than dyads.</p>
 </blockquote>
 <p>This difference is clearly just of a <em>quantitative</em>, not of a <em>qualitative</em>
 nature, because adding another argument only makes the function «harder to
-understand», no matter if you go from one to two of from two to three arguments.</p>
+understand», no matter if you go from one to two of from two to three arguments.
+You just move up one step on a continuum.</p>
 <p>Having been exposed to Haskell for a couple of hours, I'd expect to read about
 <em>Curried Functions</em> here: functions of arity <code>n</code> that return a function of arity
 <code>n-1</code> when being invoked with a single argument. But obviously those Haskell
@@ -237,7 +238,7 @@ Style</a> and let his advice sink in.
 (A former professor of mine once «improved» Kernighan's code from <em>The C
 Programming Language</em>, for the reason you might guess: <em>Clean Code!!!1</em>)</p>
 <p>So reconsider your habit of yelling <em>«Clean Code!!!1»</em>, <em>«Train Wreck!!!1»</em>,
-or <em>«SOLID!!!1»</em> (what doess the «L» stand for, again?) at other programmers
+or <em>«SOLID!!!1»</em> (what does the «L» stand for, again?) at other programmers
 without first having tried to understand their code and familiarized yourself
 with the concepts being used therein. Try out a functional programming language
 or two, e.g. Haskell and Scheme, and consider their up- and downsides compared

@@ -21,7 +21,7 @@ chapters. I also rarely bothered to read specific sections offering solutions to
 problems I faced on a daily basis. Probably the solutions offered weren't too
 helpful, even though I worked as a Java programmer during that time, and _Clean
 Code_ is very much about the kind of Java we wrote back then. So _Clean Code_
-collected dust in my bookshelf.
+collected dust on my bookshelf.
 
 # Clean Code and the Klean Kode Kult
 
@@ -57,8 +57,8 @@ But wait, a contradiction in _Clean Code_? That's impossible! Or maybe not?
 
 Working as a programmer for almost twenty years, I am still a layperson when it
 comes to the exegesis of _Clean Code_, because I obviously still haven't been
-englightened by this masterpiece yet. By trying to slay a straw man—and failing
-to do so!—will hopefully bring me back to the Right Path, so that I can finally
+englightened by this masterpiece yet. Trying to slay a straw man—and failing to
+do so!—will hopefully bring me back to the Right Path, so that I can finally
 abondon my wrongthink and give up on my hellish ends.
 
 Let's hear what The Englightened has to say about function arguments (_Clean
@@ -74,22 +74,23 @@ paragraphs.
 
 Uncle Bob™ uses the terms _niladic_, _monadic_, _dyadic_, _triadic_, and
 _polyadic_ for functions with arities of 0, 1, 2, 3, and n, respectively. There
-certainly is a _qualitative_ difference betweeen 0, 1, and n, the difference
-between, 2, 3, and n is only of a _quantitative_ nature. But judging by the
-terms used, the author sees a _qualitative_ difference between all those
-arities, to wit (_Clean Code_, p. 42):
+certainly is a _qualitative_ difference betweeen 0, 1, and n (nothing,
+something, and many things), the difference between, 2, 3, and n is only of a
+_quantitative_ nature. But judging by the terms being used, the author sees a
+_qualitative_ difference between all those arities, to wit (_Clean Code_, p.
+42):
 
 > A function with two arguments is harder to understand than a monadic function.
 
 And:
 
 > Functions that take three arguments are significantly harder to understand
-> than dyads. The issues of ordering, pausing, and ignoring are more than
-> doubled. I suggest you think very carefully before creating a triad.
+> than dyads.
 
 This difference is clearly just of a _quantitative_, not of a _qualitative_
 nature, because adding another argument only makes the function «harder to
 understand», no matter if you go from one to two of from two to three arguments.
+You just move up one step on a continuum.
 
 Having been exposed to Haskell for a couple of hours, I'd expect to read about
 _Curried Functions_ here: functions of arity `n` that return a function of arity
@@ -258,7 +259,7 @@ Style](https://www.youtube.com/watch?v=8SUkrR7ZfTA) and let his advice sink in.
 Programming Language_, for the reason you might guess: _Clean Code!!!1_)
 
 So reconsider your habit of yelling _«Clean Code!!!1»_, _«Train Wreck!!!1»_,
-or _«SOLID!!!1»_ (what doess the «L» stand for, again?) at other programmers
+or _«SOLID!!!1»_ (what does the «L» stand for, again?) at other programmers
 without first having tried to understand their code and familiarized yourself
 with the concepts being used therein. Try out a functional programming language
 or two, e.g. Haskell and Scheme, and consider their up- and downsides compared
