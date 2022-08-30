@@ -5,13 +5,13 @@ author: Patrick Bucher
 date: 2018-10-05T12:00:00
 lang: en
 ---
-Accepting interfaces instead
-of requiring specific implementation is a good practice. Take Java collections
-as an example. A method accepting an `ArrayList` argument will only be useful
-if the caller is already using an `ArrayList`. Otherwise he’d need to convert
-the implementation he’s using, say, `LinkedList`, to an `ArrayList` first. A
-method accepting the `List` or even the `Collection` interface is far more
-likely to accept what the caller already has.
+
+Accepting interfaces instead of requiring specific implementation is a good
+practice. Take Java collections as an example. A method accepting an `ArrayList`
+argument will only be useful if the caller is already using an `ArrayList`.
+Otherwise he’d need to convert the implementation he’s using, say, `LinkedList`,
+to an `ArrayList` first. A method accepting the `List` or even the `Collection`
+interface is far more likely to accept what the caller already has.
 
 Many programmers recite this practice as “program on interfaces, not on
 implementations”. However, this rule is misleading, because the somewhat blurry

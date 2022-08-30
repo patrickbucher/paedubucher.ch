@@ -17,13 +17,12 @@
             
             <h3 class="author">Patrick Bucher</h3>
             <h3 class="date">2018-10-05</h3>
-            <div class="content"><p>Accepting interfaces instead
-of requiring specific implementation is a good practice. Take Java collections
-as an example. A method accepting an <code>ArrayList</code> argument will only be useful
-if the caller is already using an <code>ArrayList</code>. Otherwise he’d need to convert
-the implementation he’s using, say, <code>LinkedList</code>, to an <code>ArrayList</code> first. A
-method accepting the <code>List</code> or even the <code>Collection</code> interface is far more
-likely to accept what the caller already has.</p>
+            <div class="content"><p>Accepting interfaces instead of requiring specific implementation is a good
+practice. Take Java collections as an example. A method accepting an <code>ArrayList</code>
+argument will only be useful if the caller is already using an <code>ArrayList</code>.
+Otherwise he’d need to convert the implementation he’s using, say, <code>LinkedList</code>,
+to an <code>ArrayList</code> first. A method accepting the <code>List</code> or even the <code>Collection</code>
+interface is far more likely to accept what the caller already has.</p>
 <p>Many programmers recite this practice as “program on interfaces, not on
 implementations”. However, this rule is misleading, because the somewhat blurry
 notion of “programming on interfaces” does not mean the same as “accepting
