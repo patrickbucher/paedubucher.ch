@@ -92,9 +92,9 @@ create additional Git config files in my home folder: <code>~/.gitconfig-work</c
 <code>~/.gitconfig-school</code> (<code>~/.gitconfig</code> is for private GitHub repos on this
 particular computer, i.e. the default shown above).</p>
 <p>Then each config is included depending on its path from the <code>~/.gitconfig</code> file:</p>
-<pre class="codehilite"><code>[includeIf &quot;gitdir:~/git.work.xy&quot;]
+<pre class="codehilite"><code>[includeIf &quot;gitdir:~/git.work.xy/&quot;]
     path = ~/.gitconfig-work
-[includeIf &quot;gitdir:~/git.school.xy&quot;]
+[includeIf &quot;gitdir:~/git.school.xy/&quot;]
     path = ~/.gitconfig-school
 </code></pre>
 

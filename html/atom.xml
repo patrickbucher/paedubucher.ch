@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2022-09-04T07:52:23.834961Z</updated>
+    <updated>2022-10-25T09:32:23.775426Z</updated>
     <entry>
         <title>One Month of SICP</title>
         <link href="https://paedubucher.ch/articles/2022-08-30-one-month-of-sicp.html"/>
@@ -518,9 +518,9 @@ particular computer, i.e. the default shown above).
 Then each config is included depending on its path from the `~/.gitconfig` file:
 
 ```
-[includeIf &quot;gitdir:~/git.work.xy&quot;]
+[includeIf &quot;gitdir:~/git.work.xy/&quot;]
     path = ~/.gitconfig-work
-[includeIf &quot;gitdir:~/git.school.xy&quot;]
+[includeIf &quot;gitdir:~/git.school.xy/&quot;]
     path = ~/.gitconfig-school
 ```
 
@@ -576,6 +576,7 @@ be used for each commit.
 So you no longer have to remember running `git config user.email [wh@ev.er]`
 after cloning a repo (which you will forget) or commit with the wrong E-Mail
 address (which you'll regret).
+
 </content>
     </entry>
     <entry>

@@ -95,9 +95,9 @@ particular computer, i.e. the default shown above).
 Then each config is included depending on its path from the `~/.gitconfig` file:
 
 ```
-[includeIf "gitdir:~/git.work.xy"]
+[includeIf "gitdir:~/git.work.xy/"]
     path = ~/.gitconfig-work
-[includeIf "gitdir:~/git.school.xy"]
+[includeIf "gitdir:~/git.school.xy/"]
     path = ~/.gitconfig-school
 ```
 
@@ -153,3 +153,4 @@ be used for each commit.
 So you no longer have to remember running `git config user.email [wh@ev.er]`
 after cloning a repo (which you will forget) or commit with the wrong E-Mail
 address (which you'll regret).
+
