@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Towards Monads (in Go) ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../fonts.css">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">Towards Monads (in Go)</h1>
+            
+            <h2 class="subtitle">If I'd got them, I couldn't explain them…</h2>
+            
+            <h3 class="author">Patrick Bucher</h3>
+            <h3 class="date">2022-11-05</h3>
+            <div class="content"><blockquote>
+<p>As soon as you understand Monads, you're no longer able to explain Monads.</p>
+</blockquote>
+<p>— Somebody on the Internet</p>
+<p>Having read <code>n</code> tutorials on Monads, one must come to the conclusion that
+tutorial <code>n+1</code> needs to be written. Not so much in order to explain monads to
+others, but rather to understand them. So here I write down my current
+understanding on them, and my few readers get the chance to correct my
+misconceptions about them. I'll be using example code in Go for this purpose,
+because Haskell programmers won't bother to visit my site anyway.</p>
+<h1>Basic Arithmetic in Go</h1>
+<p>Functors are about composing functions, Monads are about composing <em>lifting</em>
+functions. For a start, we need some functions to compose. Everybody knows
+function composition from basic arithmetic:</p>
+<pre class="codehilite"><code>3 - 2 + 1 * 4
+</code></pre>
+
+<p>We have <em>numbers</em> that are chained together by <em>operators</em>.</p>
+<p>First, let's define a type alias for numbers:</p>
+<pre class="codehilite"><code class="language-go">type Number float64
+</code></pre>
+
+<p>Second, we need a type for operators:</p>
+<pre class="codehilite"><code class="language-go">type Operator func(Number) Number
+</code></pre>
+
+<p>But wait, why does the Operator only take a single number? Because we use
+closures to implement them:</p>
+<pre class="codehilite"><code class="language-go">func Adder(i Number) Operator {
+    return func(n Number) Number {
+        return n + i
+    }
+}
+
+func Subtractor(i Number) Operator {
+    return func(n Number) Number {
+        return n - i
+    }
+}
+
+func Multiplier(i Number) Operator {
+    return func(n Number) Number {
+        return n * i
+    }
+}
+
+func Divider(i Number) Operator {
+    return func(n Number) Number {
+        return n / i // NOTE: divide by zero possible!
+    }
+}
+</code></pre>
+
+<p>An <code>Operator</code> function is defined as some operation to be done on another
+number. For example, a <code>Multiplier</code> for the value <code>3</code> can be created. This
+function then can be applied to another number, say, <code>2</code>, which then is
+multiplied with <code>3</code> (<code>2 * 3 = 6</code>).</p>
+<p>Notice how elegantly the <code>NOTE</code> comment in the function <code>Divider</code> points to a
+possible problem to be resolved later on in the text. Yes: we could divide by
+zero, which is the problem to be solved using Monads.</p>
+<p>Here's how to use those operators:</p>
+<pre class="codehilite"><code class="language-go">func main() {
+    var n Number = 1
+    addTwo := Adder(2)
+    subOne := Subtractor(1)
+    mulThree := Multiplier(3)
+    divFour := Divider(4)
+
+    // ((((1 + 2) * 3) - 1) / 4) = 2
+    fmt.Println(divFour(subOne(mulThree(addTwo(n)))))
+}
+</code></pre>
+
+<p>We start with <code>n=1</code>, add <code>2</code> to it (<code>=3</code>), multiply it with <code>3</code> (<code>=9</code>), subtract
+<code>1</code> from it (<code>=8</code>), and divide it by <code>4</code>, which produces the result <code>2</code>.</p>
+<h1>Composing Functions</h1>
+<p>Nested function can be tedious to read. If we'd like to re-use a formula, it's
+better to <em>compose</em> those functions, which is achieved by another function
+called <code>Compose</code>:</p>
+<pre class="codehilite"><code class="language-go">// f(g(n))
+func Compose(f, g Operator) Operator {
+    return func(n Number) Number {
+        x := g(n)
+        y := f(x)
+        return y
+    }
+}
+</code></pre>
+
+<p>Two functions <code>f</code> and <code>g</code> can be composed as <code>f(g(x))</code>. The composition of those
+functions is itself a function, let's call it <code>h</code>. Calling <code>h(x)</code> is the
+equivalent of calling <code>f(g(x))</code>. (I call <code>g</code> the <em>inner</em> and <code>f</code> the <em>outer</em>
+function, and <code>f</code> is called with the result from the inner function call.)</p>
+<p>Let's compose the functions frome before:</p>
+<pre class="codehilite"><code class="language-go">func main() {
+    var n Number = 1
+    addTwo := Adder(2)
+    subOne := Subtractor(1)
+    mulThree := Multiplier(3)
+    divFour := Divider(4)
+
+    f := Compose(mulThree, addTwo)
+    g := Compose(subOne, f)
+    h := Compose(divFour, g)
+
+    // ((((1 + 2) * 3) - 1) / 4) = 2
+    fmt.Println(h(n))
+}
+</code></pre>
+
+<p>Which produces the same result as before: <code>2</code>.</p>
+<h2>Bad Composition</h2>
+<p>Let's mess up this example by introducing some nefarious operation: divide
+something by zero (I'll be leaving out the boiler-plate <code>main</code> code here):</p>
+<pre class="codehilite"><code class="language-go">divZero := Divider(0)
+f = Compose(mulThree, addTwo)
+g = Compose(subOne, f)
+h = Compose(divZero, g) // NOTE: this would break everything
+fmt.Println(h(n))
+</code></pre>
+
+<p>This, of course, does not produce a sensible result, but <code>+Inf</code>. One could make
+a mathematical argument on the correctness of this result (I can't), but further
+composition might be hurt by such a result.</p>
+<p>If the definition of <code>Number</code> is changed to <code>int32</code>, for example, the programm
+will break:</p>
+<pre class="codehilite"><code>panic: runtime error: integer divide by zero
+</code></pre>
+
+<p>Which definitively hurts composition.</p>
+<p>So we need a safe way to divide numbers, which either produces a proper result
+to be used for further computations (or as the final result), or some kind of an
+error, so that further computations downstream won't be attempting to compute
+with.</p>
+<h1>Wrapping Results</h1>
+<p>A new type <code>Result</code> is created, which can represent the result of a successful
+computation (<code>Val</code>) or the reason why this computation failed (<code>Err</code>):</p>
+<pre class="codehilite"><code class="language-go">type Result struct {
+    Val Number
+    Err error
+}
+</code></pre>
+
+<p>The operators are supposed to deal with such results. More precisely: The
+operators still accept <code>Number</code>s, but produce <code>Result</code>s:</p>
+<pre class="codehilite"><code class="language-go">type LiftingOperator func(Number) Result
+</code></pre>
+
+<p>Those operators are supposed to <em>lift</em> an ordinary <code>Number</code> into another
+context: the <code>Result</code>.</p>
+<p>A <code>Result</code> is used like a union in C: either <code>Val</code> is set (indicating a properly
+performed computation), or <code>Err</code> is set (indicating some problem). The
+implementations of the operations addition, subtraction, and multiplication are
+straightforwards:</p>
+<pre class="codehilite"><code class="language-go">func LiftingAdder(i Number) LiftingOperator {
+    return func(n Number) Result {
+        return Result{n + i, nil}
+    }
+}
+
+func LiftingSubtractor(i Number) LiftingOperator {
+    return func(n Number) Result {
+        return Result{n - i, nil}
+    }
+}
+
+func LiftingMultiplier(i Number) LiftingOperator {
+    return func(n Number) Result {
+        return Result{n * i, nil}
+    }
+}
+</code></pre>
+
+<p>The result of the computation is wrapped in <code>Result</code> with no error and returned.</p>
+<p>The division, however, might produce either a <code>Result</code> with an actual value, or
+one only consisting of an error:</p>
+<pre class="codehilite"><code class="language-go">func LiftingDivider(i Number) LiftingOperator {
+    return func(n Number) Result {
+        if i == 0 {
+            return Result{0.0, errors.New(&quot;divide by zero&quot;)}
+        }
+        return Result{n / i, nil}
+    }
+}
+</code></pre>
+
+<h2>Composing Lifting Functions</h2>
+<p>Those lifting functions can be composed, too, but require a modified
+implementation of the <code>Compose</code> function from before, called <code>ComposeLifting</code>:</p>
+<pre class="codehilite"><code class="language-go">func ComposeLifting(f, g LiftingOperator) LiftingOperator {
+    return func(n Number) Result {
+        x := g(n)
+        if x.Err != nil {
+            return Result{0.0, fmt.Errorf(&quot;call inner function: %w&quot;, x.Err)}
+        }
+        y := f(x.Val)
+        if y.Err != nil {
+            return Result{0.0, fmt.Errorf(&quot;call outer function: %w&quot;, y.Err)}
+        }
+        return Result{y.Val, nil}
+    }
+}
+</code></pre>
+
+<p>If the result of the inner function <code>g</code> turns out be be erroneous, the outer
+function <code>f</code> is never called, but the error returned from <code>g</code> is wrapped and
+returned. The same is done for the result of the outer functon <code>f</code>. Only if both
+<code>g</code> and <code>f</code> produce proper results (represented by a value) can a the composed
+function itself return a proper result.</p>
+<p>Let's compose some <em>lifting</em> functions:</p>
+<pre class="codehilite"><code class="language-go">addLiftingTwo := LiftingAdder(2)
+subLiftingOne := LiftingSubtractor(1)
+mulLiftingThree := LiftingMultiplier(3)
+divLiftingFour := LiftingDivider(4)
+
+fl := ComposeLifting(mulLiftingThree, addLiftingTwo)
+gl := ComposeLifting(subLiftingOne, fl)
+hl := ComposeLifting(divLiftingFour, gl)
+fmt.Println(hl(n))
+</code></pre>
+
+<p>This program produces the output <code>{2 &lt;nil&gt;}</code>, i.e. the result <code>2</code> was computed,
+and no error (<code>&lt;nil&gt;</code>) occured.</p>
+<p>Let's compose some computation including the nefarious division by zero:</p>
+<pre class="codehilite"><code class="language-go">addLiftingTwo := LiftingAdder(2)
+subLiftingOne := LiftingSubtractor(1)
+mulLiftingThree := LiftingMultiplier(3)
+divLiftingZero := LiftingDivider(0)
+
+fl := ComposeLifting(mulLiftingThree, addLiftingTwo)
+gl := ComposeLifting(subLiftingOne, fl)
+hl := ComposeLifting(divLiftingZero, gl)
+fmt.Println(hl(n))
+</code></pre>
+
+<p>Which produces the following output:</p>
+<pre class="codehilite"><code>{0 call outer function: divide by zero}
+</code></pre>
+
+<p>Since there is an error, <code>0</code> is <em>not</em> the result, but a placeholder. The error
+message tells us pretty well what went wrong.</p>
+<p>The function composition is also not hurt if we put the nefarious division by
+zero in the middle:</p>
+<pre class="codehilite"><code class="language-go">addLiftingTwo := LiftingAdder(2)
+divLiftingZero := LiftingDivider(0)
+subLiftingOne := LiftingSubtractor(1)
+mulLiftingThree := LiftingMultiplier(3)
+
+fl := ComposeLifting(divLiftingZero, addLiftingTwo)
+gl := ComposeLifting(subLiftingOne, fl)
+hl := ComposeLifting(mulLiftingThree, gl)
+fmt.Println(hl(n))
+</code></pre>
+
+<p>However, a longer error message is produced:</p>
+<pre class="codehilite"><code>{0 call inner function: call inner function: call outer function: divide by zero}
+</code></pre>
+
+<p>The code can be found on
+<a href="https://gist.github.com/patrickbucher/70b8f1ebe91ea2f50cb829c7bad657a7">GitHub</a>.</p>
+<h1>Conclusion</h1>
+<p>Functions operate on values and can be composed to new functions. Lifting
+functions operate on values, too, but lift them in a context for some purpose
+like error handling. This lifted context is called a Monad. Lifting functions
+can be composed and make the aspect, for which the lifting happens, transparent
+to the user of an API. Monads are about composing lifting functions.</p>
+<p>Note: I didn't bother to mention <a href="https://wiki.haskell.org/Monad_laws">Monad
+Laws</a>.</p></div>
+        </main>
+        <footer class="backlink"><a href="index.html">paedubucher.ch</a> | © 2022 by Patrick Bucher</footer>
+    </body>
+</html>
