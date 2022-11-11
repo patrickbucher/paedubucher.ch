@@ -23,8 +23,8 @@
 <p>— Somebody on the Internet</p>
 <p>Having read <code>n</code> tutorials on Monads, one must come to the conclusion that
 tutorial <code>n+1</code> needs to be written. Not so much in order to explain monads to
-others, but rather to understand them. So here I write down my current
-understanding on them, and my few readers get the chance to correct my
+others, but rather to gain more clarity. So here I write down my current
+understanding of Monads, and my few readers get the chance to correct my
 misconceptions about them. I'll be using example code in Go for this purpose,
 because Haskell programmers won't bother to visit my site anyway.</p>
 <h1>Basic Arithmetic in Go</h1>
@@ -130,7 +130,7 @@ function, and <code>f</code> is called with the result from the inner function c
 <p>Which produces the same result as before: <code>2</code>.</p>
 <h2>Bad Composition</h2>
 <p>Let's mess up this example by introducing some nefarious operation: divide
-something by zero (I'll be leaving out the boiler-plate <code>main</code> code here):</p>
+something by zero (I'll be leaving out the boiler-plate <code>main</code> code from here):</p>
 <pre class="codehilite"><code class="language-go">divZero := Divider(0)
 f = Compose(mulThree, addTwo)
 g = Compose(subOne, f)
@@ -138,9 +138,11 @@ h = Compose(divZero, g) // NOTE: this would break everything
 fmt.Println(h(n))
 </code></pre>
 
-<p>This, of course, does not produce a sensible result, but <code>+Inf</code>. One could make
-a mathematical argument on the correctness of this result (I can't), but further
-composition might be hurt by such a result.</p>
+<p>This, of course, does not produce a numeric result, but <code>+Inf</code>. One could make a
+mathematical argument on the correctness of this result (which I can't), or
+refer to the <a href="https://standards.ieee.org/ieee/754/6210/">IEEE 754</a> standard for
+floating-point arithmetic (which I did), but further composition is clearly hurt
+by such a result.</p>
 <p>If the definition of <code>Number</code> is changed to <code>int32</code>, for example, the programm
 will break:</p>
 <pre class="codehilite"><code>panic: runtime error: integer divide by zero
@@ -161,7 +163,8 @@ computation (<code>Val</code>) or the reason why this computation failed (<code>
 </code></pre>
 
 <p>The operators are supposed to deal with such results. More precisely: The
-operators still accept <code>Number</code>s, but produce <code>Result</code>s:</p>
+operators still accept values of type <code>Number</code>, but produce values of type
+<code>Result</code>:</p>
 <pre class="codehilite"><code class="language-go">type LiftingOperator func(Number) Result
 </code></pre>
 
@@ -170,7 +173,7 @@ context: the <code>Result</code>.</p>
 <p>A <code>Result</code> is used like a union in C: either <code>Val</code> is set (indicating a properly
 performed computation), or <code>Err</code> is set (indicating some problem). The
 implementations of the operations addition, subtraction, and multiplication are
-straightforwards:</p>
+straightforward:</p>
 <pre class="codehilite"><code class="language-go">func LiftingAdder(i Number) LiftingOperator {
     return func(n Number) Result {
         return Result{n + i, nil}
@@ -191,8 +194,8 @@ func LiftingMultiplier(i Number) LiftingOperator {
 </code></pre>
 
 <p>The result of the computation is wrapped in <code>Result</code> with no error and returned.</p>
-<p>The division, however, might produce either a <code>Result</code> with an actual value, or
-one only consisting of an error:</p>
+<p>The division, however, might produce either a <code>Result</code> with an actual value
+(<code>Val</code>), or a <code>Result</code> only consisting of an error (<code>Err</code>):</p>
 <pre class="codehilite"><code class="language-go">func LiftingDivider(i Number) LiftingOperator {
     return func(n Number) Result {
         if i == 0 {
@@ -224,8 +227,8 @@ implementation of the <code>Compose</code> function from before, called <code>Co
 <p>If the result of the inner function <code>g</code> turns out be be erroneous, the outer
 function <code>f</code> is never called, but the error returned from <code>g</code> is wrapped and
 returned. The same is done for the result of the outer functon <code>f</code>. Only if both
-<code>g</code> and <code>f</code> produce proper results (represented by a value) can a the composed
-function itself return a proper result.</p>
+<code>g</code> and <code>f</code> produce proper results (represented by a value) can the composed
+function itself return a result with a value set.</p>
 <p>Let's compose some <em>lifting</em> functions:</p>
 <pre class="codehilite"><code class="language-go">addLiftingTwo := LiftingAdder(2)
 subLiftingOne := LiftingSubtractor(1)
@@ -240,7 +243,7 @@ fmt.Println(hl(n))
 
 <p>This program produces the output <code>{2 &lt;nil&gt;}</code>, i.e. the result <code>2</code> was computed,
 and no error (<code>&lt;nil&gt;</code>) occured.</p>
-<p>Let's compose some computation including the nefarious division by zero:</p>
+<p>Let's compose some computations including the nefarious division by zero:</p>
 <pre class="codehilite"><code class="language-go">addLiftingTwo := LiftingAdder(2)
 subLiftingOne := LiftingSubtractor(1)
 mulLiftingThree := LiftingMultiplier(3)

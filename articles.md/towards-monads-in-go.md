@@ -12,8 +12,8 @@ lang: "en"
 
 Having read `n` tutorials on Monads, one must come to the conclusion that
 tutorial `n+1` needs to be written. Not so much in order to explain monads to
-others, but rather to understand them. So here I write down my current
-understanding on them, and my few readers get the chance to correct my
+others, but rather to gain more clarity. So here I write down my current
+understanding of Monads, and my few readers get the chance to correct my
 misconceptions about them. I'll be using example code in Go for this purpose,
 because Haskell programmers won't bother to visit my site anyway.
 
@@ -144,7 +144,7 @@ Which produces the same result as before: `2`.
 ## Bad Composition
 
 Let's mess up this example by introducing some nefarious operation: divide
-something by zero (I'll be leaving out the boiler-plate `main` code here):
+something by zero (I'll be leaving out the boiler-plate `main` code from here):
 
 ```go
 divZero := Divider(0)
@@ -154,9 +154,11 @@ h = Compose(divZero, g) // NOTE: this would break everything
 fmt.Println(h(n))
 ```
 
-This, of course, does not produce a sensible result, but `+Inf`. One could make
-a mathematical argument on the correctness of this result (I can't), but further
-composition might be hurt by such a result.
+This, of course, does not produce a numeric result, but `+Inf`. One could make a
+mathematical argument on the correctness of this result (which I can't), or
+refer to the [IEEE 754](https://standards.ieee.org/ieee/754/6210/) standard for
+floating-point arithmetic (which I did), but further composition is clearly hurt
+by such a result.
 
 If the definition of `Number` is changed to `int32`, for example, the programm
 will break:
@@ -185,7 +187,8 @@ type Result struct {
 ```
 
 The operators are supposed to deal with such results. More precisely: The
-operators still accept `Number`s, but produce `Result`s:
+operators still accept values of type `Number`, but produce values of type
+`Result`:
 
 ```go
 type LiftingOperator func(Number) Result
@@ -197,7 +200,7 @@ context: the `Result`.
 A `Result` is used like a union in C: either `Val` is set (indicating a properly
 performed computation), or `Err` is set (indicating some problem). The
 implementations of the operations addition, subtraction, and multiplication are
-straightforwards:
+straightforward:
 
 ```go
 func LiftingAdder(i Number) LiftingOperator {
@@ -221,8 +224,8 @@ func LiftingMultiplier(i Number) LiftingOperator {
 
 The result of the computation is wrapped in `Result` with no error and returned.
 
-The division, however, might produce either a `Result` with an actual value, or
-one only consisting of an error:
+The division, however, might produce either a `Result` with an actual value
+(`Val`), or a `Result` only consisting of an error (`Err`):
 
 ```go
 func LiftingDivider(i Number) LiftingOperator {
@@ -259,8 +262,8 @@ func ComposeLifting(f, g LiftingOperator) LiftingOperator {
 If the result of the inner function `g` turns out be be erroneous, the outer
 function `f` is never called, but the error returned from `g` is wrapped and
 returned. The same is done for the result of the outer functon `f`. Only if both
-`g` and `f` produce proper results (represented by a value) can a the composed
-function itself return a proper result.
+`g` and `f` produce proper results (represented by a value) can the composed
+function itself return a result with a value set.
 
 Let's compose some _lifting_ functions:
 
@@ -279,7 +282,7 @@ fmt.Println(hl(n))
 This program produces the output `{2 <nil>}`, i.e. the result `2` was computed,
 and no error (`<nil>`) occured.
 
-Let's compose some computation including the nefarious division by zero:
+Let's compose some computations including the nefarious division by zero:
 
 ```go
 addLiftingTwo := LiftingAdder(2)
