@@ -73,7 +73,8 @@ def scaffold(page_dir):
 
     static_dir = os.path.join(page_dir, 'static')
 
-    for entry in ['fonts.css', 'style.css', 'favicon.ico', 'robots.txt']:
+    for entry in ['fonts.css', 'style.css', 'favicon.ico', 'robots.txt',
+                  'key.gpg']:
         source = os.path.join(static_dir, entry)
         target = os.path.join(html_dir, entry)
         shutil.copyfile(source, target)
