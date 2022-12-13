@@ -215,3 +215,7 @@ Linux-Einführung an der Berufsschule geben ‒ für die Lehrer, nicht für die
 Schüler. Themen wie systemd, nftables und Netzwerke allgemein sollte ich
 gelegentlich auch etwas vertiefen. Dazu kommen auch diverse Cloud-Themen, u.a.
 auch Datenschutz und anbieterspezifische Themen.
+
+Im zweiten Halbjahr steht dann die didaktische Grundausbildung an, die mich wohl
+jeweils samstags beschäftigen wird. Geniesse ich also die grösstenteils freien
+Wochenenden im ersten Halbjahr.
