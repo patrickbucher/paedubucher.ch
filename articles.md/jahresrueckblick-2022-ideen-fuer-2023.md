@@ -2,8 +2,8 @@
 title: 'Jahresrückblick 2022 und Ideen für 2023'
 subtitle: 'Was war, was (vielleicht) wird.'
 author: 'Patrick Bucher'
-date: '2022-12-13T21:50:00'
-lang: 'de'
+date: 2022-12-13T21:50:00
+lang: de
 ---
 
 Letztes Jahr habe ich einen
@@ -25,15 +25,16 @@ wie die Commits im entsprechenden
 [Repository](https://github.com/patrickbucher/elixir-basics) zeigen. Das Buch
 [Elixir in
 Action](https://www.manning.com/books/elixir-in-action-second-edition) habe ich
-jedoch nur etwa zu zwei Dritteln durchgearbeitet.
+jedoch nur etwa zu zwei Dritteln durchgearbeitet. Ich bin bei den eigentlich
+interessanten Teilen (Fehlerbehandlung) hängen geblieben.
 
 Die 
 [Elixir-Implementierung meines
 SuperLeague-Programms](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-elixir)
 habe ich überarbeitet und dabei deutlich verbessern können. Soweit das Positive.
 
-Mit Phoenix und dem Umschreiben meiner
-[Reversi-Simulation](https://github.com/patrickbucher/revergo) auf Elixir ist es
+Mit Phoenix und dem Neuschreiben meiner
+[Reversi-Simulation](https://github.com/patrickbucher/revergo) in Elixir ist es
 jedoch nichts geworden.
 
 Das einzige grössere Beispiel war eine nebenläufige
@@ -52,7 +53,8 @@ angeschaut, jedoch ohne generische Sprachkonstrukte.
 
 Auf der Arbeit habe ich ein Memory-leakendes Logging-Tool (in Python
 implementiert) durch ein einfacheres Tool in Go ersetzt. Das habe ich in Etappen
-gemacht; mit dem Ergebnis bin ich recht zufrieden.
+gemacht; mit dem Ergebnis bin ich recht zufrieden. Ich habe es schon mehrmals
+verbessert und erweitert, was recht einfach ging.
 
 Mit [Cloud Native
 Go](https://www.oreilly.com/library/view/cloud-native-go/9781492076322/) und [12
@@ -69,8 +71,9 @@ An privaten Projekten sind doch einige kleinere Sachen in Go zusammengekommen:
   Kommandozeilenwerkzeug, der die Links einer Webseite überprüft, um tote Links
   finden zu können
 - [openbsd_autoinstall](https://github.com/patrickbucher/openbsd_autoinstall):
-  ein minimalistischer Server, der eine `install.conf` für OpenBSD liefert, was
-  etwa für das Bauen von Images mit Packer sinnvoll sein kann
+  ein minimalistischer HTTP-Server, der eine `install.conf` für OpenBSD liefert,
+  was etwa für das Bauen von Images mit [Packer](https://www.packer.io/)
+  sinnvoll sein kann
 - [dfdegoregexp](https://github.com/patrickbucher/dfdegoregexp): eine kleine
   Einführung in reguläre Ausdrücke mit Go, für das deutsche Debianforum
   geschrieben
@@ -88,11 +91,10 @@ Immerhin…
 
 Ab Februar habe ich an der Berufsschule ein Praxismodul zum Thema
 Web-Entwicklung unterrichtet. Hierfür habe ich mich wieder einmal etwas mit
-JavaScript befasst. Dabei habe ich eher Node.js als Deno verwendet, obwohl mir
-letzteres besser gefällt. Es wurde jedoch November, bis ich mein
-SuperLeague-Programm mit
-[JavaScript/Deno](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-javascript)
-geschrieben habe.
+JavaScript befasst. Dabei habe ich eher [Node.js](https://nodejs.org/en/) als
+[Deno](https://deno.land/) verwendet, obwohl mir letzteres besser gefällt. Es
+wurde jedoch November, bis ich mein SuperLeague-Programm mit
+[JavaScript/Deno](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-javascript) geschrieben habe.
 
 Neben kleineren Programmierbeispielen für den Unterricht habe ich das [Game of
 Life](https://github.com/patrickbucher/js-game-of-life) in JavaScript
@@ -105,7 +107,8 @@ eine genügend schmale Nische zu finden…
 
 Zum Thema JavaScript habe ich auch einige
 [Videos](https://www.youtube.com/@ipt6web-entwicklung264/videos) für den
-Berufsschulunterricht aufgenommen.
+Berufsschulunterricht aufgenommen. Beruflich habe ich JavaScript sonst kaum
+verwendet.
 
 ---
 
@@ -113,40 +116,44 @@ Soviel zu den gesteckten Zielen.
 
 # Und sonst so?
 
-Es muss so im April gewesen sein, dass ich Elixir erneut habe fallen lassen. Ich
+Es muss so im April gewesen sein, als ich Elixir erneut habe fallen lassen. Ich
 muss mich wohl etwas mit Clojure beschäftigt haben, wovon die entsprechende
 [SuperLeague-Implementierung](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-clojure)
 zeugt. (Das gleiche habe ich noch in
 [C](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-c)
-und
+und in
 [Racket](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-racket)
-gemacht, doch von letzterem später mehr…) Einige neue Bücher auf meinem Regal
-zeugen auch von dieser Beschäftigung. Statt eines gründlich durchzuarbeiten,
-habe ich verschiedene Bücher angelesen. So richtig vorwärtsgekommen bin ich
-dabei nicht. Frustriert von meiner fehlenden Konzentration ‒ und im Hinblick auf
-ein zweites Halbjahr mit nur sehr wenig Freizeit, habe ich dann Clojure wieder
-fallen lassen, jedoch Scheme wieder aufgenommen.
+gemacht, doch von letzterem später mehr…)
+
+Einige neue Bücher auf meinem Regal zeugen auch von dieser Beschäftigung mit
+Clojure. Statt eines gründlich durchzuarbeiten, habe ich verschiedene Bücher
+angelesen. So richtig vorwärtsgekommen bin ich dabei nicht. Frustriert von
+meiner fehlenden Konzentration ‒ und im Hinblick auf ein zweites Halbjahr mit
+nur sehr wenig Freizeit, habe ich dann Clojure wieder fallen lassen, jedoch
+Scheme wieder aufgenommen.
 
 ## SICP: der zweite Versuch
 
 Ich habe mir folgendes überlegt: Wenn ich
 [SICP](https://mitpress.mit.edu/9780262510875/structure-and-interpretation-of-computer-programs/)
 durcharbeite, profitiere ich dabei sicherlich auch für Clojure, sowie für andere
-Programmiersprachen. Und wenn ich täglich daran arbeite ‒ und sei es auch nur
-eine gelesene Seite oder eine angefangene Übung ‒ bleibe ich sicherlich nicht
-stehen.
+(funktionale) Programmiersprachen. Und wenn ich täglich daran arbeite ‒ und sei
+es auch nur eine gelesene Seite oder eine angefangene Übung ‒ bleibe ich
+sicherlich nicht stehen. Gerade das zweite Halbjahr würde mir die Vorbereitung
+des Berufsschulunterrichts sehr viel Aufwand bereiten. So bleibe ich zumindest
+nicht stehen in meiner Beschäftigung mit der funktionalen Programmierung.
 
 So schaue ich nun auf über vier Monate [täglicher
 Beschäftigung](https://github.com/patrickbucher/sicp/blob/master/diary.md) mit
 SICP zurück. Sogar am [Tag meines
 Umzugs](https://github.com/patrickbucher/sicp/blob/master/diary.md#2022-10-04-tu)
 konnte ich eine Übung lösen, die ich dann per Smartphone-Hotspot auf GitHub
-gepusht habe.
+gepusht habe. Ja, ich habe es dieses mal durchgezogen!
 
 Gelernt habe ich dabei so einiges. Einige Frustrationen konnte ich
 gewinnbringend überwinden, in dem ich etwa auf Racket ausweichen musste, um die
-Beispiele mit der Bildverarbeitung testen zu können. (Aus dieser Beschäftigung
-stammte auch die SuperLeague-Implementierung.)
+Beispiele mit der Bildverarbeitung im zweiten Kapitel testen zu können. (Aus
+dieser Beschäftigung stammte auch die SuperLeague-Implementierung.)
 
 Kapitel 2 könnte ich noch dieses Jahr beenden. Kapitel 3 möchte ich sicherlich
 auch noch durcharbeiten. Kapitel 4 und 5 hingegen könnten warten, und ich könnte
@@ -164,26 +171,30 @@ habe ich in Python umgeschrieben und erweitert, was sich durchaus gelohnt hat.
 
 Auf der Arbeit habe ich keine grösseren Würfe zu verzeichnen. Ich habe vor mich
 hingewerkelt und das eine oder andere verbessert. Ein Werkzeug zur Auslosung
-interner Restore-Tests hat mich zur kurzen Beschäftigung mit GraphQL gebracht.
-Auch Podman war kurz ein Thema. Mit Ruby und Vagrant hatte ich mich auch kurz
-beschäftigt, jedoch zu wenig nachhaltig. Ansible ist auch wieder unter den Tisch
-gefallen, Kubernetes genauso.
+interner Restore-Tests hat mich zur kurzen Beschäftigung mit
+[GraphQL](https://graphql.org/) gebracht. Auch [Podman](https://podman.io/) war
+kurz ein Thema. Mit Ruby und Vagrant hatte ich mich auch kurz beschäftigt,
+jedoch zu wenig nachhaltig. Ansible ist auch wieder unter den Tisch gefallen,
+Kubernetes genauso, wobei ich mir letzteres gar nicht vorgenommen hatte.
 
 Mit zwei Freunden halte ich einen unregelmässizen Lesezirkel zu Gerald Weinbergs
 _Psychology of Computer Programming_ ab. Das Buch ist ein wahrer Schatz, und zu
 jedem Kapitel fallen jedem Teilnehmer verschiedenste bestätigende Beispiele ein.
+Wir sind aber in einem halben Jahr nicht ganz durchgekommen. Ich freue mich
+aber, den Lesezirkel 2023 weiterzuführen; auch mit einem weiteren Buch.
 
 Sonst gibt es von 2022 nicht mehr viel zu berichten. Gelesen habe ich nicht sehr
 viel. Das [Cryptonomicon](https://www.nealstephenson.com/cryptonomicon.html)
 zieht sich seit Sommer hin. Wenigstens wäre nach dem Umzug meine Bibliothek
 wieder einigermassen aufgeräumt. Den Kindle habe ich wieder aktiviert, mir
-darauf aber v.a. leichte Lektüre zugeführt. Fremdsprachen waren auch kein Thema.
+darauf aber v.a. leichte Lektüre zugeführt. Fremdsprachen waren kein Thema
+dieses Jahr. Immerhin lese ich das meiste auf Englisch.
 
 Zum Jahresende hat mir dann der [Adventskalender 2022 vom
 Debianforum](https://wiki.debianforum.de/Adventskalender_2022) noch etwas Arbeit
 und noch viel mehr Freude beschert. Zwei meiner «Türchen» kamen aus dem Umfeld
 des Berufsschulunterrichts (Redis und ein noch geheimes); die anderen beiden von
-der Arbeit (`spiped`) bzw. aus der Freizeit (auch noch geheim).
+der Arbeit (`spiped`) bzw. aus der Freizeit (Huffman-Codierung).
 
 Das Unterrichten mit Vor- und Nachbereitung hat in der zweiten Jahreshälfte
 nicht nur zwei volle Tage, sondern auch den grössten Teil des Wochenendes
@@ -207,14 +218,16 @@ Packaging-Thematik).
 
 SICP wird mich sicherlich noch einige Monate beschäftigen, wenn nicht das ganze
 Jahr. Ansonsten reizt mich derzeit so einiges: Elixir, Rust, Perl (kein
-Tippfehler!), Clojure, Elm, Svelte und Racket.
+Tippfehler!), Clojure, Elm, Svelte und Racket. Dabei sehe ich im Moment bei
+Elixir und dem Web-Framework Phoenix das grösste Potenzial.
 
 Bei ben Betriebssystemen begnüge ich mich derzeit mit Linux. FreeBSD und OpenBSD
-spielen bei mir derzeit (leider) keine Rolle. Im Frühling soll ich zudem eine
-Linux-Einführung an der Berufsschule geben ‒ für die Lehrer, nicht für die
-Schüler. Themen wie systemd, nftables und Netzwerke allgemein sollte ich
-gelegentlich auch etwas vertiefen. Dazu kommen auch diverse Cloud-Themen, u.a.
-auch Datenschutz und anbieterspezifische Themen.
+spielen bei mir derzeit (leider) keine Rolle. Mein Backup- und Dateiserver, auf
+dem FreeBSD mit ZFS läuft, liegt immer noch in einer Umzugskiste. Im Frühling
+soll ich zudem eine Linux-Einführung an der Berufsschule geben ‒ für die Lehrer,
+nicht für die Schüler. Themen wie systemd, nftables und Netzwerke allgemein
+sollte ich gelegentlich auch etwas vertiefen. Dazu kommen auch diverse
+Cloud-Themen, u.a. auch Datenschutz und anbieterspezifische Themen.
 
 Im zweiten Halbjahr steht dann die didaktische Grundausbildung an, die mich wohl
 jeweils samstags beschäftigen wird. Geniesse ich also die grösstenteils freien
