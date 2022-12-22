@@ -2,7 +2,7 @@
 title: 'Jahresrückblick 2022 und Ideen für 2023'
 subtitle: 'Was war, was (vielleicht) wird.'
 author: 'Patrick Bucher'
-date: 2022-12-13T21:50:00
+date: 2022-12-22T14:30:00
 lang: de
 ---
 
