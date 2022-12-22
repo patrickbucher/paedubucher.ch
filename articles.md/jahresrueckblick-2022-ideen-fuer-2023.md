@@ -213,15 +213,18 @@ Bis Ende April stehen einige Servermigrationen an; d.h. nicht nur VMs, sondern
 auch ein physischer im Serverraum. Weiter sollte ich mich mit
 Container-Registries befassen und vielleicht Podman noch etwas genauer
 anschauen. Kubernetes wäre auch wieder einmal interessant, zumal ich es bisher
-v.a. aus der OpenShift-Perspektive kenne. Auch mein Python-Wissen sollte ich
-gelegentlich etwas vertiefen (z.B. mit asyncio oder der ganzen
-Packaging-Thematik).
+v.a. aus der OpenShift-Perspektive kenne, und sich Kubernetes seit meiner
+letzten Beschäftigung damit sicherlich weiterentwickelt hat. Auch mein
+Python-Wissen sollte ich gelegentlich etwas vertiefen (z.B. mit asyncio oder der
+ganzen Packaging-Thematik, ansonsten reizt mich daran derzeit wenig).
 
 SICP wird mich sicherlich noch einige Monate beschäftigen, wenn nicht das ganze
 Jahr. Ansonsten reizt mich derzeit so einiges: Elixir, Rust, Perl (kein
 Tippfehler!), Clojure, Elm, Svelte und Racket. Dabei sehe ich im Moment bei
-Elixir und dem Web-Framework Phoenix das grösste Potenzial. Und wenn ich
-konsequent sein will, sollte ich mir vorher einmal gründlich Erlang anschauen.
+Elixir und dem Web-Framework Phoenix das grösste Potenzial. (Und wenn ich
+konsequent sein will, sollte ich mir vorher einmal gründlich Erlang anschauen.)
+Viele dieser Sprachen und Technologien (Perl ausgenommen) helfen dabei, Software
+besser zu entwickeln, indem man auf unkontrollierte Seiteneffekte verzichtet.
 
 Bei ben Betriebssystemen begnüge ich mich derzeit mit Linux. FreeBSD und OpenBSD
 spielen bei mir derzeit (leider) keine Rolle. Mein Backup- und Dateiserver, auf
