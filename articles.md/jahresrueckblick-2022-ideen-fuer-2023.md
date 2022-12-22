@@ -94,7 +94,8 @@ Web-Entwicklung unterrichtet. Hierfür habe ich mich wieder einmal etwas mit
 JavaScript befasst. Dabei habe ich eher [Node.js](https://nodejs.org/en/) als
 [Deno](https://deno.land/) verwendet, obwohl mir letzteres besser gefällt. Es
 wurde jedoch November, bis ich mein SuperLeague-Programm mit
-[JavaScript/Deno](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-javascript) geschrieben habe.
+[JavaScript/Deno](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-javascript)
+geschrieben habe.
 
 Neben kleineren Programmierbeispielen für den Unterricht habe ich das [Game of
 Life](https://github.com/patrickbucher/js-game-of-life) in JavaScript
@@ -193,15 +194,15 @@ dieses Jahr. Immerhin lese ich das meiste auf Englisch.
 Zum Jahresende hat mir dann der [Adventskalender 2022 vom
 Debianforum](https://wiki.debianforum.de/Adventskalender_2022) noch etwas Arbeit
 und noch viel mehr Freude beschert. Zwei meiner «Türchen» kamen aus dem Umfeld
-des Berufsschulunterrichts (Redis und ein noch geheimes); die anderen beiden von
-der Arbeit (`spiped`) bzw. aus der Freizeit (Huffman-Codierung).
+des Berufsschulunterrichts (Redis und S3/MinIO); die anderen beiden von der
+Arbeit (`spiped`) bzw. aus der Freizeit (Huffman-Codierung).
 
 Das Unterrichten mit Vor- und Nachbereitung hat in der zweiten Jahreshälfte
 nicht nur zwei volle Tage, sondern auch den grössten Teil des Wochenendes
 eingenommen. Im Frühling habe ich nur halbsoviele Lektionen, bei gleicher
 Bezahlung. (Die Pensen werden auf das ganze Schuljahr hochgerechnet; d.h. ich
 hatte jetzt ein Semester lang etwas über 120% gearbeitet und kann Ende Januar
-auf ca. 80% reduzieren.) Das gröbste habe ich überstanden, und 2023 dürfte es
+auf ca. 80% reduzieren.) Das Gröbste habe ich überstanden, und 2023 dürfte es
 etwas mehr Luft geben.
 
 # Ideen für 2023
@@ -219,7 +220,8 @@ Packaging-Thematik).
 SICP wird mich sicherlich noch einige Monate beschäftigen, wenn nicht das ganze
 Jahr. Ansonsten reizt mich derzeit so einiges: Elixir, Rust, Perl (kein
 Tippfehler!), Clojure, Elm, Svelte und Racket. Dabei sehe ich im Moment bei
-Elixir und dem Web-Framework Phoenix das grösste Potenzial.
+Elixir und dem Web-Framework Phoenix das grösste Potenzial. Und wenn ich
+konsequent sein will, sollte ich mir vorher einmal gründlich Erlang anschauen.
 
 Bei ben Betriebssystemen begnüge ich mich derzeit mit Linux. FreeBSD und OpenBSD
 spielen bei mir derzeit (leider) keine Rolle. Mein Backup- und Dateiserver, auf

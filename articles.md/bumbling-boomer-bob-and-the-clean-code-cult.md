@@ -1,5 +1,5 @@
 ---
-title: Bumbling Boomer Bob and the Klean Kode Klan
+title: Bumbling Boomer Bob and the Clean Code Cult
 subtitle: niladic, monadic, dyadic, triadic, polyadic, shmyadic
 author: Patrick Bucher
 date: 2022-08-27T10:00:00
@@ -29,7 +29,7 @@ When I studied computer science at the local technical college, I was exposed to
 _Clean Code_ again. Or rather it was shoved down the students throats as a
 gospel by disciples of the _Klean Kode Kult_, as I like to call them.
 
-The members of the _Klean Kode Kult_ strengthen their belief by joining up for a
+The members of the _Clean Code Cult_ strengthen their belief by joining up for a
 ritual called _Clean Code Shaming_, where they superficially look at a piece of
 code they don't understand on first sight, and then just yell _«Clean Code!!!1»_
 at its author in order to give proof of their superiority and sophistication.
