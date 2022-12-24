@@ -23,11 +23,11 @@ helpful, even though I worked as a Java programmer during that time, and _Clean
 Code_ is very much about the kind of Java we wrote back then. So _Clean Code_
 collected dust on my bookshelf.
 
-# Clean Code and the Klean Kode Kult
+# Clean Code and the Clean Code Cult
 
 When I studied computer science at the local technical college, I was exposed to
 _Clean Code_ again. Or rather it was shoved down the students throats as a
-gospel by disciples of the _Klean Kode Kult_, as I like to call them.
+gospel by disciples of the _Clean Code Cult_, as I like to call them.
 
 The members of the _Clean Code Cult_ strengthen their belief by joining up for a
 ritual called _Clean Code Shaming_, where they superficially look at a piece of
