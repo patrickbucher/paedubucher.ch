@@ -125,8 +125,8 @@ is Unix, after all), if no preview is needed:
 
     $ man -T ps -O paper=a4 ksh | lpr
 
-Printing plain text files behaved strange on my setup, but could to using the
-`pr` formatter with `lpr` as follows:
+Printing plain text files behaved strange on my setup, but it worked well using
+the `pr` formatter with `lpr` as follows:
 
     $ lpr -p plain.txt
 
