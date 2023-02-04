@@ -1,5 +1,6 @@
 body {
-    font-family: "Lato", sans-serif;
+    font-family: sans-serif;
+    font-size: 16px;
     line-height: 1.25;
     color: #23373b;
     background-color: #fafafa;
@@ -11,8 +12,9 @@ header, footer {
     background-color: #23373b;
     color: #fafafa;
     text-align: center;
-    line-height: 120%;
+    line-height: 1.25;
     padding: 1em 0;
+    font-size: 90%;
 }
 
 header a, footer a {
@@ -45,20 +47,19 @@ ul.nav li {
 }
 
 p {
-    font-family: "Crimson Pro", serif;
-    font-size: 120%;
+    font-family: serif;
     text-align: justify;
     hyphens: auto;
 }
 
 .content h1 {
-    font-size: 180%;
+    font-size: 160%;
     margin-top: 1em;
     margin-bottom: 0.5em;
 }
 
 .content h2 {
-    font-size: 150%;
+    font-size: 140%;
     margin-top: 1em;
     margin-bottom: 0.5em;
 }
@@ -70,22 +71,23 @@ p {
 }
 
 h1.title {
+    font-size: 200%;
     text-align: center;
 }
 
 h2.subtitle {
+    font-size: 120%;
     text-align: center;
 }
 
-h3.author, h3.date {
+p.author-date {
     text-align: center;
-    font-weight: normal;
+    margin-bottom: 2em;
 }
 
 li {
     text-align: justify;
-    font-family: "Crimson Pro", serif;
-    font-size: 120%;
+    font-family: serif;
     hyphens: auto;
 }
 
@@ -97,7 +99,7 @@ div.content:after {
 }
 
 .tt, code {
-    font-family: "Inconsolata", monospace;
+    font-family: monospace;
 }
 
 pre, pre>code {
@@ -124,5 +126,6 @@ blockquote em {
 }
 
 hr {
+    margin: 2em auto;
     width: 5em;
 }
