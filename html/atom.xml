@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2023-07-29T15:26:10.222423Z</updated>
+    <updated>2023-07-29T17:23:51.063184Z</updated>
     <entry>
         <title>Learning Algorithms</title>
         <link href="https://paedubucher.ch/articles/2023-07-29-learning-algorithms.html"/>
@@ -115,8 +115,8 @@ be _too_ hard. So here's my plan:
    programming model of Go. I already know Go quite well, and it comes with all
    the tools needed to play with algorithms: Data structures (slices, maps,
    structs), relatively lean syntax, and a built-in test module with
-   benchmarking capailities, besides according tooling. Using Go, I can focus on
-   the algorithm and play with it, until I really understood it.
+   benchmarking capabilities, besides appropriate tooling. Using Go, I can focus
+   on the algorithm and play with it, until I really understand it.
 3. **Rust**: Having a working version in Go, I can just translate it to Rust.
    There will be a few language-specific issues to deal with (immutability, the
    need for smart pointers when using recursive data structures), but that is
