@@ -184,6 +184,11 @@ versuchte die Frage mit einem kleinen Go-Programm namens
 [request0r](https://github.com/patrickbucher/request0r) zu beantworten, womit
 ich wieder einmal etwas Concurrency in Go anwenden konnte.
 
+Was die funktionale Programmierung angeht, so fühle ich mich nun bereit für den
+produktiven Einsatz. Bei Programmiersprachen, welche die Transformationen
+`filter`, `map` und `reduce` in ihrer Collection-API anbieten, finde ich mich
+nun auf Anhieb zurecht.
+
 ## Hobbies
 
 Nach dem Wegzug aus dem Einfamilienhaus vor über zehn Jahren musste ich zwei
@@ -199,15 +204,21 @@ Spannungskopfschmerzen als früher. In den letzten Wochen bin ich dann aus
 zeitlichen Gründen nur noch selten zum Rudern gekommen. Das soll sich aber
 nach den Festtagen wieder ändern!
 
+Im Spätsommer setzte ich mir das Ziel, in einer Stunde auf höchstem Widerstand
+14 Kilometer zurücklegen zu können. Ich übertraf das Ziel bereits im November;
+mein Rekord liegt bei etwas über 14.3 Kilometer. Für nächstes Jahr möchte ich
+die 15-Kilometer-Marke anpeilen.
+
 Im Herbst hatte ich dann die Idee mir ein E-Drum zu kaufen, zumal ich im Büro
 dafür Platz habe. Nach mehrwöchigem Überlegen und Vergleichen habe ich mich dann
 dazu entschieden und habe mein einst liebstes Hobby im Oktober wieder aufnehmen
 können. Hierzu habe ich mir das Roland TD-27K mit Hardware von DW gekauft, u.a.
-ein DW-5000-Base-Drum-Pedal, das ich früher schon hatte. Nach fast 12 Jahren
-Abstinenz und nach nur wenigen Wochen unregelmässigem Üben konnte ich praktisch
-wieder alles spielen, was ich früher einmal konnte. Nur an Ausdauer, Tempo und
-Timing muss ich noch etwas arbeiten. Das wichtigste ist mir aber die Freude beim
-Spielen als Ausgleich zur Computerarbeit.
+ein DW-5000-Base-Drum-Pedal, das ich früher schon hatte.
+
+Nach fast 12 Jahren Abstinenz und nach nur wenigen Wochen unregelmässigem Üben
+konnte ich praktisch wieder alles spielen, was ich früher einmal konnte. Nur an
+Ausdauer, Tempo und Timing muss ich noch etwas arbeiten. Das wichtigste ist mir
+aber die Freude beim Spielen als Ausgleich zur Computerarbeit.
 
 Das Lesen und das Spazieren kamen hingegen etwas zu kurz dieses Jahr. Das sollte
 ich auf nächstes Jahr etwas höher priorisieren. Immerhin bin ich von den News
