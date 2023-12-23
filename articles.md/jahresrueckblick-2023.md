@@ -82,19 +82,19 @@ letztes Jahr, zweitens die Inbetriebnahme von Nextcloud als Alternativprogramm
 und drittens ein Projekt nach Wahl für diejenigen, denen die beiden geführten
 Programme wenig zusagen. Der erste Teil des Moduls (Definition des
 Cloud-Begriffs, Redis, S3/Minio sowie ein neuer Teil über die DSGVO im Kontext
-des Cloud Computings) ist für alle Klassen der gleiche. Im weiten Teil wird dann
-entweder mit Go ein kleines Monitoring-System angepasst, Nextcloud aufgesetzt
-oder eben ein Projekt nach Wahl umgesetzt.
+des Cloud Computings) ist für alle Klassen der gleiche. Im zweiten Teil wird
+dann entweder mit Go ein kleines Monitoring-System angepasst, Nextcloud
+aufgesetzt oder eben ein Projekt nach Wahl umgesetzt.
 
 V.a. die Beschäftigung mit dem zweiten Programm (Nextcloud in Betrieb nehmen)
 hat mich recht motiviert: So habe ich mich etwas genauer mit systemd und dem
-LAMP-Stack befasst. Das Programm scheint mir bei Plattformentwicklern recht gut
-anzukommen, sowie das erste Programm bei Applikationsentwicklern erneut gut zu
-funktionieren scheint. Beide Programme sind je von zwei Klassen gewählt worden.
-Das dritte Programm (eigenes Projekt) wurde ebenfalls von zwei Klassen gewählt.
-Ob ich dieses im nächsten Jahr erneut anbieten will, werde ich entscheiden,
-nachdem ich die ganzen Projekte gesehen habe. Hier macht es die Vielfalt der
-Projekte schwer, inhaltlich Unterstützung bieten zu können.
+LAMP-Stack befasst. Das Programm scheint mir bei Plattformentwicklern
+einigermassen anzukommen, sowie das erste Programm bei Applikationsentwicklern
+erneut gut zu funktionieren scheint. Beide Programme sind je von zwei Klassen
+gewählt worden. Das dritte Programm (eigenes Projekt) wurde ebenfalls von zwei
+Klassen gewählt. Ob ich dieses im nächsten Jahr erneut anbieten will, werde ich
+entscheiden, nachdem ich die ganzen Projekte gesehen habe. Hier macht es die
+Vielfalt der Projekte schwer, inhaltlich Unterstützung bieten zu können.
 
 ## Privates Mäandrieren
 
@@ -109,6 +109,8 @@ ich in jeder neuen Programmiersprache schreiben möchte, die ich lerne. Geeignet
 Programme waren schnell gefunden. Systematisch damit beschäftigt habe ich mich
 jedoch dann nicht mehr. Immerhin habe ich die Ideen im Repository
 [stock-programs](https://github.com/patrickbucher/stock-programs) festgehalten.
+Beim Erlernen der nächsten Programmiersprache könnte ich noch detailliertere
+Aufgabenstellungen und erste Beispielprogramme nachliefern.
 
 Im Frühling habe ich mich erneut an Rust herangewagt. Ich habe darin u.a. meine
 [Ligatabellenberechnung](https://github.com/patrickbucher/superleague-polyglot/tree/master/superleague-rust)
@@ -140,8 +142,9 @@ Projekt doch recht schnell wieder fallen, was zwei Gründe hatte:
    extrem konzis und gut nachvollziehbar.
 
 Die zweite Erkenntnis war dann sogleich das Ende von meiner Beschäftigung mit
-Clojure. Zwar ist die Sprache die meiner Meinung nach schönste überhaupt, aber
-Pattern Matching hat es leider nicht.
+Clojure. Zwar ist die Sprache meiner Meinung nach eine der schönsten überhaupt
+(gerade wegen der eingebauten Datenstrukturen List, Vector, Map und Set), aber
+ein mächtiges Pattern Matching hat sie leider nicht.
 
 So beschäftigte ich mich zuerst etwas mit Haskell und dann wieder mit Elixir,
 die beide über Pattern Matching verfügen. Bei Haskell bin ich im Herbst
@@ -156,7 +159,7 @@ dazu führte.
 
 Ab Ende November war die erste halbe Stunde des Tages dann für den
 [Adventskalender 2023](https://wiki.debianforum.de/Adventskalender_2023) des
-Debianforums reserviert, wofür ich dieses Jahr ganze sieben Türchen in Beschlag
+Debianforums reserviert, wofür ich dieses Jahr ganze acht Türchen in Beschlag
 nahm. Die Inhalte waren grösstenteils eine Jahresresteverwertung, kamen aber
 sehr gut beim Publikum an. Damit ich nicht wieder manuell BBCode eintippen
 musste, habe ich mich noch kurz mit Lua befasst, um einen `pandoc`-Filter zu
@@ -167,40 +170,48 @@ durchaus zweckmässig und erspart mir eine Menge lästiger Handarbeit.
 Für den Adventskalender beschäftigte ich mich wieder einmal mit C und Prolog.
 Ersteres für ein Beispiel mit Shared Libraries, worauf mich eine Lektion der
 LPIC-Schulung gebracht hat. Ausserdem implementierte ich eine
-Primzahlfaktorisierung in C, die ich dann per CGI in Apache eingebunden hatte.
-Mit Prolog löste ich ein sogenanntes _Logical_: Ein Logikrätsel, das ich als
-Anschauungsbeispiel für den Adventskalender verwenden möchte.
+Primzahlfaktorisierung in C, die ich dann testhalber auch per CGI in Apache
+eingebunden hatte.  Mit Prolog löste ich ein sogenanntes _Logical_: Ein
+Logikrätsel, das ich als Anschauungsbeispiel für den Adventskalender verwendete.
+(Eine Unzulänglichkeit in der Logik und beim Testen führte dann zur wohl
+ausgedehntesten Diskussion im diesjährigen Adventskalender überhaupt.)
 
 Ich schrieb sogar noch einige Zeilen PHP um den LAMP-Stack zu testen. Ich setzte
 die Primzahlfaktorisierung in PHP um, womit ich für den Adventskalender
 `mod_php` mit PHP-FPM verglich. Dabei kam die Frage aus, ob es performancemässig
 einen signifikanten Unterschied zwischen diesen beiden Ausführungsmodi gäbe. Ich
-beantwortete die Frage mit einem kleinen Go-Programm namens
-[request0r](https://github.com/patrickbucher/request0r), womit ich wieder einmal
-etwas Concurrency in Go anwenden konnte.
+versuchte die Frage mit einem kleinen Go-Programm namens
+[request0r](https://github.com/patrickbucher/request0r) zu beantworten, womit
+ich wieder einmal etwas Concurrency in Go anwenden konnte.
 
 ## Hobbies
 
 Nach dem Wegzug aus dem Einfamilienhaus vor über zehn Jahren musste ich zwei
 Hobbies aufgeben: Das Schlagzeugspielen und das Rudern auf dem Ergometer.
-Schlagzeug und Ruderergometer musste ich aus Platzgründen verkaufen. Im Januar
-habe ich mir nun wieder ein Ruderergometer gekauft ‒ und mein Training auf den
-Sommer hin intensiviert: Über drei Wochen lang habe ich jeden Tag eine Stunde
-auf höchstem Widerstand gerudert, ohne dass ich dabei in irgend einer Weise
-Schmerzen verspürte. Mein Körpergewicht konnte ich reduzieren und mein
+Schlagzeug und Ruderergometer musste ich aus Platzgründen verkaufen.
+
+Im Januar habe ich mir nun wieder ein Ruderergometer gekauft ‒ und mein Training
+auf den Sommer hin intensiviert: Über drei Wochen lang habe ich jeden Tag eine
+Stunde auf höchstem Widerstand gerudert, ohne dass ich dabei in irgend einer
+Weise Schmerzen verspürte. Mein Körpergewicht konnte ich reduzieren und mein
 allgemeines Wohlergehen steigern: Ich leide wesentlich seltener unter
-Spannungskopfschmerzen als früher.
+Spannungskopfschmerzen als früher. In den letzten Wochen bin ich dann aus
+zeitlichen Gründen nur noch selten zum Rudern gekommen. Das soll sich aber
+nach den Festtagen wieder ändern!
 
 Im Herbst hatte ich dann die Idee mir ein E-Drum zu kaufen, zumal ich im Büro
-dafür Platz habe. Nach mehrwöchigem Überlegen habe ich mich dann dazu
-entschieden und habe mein einst liebstes Hobby im Oktober wieder aufnehmen
+dafür Platz habe. Nach mehrwöchigem Überlegen und Vergleichen habe ich mich dann
+dazu entschieden und habe mein einst liebstes Hobby im Oktober wieder aufnehmen
 können. Hierzu habe ich mir das Roland TD-27K mit Hardware von DW gekauft, u.a.
 ein DW-5000-Base-Drum-Pedal, das ich früher schon hatte. Nach fast 12 Jahren
 Abstinenz und nach nur wenigen Wochen unregelmässigem Üben konnte ich praktisch
-wieder alles spielen, was ich früher einmal konnte. Nur an Ausdauer und Tempo
-muss ich noch etwas arbeiten. Das wichtigste ist mir aber die Freude beim
-Spielen.
+wieder alles spielen, was ich früher einmal konnte. Nur an Ausdauer, Tempo und
+Timing muss ich noch etwas arbeiten. Das wichtigste ist mir aber die Freude beim
+Spielen als Ausgleich zur Computerarbeit.
 
 Das Lesen und das Spazieren kamen hingegen etwas zu kurz dieses Jahr. Das sollte
 ich auf nächstes Jahr etwas höher priorisieren. Immerhin bin ich von den News
-abstitent geblieben, was mir viel Zeit und noch mehr Aufregung gespart hat.
+abstitent geblieben, was mir viel Zeit und noch mehr Aufregung gespart hat. Der
+in Leder gebundene Incerto von Nassim Taleb, den ich letztes Jahr bestellte und
+nun endlich erhalten habe, dürfte mich zum Wiederlesen der vier Bände zum
+Jahresanfang motivieren.
