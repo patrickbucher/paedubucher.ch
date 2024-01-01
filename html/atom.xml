@@ -5,7 +5,7 @@
     <link href="https://paedubucher.ch/atom.xml" rel="self"/>
     <link href="https://paedubucher.ch/"/>
     <id>https://paedubucher.ch/</id>
-    <updated>2024-01-01T17:39:13.657955Z</updated>
+    <updated>2024-01-01T20:02:46.647447Z</updated>
     <entry>
         <title>Ideen für 2024</title>
         <link href="https://paedubucher.ch/articles/2024-01-01-ideen-fuer-2024.html"/>
@@ -17,8 +17,9 @@
         <content type="text/markdown; charset=UTF-8">
 Das neue Jahr hat angefangen, und die Gelegenheit ist gut um mir etwas Neues
 vorzunehmen. Nicht einfach bloss, weil man sich Vorsätze fürs neue Jahr nimmt,
-sondern weil der Jahreswechsel mir die Möglichkeit bietet, über meine
-Prioritäten nachzudenken ‒ und auch gleich mit neuen Sachen anzufangen.
+sondern weil der Jahreswechsel mit der Arbeitspause mir die Möglichkeit bietet,
+über meine Prioritäten nachzudenken ‒ und auch gleich mit neuen Sachen
+anzufangen.
 
 # Rückblick auf 2023
 
@@ -40,18 +41,21 @@ neuen Ideen. Was habe ich 2023 geleistet?
 Aus diesen Projekten sind nun folgende Ideen entstanden, mit denen ich mich 2024
 gründlicher befassen möchte:
 
-- Erlang
-- Rust
-- Haskell
-- TypeScript
-- Shell-Skripting
-- Ansible
-- Hugo
-- Software and Mind
+- Programmiersprachen
+    - Erlang
+    - Rust
+    - Haskell
+    - TypeScript
+    - Shell-Skripting
+- Technologien
+    - Ansible
+    - Hugo
+- Lektüre
+    - Software and Mind
 
 Diese Ideen sind nicht neu; ich habe schon einmal in alle diese Themen
-hineingeschaut. Wirklich sicher fühle ich mich aber in keinem der Themen. So
-wird 2024 eher ein Jahr der Vertiefung als der Neuanfänge.
+hineingeschaut. Wirklich sicher fühle ich mich aber in keinem dieser Bereiche.
+So wird 2024 eher ein Jahr der Vertiefung als der Neuanfänge.
 
 ## Erlang
 
@@ -64,12 +68,12 @@ Elixir «angelernt» ‒ und bin dabei etwas weiter gekommen als mit Erlang.
 
 Im Sommer habe ich einige Sortieralgorithmen mit Erlang umgesetzt. Dabei ist mir
 das mächtige _Pattern Matching_ sehr positiv aufgefallen. Längerfristig möchte
-ich Elixir produktiv einsetzen. Um das gründlich lernen zu können, sollte ich
-mich aber zuerst mit Erlang befassen. Ich möchte wissen, was Elixir wirklich
+ich zwar Elixir produktiv einsetzen. Um das gründlich lernen zu können, sollte
+ich mich aber zuerst mit Erlang befassen. Ich möchte wissen, was Elixir wirklich
 bietet ‒ und was bereits von Erlang geboten wird.
 
 Erlang ist wohl das Gegenteil von «sexy» und «trendy»: stabil, solide ‒ und
-teilweise etwas umständlich. Mittlerweile habe ich auch die Grundlagen der
+teilweise etwas umständlich. Mittlerweile habe ich die Grundlagen der
 funktionalen Programmierung verinnerlicht, sodass ich mich auf die Sprache und
 Technologie konzentrieren kann. Der Key-Value-Store
 [ETS](https://www.erlang.org/doc/man/ets.html) und die Datenbank
@@ -78,10 +82,10 @@ Alternativen zu bekannten Technologien wie Redis und PostgreSQL. Es muss nicht
 immer vom Mainstream akzeptiert sein…
 
 So habe ich mich in den letzten drei Tagen durch Kapitel 1-5 in _Programming
-Erlang_ durchgearbeitet und möchte das Durcharbeiten dieses Buches zu meinem
-neuen «Morgenthema» machen, d.h. mich täglich als erstes damit befassen, und
-wenn es auch nur 15 Minuten sind. Das dürfte mich das erste Quartal 2024
-beschäftigen.
+Erlang_ durchgearbeitet und möchte die Beschäftigung mit diesem Buch zu meinem
+neuen «Morgenthema» machen, d.h. mich täglich als erstes nach dem Aufstehen
+damit befassen, und wenn es auch nur 15 Minuten sind. Das dürfte mich das erste
+Quartal 2024 beschäftigen.
 
 Mit Erlang würde ich gerne einen kleinen verteilten Monitoring-Stack entwickeln,
 womit sich virtuelle Maschinen überwachen lassen (Ressourcenauslastung,
@@ -96,10 +100,12 @@ Hintergrundwissen zum Memory Management fehlt mir hingegen noch. Hier habe ich
 zwar einiges gelesen, aber noch lange nicht alles verstanden.
 
 Ich sollte noch einmal das [Rust Book](https://doc.rust-lang.org/book/)
-durcharbeiten ‒ und mir eigene Beispiele zu den anspruchsvollen Themen machen
-(Borrowing, Smart Pointers, Concurrency). Anschliessend sollte ich es einmal in
-der Praxis anwenden. Kommandozeilenwerkzeuge oder kleinere Serveranwendungen
-wären passende Projekte, auch wenn mir hierzu im Moment noch die Ideen fehlen.
+durcharbeiten (evtl. in der [interaktiven
+Version](https://rust-book.cs.brown.edu/) der Brown University ‒ und mir eigene
+Beispiele zu den anspruchsvollen Themen machen (_Borrowing_, _Smart Pointers_,
+_Concurrency_). Anschliessend sollte ich es einmal in der Praxis anwenden.
+Kommandozeilenwerkzeuge oder kleinere Serveranwendungen wären passende Projekte,
+auch wenn mir hierzu im Moment noch die Ideen fehlen.
 
 ## Haskell
 
@@ -124,18 +130,19 @@ So werde ich wohl _Effective Haskell_ und _Category Theory for Programmers_
 parallel durcharbeiten. _Programming in Haskell_ habe ich schon zweimal bis zur
 Hälfte durchgearbeitet und könnte ich anschliessend als Repetition
 durcharbeiten. _Thinking Functionally in Haskell_ und _Algorithm Design with
-Haskell_ wären dann eine Vertiefung in die funktionale Programmierung.
+Haskell_ wären dann eine Vertiefung in die funktionale Programmierung und in
+Algorithmen.
 
 ## TypeScript
 
 Ich habe schon mehrere halbherzige Versuche unternommen Angular zu lernen. Zwar
 könnte ich dieses Web-Framework sicherlich produktiv einsetzen und damit Geld
-verdienen, die Motivation fehlte mir aber bislang immer.
+verdienen, die Motivation zum Durchhalten fehlte mir aber bislang.
 
 TypeScript gründlich zu lernen wäre einerseits schon ein grosser Schritt in
 Richtung Angular. Ausserdem würde ich dabei mein bestehendes und eingerostetes
 JavaScript-Wissen auffrischen ‒ und mein Wissen über Typsysteme vertiefen
-könnten. Das sollte für mich genügend Motivation sein um dranzubleiben.
+können. Das sollte für mich genügend Motivation sein um dranzubleiben.
 
 Mit dem ganzen TypeScript-Wissen sollte ich mir Angular dann durch das Lesen von
 bestehendem Code aneignen können. (Bücher und Kurse über moderne Web-Frameworks
@@ -154,7 +161,7 @@ Druckseiten mir doch ein etwas mulmiges Gefühl bereiten…)
 Zwar ist die Kommandozeile seit meinem Umstieg auf
 [dwm](http://dwm.suckless.org/) im Jahr 2010 meine primäre Benutzeroberfläche
 geworden. Mein Wissen beschränkt sich aber auf die alltägliche Bedienung; sobald
-es um das Schreiben anspruchsvollerer Skripte geht, stehe ich recht schnell and.
+es um das Schreiben anspruchsvollerer Skripte geht, stehe ich recht schnell an.
 
 So möchte ich gelegentlich mein Wissen der Unix-Shell etwas vertiefen. Da mir
 Portabilität ‒ gerade im Hinblick auf OpenBSD und FreeBSD, welche _nicht_ die
@@ -165,7 +172,7 @@ Die Korn-Shell, die bei OpenBSD als `pdksh` zum Einsatz kommt, wäre hierzu eine
 interessante Variante und würde mir auch den Wiedereinstieg in OpenBSD
 ermöglichen. Mit [Learning the Korn
 Shell](https://www.oreilly.com/library/view/learning-the-korn/0596001959/) steht
-auch schon das passende Buch dazu schon bereit. (Es ist aus dem Jahr 2002 ‒ als
+auch das passende Buch dazu schon bereit. (Es ist aus dem Jahr 2002 ‒ als
 O'Reilly noch für Qualität und Nerd-Kultur stand.)
 
 Sollte ich noch Zeit haben, könnte ich mich dann gleich noch mit der zweiten
@@ -203,13 +210,13 @@ könnte Hugo aber genau das Richtige sein.
 
 So sollte ich mich endlich einmal in diese Technologie einarbeiten.
 Grundsätzlich besteht bei Hugo ein «Henne-Ei-Problem»: Man benötigt zuerst ein
-Template, um vernünftig mit Hugo herumspielen zu können, möchte aber
-andererseits auch Templates entwickeln können, um Hugo grundlegend verstehen zu
-können. So werde ich wohl versuchen, zuerst eine Seite mit einem
+Template, um vernünftig mit Hugo herumspielen zu können. Zum Nachvollziehen der
+Funktionsweise von Hugo sollte man aber andererseits auch eigene Templates
+schreiben können. So werde ich wohl versuchen, zuerst eine Seite mit einem
 Standard-Template zu bauen. Anschliessend baue ich mir ein eigenes Template, bis
 die damit erstellte Seite komplett funktioniert.
 
-Da mit [Build Websites with
+Da mich [Build Websites with
 Hugo](https://pragprog.com/titles/bhhugo/build-websites-with-hugo/) eher
 enttäuscht hat, mache ich den nächsten Versuch mit [Hugo in
 Action](https://www.manning.com/books/hugo-in-action).
@@ -230,13 +237,14 @@ fundamentale) Kritik regelrecht begeistert! Dass Sorin Paradigmen wie
 relationale Datenbanken und strukturierte Programmierung als fehlgeleitet
 kritisiert, irritiert mich zwar gewaltig, zumal ich niemals gedacht hätte,
 «hinter» diese Paradigmen zurückzugehen. Andererseits wird einem gerade
-hierdurch eine neue Perspektive geboten. (Die Kritik am objektorientierten
+hierdurch eine neue Perspektive eröffnet. (Die Kritik am objektorientierten
 Paradigma dürfte für mich hingegen eher eine Bestätigung als eine
 Infragestellung sein.)
 
 Sorin bezeichnet die etablierten Paradigmen als unwissenschaftlich, was er
-mithilfe Poppers Demarkationsbegriff ausführlich begründet. Damit ich diese
-Gedanken nachvollziehen kann, muss ich mir zunächst [The Logic of Scientific
+mithilfe von Poppers Demarkationsbegriff ausführlich zu begründet versucht.
+Damit ich diese Gedanken nachvollziehen kann, muss ich mir zunächst [The Logic
+of Scientific
 Discovery](https://www.routledge.com/The-Logic-of-Scientific-Discovery/Popper-Popper/p/book/9780415278447)
 durchlesen. Erst dann kann ich mich gründlich mit _Software and Mind_ befassen.
 
