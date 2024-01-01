@@ -14,7 +14,7 @@ Prioritäten nachzudenken ‒ und auch gleich mit neuen Sachen anzufangen.
 # Rückblick auf 2023
 
 Auf das Jahr 2023 habe ich bereits
-[andernorts](articles/2023-12-26-jahresrueckblick-2023.html) ausführlich
+[andernorts](./2023-12-26-jahresrueckblick-2023.html) ausführlich
 zurückgeblickt. Hier ist die Kurzversion davon, quasi als Andockstelle für meine
 neuen Ideen. Was habe ich 2023 geleistet?
 
@@ -24,7 +24,7 @@ neuen Ideen. Was habe ich 2023 geleistet?
   Elixir](https://github.com/patrickbucher/factorizer) befasst
 - mich mit [Algorithmen](https://github.com/patrickbucher/algorithms) in
   verschiedenen Sprachen befasst
-- mich mit dem LAMP-Stack und Nextcloud auf Debian GNU/Linux eingearbeitet
+- mich in den LAMP-Stack und Nextcloud auf Debian GNU/Linux eingearbeitet
 
 # Ausblick auf 2024
 
