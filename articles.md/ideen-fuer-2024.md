@@ -116,13 +116,14 @@ Was Haskell-Literatur betrifft, bin ich mittlerweile sehr gut ausgerüstet:
 - [Thinking Functionally with Haskell](https://www.cambridge.org/us/universitypress/subjects/computer-science/programming-languages-and-applied-logic/thinking-functionally-haskell)
 - [Algorithm Design with Haskell](https://www.cambridge.org/us/universitypress/subjects/computer-science/algorithmics-complexity-computer-algebra-and-computational-g/algorithm-design-haskell)
 - [Category Theory for Programmers](https://www.blurb.com/b/9621951-category-theory-for-programmers-new-edition-hardco)
+- [Production Haskell](https://leanpub.com/production-haskell)
 
 So werde ich wohl _Effective Haskell_ und _Category Theory for Programmers_
 parallel durcharbeiten. _Programming in Haskell_ habe ich schon zweimal bis zur
 Hälfte durchgearbeitet und könnte ich anschliessend als Repetition
 durcharbeiten. _Thinking Functionally in Haskell_ und _Algorithm Design with
 Haskell_ wären dann eine Vertiefung in die funktionale Programmierung und in
-Algorithmen.
+Algorithmen. _Production Haskell_ muss wohl noch etwas warten.
 
 ## TypeScript
 
