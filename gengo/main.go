@@ -8,6 +8,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 	yaml "gopkg.in/yaml.v3"
 )
 
@@ -103,7 +106,7 @@ func parseArticle(path string) (*Article, error) {
 		return nil, fmt.Errorf("read from %s: %v", path, err)
 	}
 	content := string(data)
-	yamlData, _, err := splitParts(content)
+	yamlData, mdData, err := splitParts(content)
 	if err != nil {
 		return nil, fmt.Errorf("parse article %s: %v", path, err)
 	}
@@ -111,6 +114,11 @@ func parseArticle(path string) (*Article, error) {
 	var meta FrontMatter
 	yaml.Unmarshal(yamlData, &meta)
 	fmt.Println(meta.Date().Format("2006-01-02 15:04:05"))
+
+	p := parser.New()
+	r := html.NewRenderer(html.RendererOptions{})
+	htmlContent := string(markdown.ToHTML(mdData, p, r))
+	fmt.Println(htmlContent)
 
 	return nil, nil
 }
