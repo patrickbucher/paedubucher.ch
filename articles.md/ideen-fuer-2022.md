@@ -2,7 +2,7 @@
 title: Ideen für 2022
 subtitle: Womit soll ich mich beschäftigen?
 author: Patrick Bucher
-date: 2021-12-31T13:15:00
+date: 2021-12-31T13:15:00+0100
 lang: de
 ---
 

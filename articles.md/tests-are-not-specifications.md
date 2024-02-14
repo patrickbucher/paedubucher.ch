@@ -2,7 +2,7 @@
 title: Tests Are Not Specifications
 subtitle: Boomers vs. the (All Too) Silent Generation
 author: Patrick Bucher
-date: 2021-05-02T10:00:00
+date: 2021-05-02T10:00:00+0100
 lang: en
 ---
 

@@ -2,7 +2,7 @@
 title: Vom präzisen Sprachgebrauch
 subtitle: Und warum dieser in der Informatik wichtig ist
 author: Patrick Bucher
-date: 2021-05-09T12:30:00
+date: 2021-05-09T12:30:00+0100
 lang: de
 ---
 

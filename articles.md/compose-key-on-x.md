@@ -2,7 +2,7 @@
 title: Compose Key on X
 subtitle: Say Goodbye to the Swiss Keyboard Layout
 author: Patrick Bucher
-date: 2020-09-16T21:00:00
+date: 2020-09-16T21:00:00+0100
 lang: en
 ---
 

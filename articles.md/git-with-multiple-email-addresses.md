@@ -2,7 +2,7 @@
 title: 'Git with Multiple E-Mail Addresses'
 subtitle: 'And How I Make Sure to Commit with the Right One'
 author: 'Patrick Bucher'
-date: 2022-07-26T12:30:00
+date: 2022-07-26T12:30:00+0100
 lang: en
 ---
 

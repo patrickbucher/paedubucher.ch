@@ -2,7 +2,7 @@
 title: Jahresrückblick 2021
 subtitle: Gar nicht so schlecht?
 author: Patrick Bucher
-date: 2021-12-17T13:00:00
+date: 2021-12-17T13:00:00+0100
 lang: de
 ---
 

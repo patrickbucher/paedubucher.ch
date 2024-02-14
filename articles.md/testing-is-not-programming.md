@@ -2,7 +2,7 @@
 title: Testing Is Not About Programming
 subtitle: Programming vs. Software Engineering
 author: Patrick Bucher
-date: 2018-12-16T12:00:00
+date: 2018-12-16T12:00:00+0100
 lang: en
 ---
 

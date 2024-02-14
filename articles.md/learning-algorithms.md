@@ -2,7 +2,7 @@
 title: Learning Algorithms
 subtitle: Slowly, but Steadily (again)
 author: Patrick Bucher
-date: 2023-07-29T17:00:00
+date: 2023-07-29T17:00:00+0100
 lang: en
 ---
 

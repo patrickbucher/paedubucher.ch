@@ -2,7 +2,7 @@
 title: "Towards Monads (in Go)"
 subtitle: "If I'd got them, I couldn't explain them…"
 author: "Patrick Bucher"
-date: 2022-11-05T15:23:00
+date: 2022-11-05T15:23:00+0100
 lang: "en"
 ---
 

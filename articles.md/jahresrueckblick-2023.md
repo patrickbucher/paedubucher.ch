@@ -2,7 +2,7 @@
 title: 'Jahresrückblick 2023'
 subtitle: 'Was alles passiert ist.'
 author: 'Patrick Bucher'
-date: 2023-12-26T12:29:00
+date: 2023-12-26T12:29:00+0100
 lang: de
 ---
 

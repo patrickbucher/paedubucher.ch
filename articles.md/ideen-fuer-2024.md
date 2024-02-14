@@ -2,7 +2,7 @@
 title: Ideen für 2024
 subtitle: Womit soll ich mich beschäftigen?
 author: Patrick Bucher
-date: 2024-01-01T17:21:00
+date: 2024-01-01T17:21:00+0100
 lang: de
 ---
 

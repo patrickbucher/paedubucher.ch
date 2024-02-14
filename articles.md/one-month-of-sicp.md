@@ -2,7 +2,7 @@
 title: One Month of SICP
 subtitle: Slowly, but Steadily
 author: Patrick Bucher
-date: 2022-08-30T18:43:00
+date: 2022-08-30T18:43:00+0100
 lang: en
 ---
 

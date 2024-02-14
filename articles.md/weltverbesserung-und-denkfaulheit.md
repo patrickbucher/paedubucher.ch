@@ -2,7 +2,7 @@
 title: "Weltverbesserung und Denkfaulheit"
 subtitle: "Oder: Das Elend beginnt im Geografieunterricht."
 author: Patrick Bucher
-date: 2022-04-13T19:08:00
+date: 2022-04-13T19:08:00+0100
 lang: de
 ---
 

@@ -2,7 +2,7 @@
 title: '«Four in a Row» in Haskell (Part I)'
 subtitle: Background and General Considerations
 author: Patrick Bucher
-date: 2020-08-03T12:00:00
+date: 2020-08-03T12:00:00+0100
 lang: en
 ---
 

@@ -2,7 +2,7 @@
 title: Gendersprache, schlechte Sprache
 subtitle: Über sprachliche Fehlinterpretation
 author: Patrick Bucher
-date: 2020-09-27T09:00:00
+date: 2020-09-27T09:00:00+0100
 lang: de
 ---
 

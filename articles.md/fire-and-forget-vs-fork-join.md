@@ -2,7 +2,7 @@
 title: '«Fire and Forget» oder «Fork and Join»?'
 subtitle: 'Gesellschaftsanalyse aus der Perspektive der Nebenläufigkeit '
 author: 'Patrick Bucher'
-date: 2022-04-30T11:35:00
+date: 2022-04-30T11:35:00+0100
 lang: de
 ---
 

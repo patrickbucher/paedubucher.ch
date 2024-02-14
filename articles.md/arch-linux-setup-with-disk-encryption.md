@@ -2,7 +2,7 @@
 title: Arch Linux Setup with Disk Encryption
 subtitle: Using dm-crypt, LUKS, and the systemd Boot Loader
 author: Patrick Bucher
-date: 2020-09-26T13:00:00
+date: 2020-09-26T13:00:00+0100
 lang: en
 ---
 

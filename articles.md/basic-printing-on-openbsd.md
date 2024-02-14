@@ -2,7 +2,7 @@
 title: Basic Printing on OpenBSD
 subtitle: Brother Network Printer with PostScript 
 author: Patrick Bucher
-date: 2020-09-20T18:00:00
+date: 2020-09-20T18:00:00+0100
 lang: en
 ---
 

@@ -2,7 +2,7 @@
 title: '«Four in a Row» in Haskell (Part II)'
 subtitle: Implementation of the Board Logic
 author: Patrick Bucher
-date: 2020-08-05T23:00:00
+date: 2020-08-05T23:00:00+0100
 lang: en
 ---
 

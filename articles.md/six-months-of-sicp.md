@@ -2,7 +2,7 @@
 title: 'Six Months of SICP'
 subtitle: 'Still Slowly, Still Steadily'
 author: 'Patrick Bucher'
-date: 2023-01-28T22:00:00
+date: 2023-01-28T22:00:00+0100
 lang: en
 ---
 

@@ -2,7 +2,7 @@
 title: Distracted by Tools
 subtitle: The Sorry State of Computer Science Tuition
 author: Patrick Bucher
-date: 2018-10-18T12:00:00
+date: 2018-10-18T12:00:00+0100
 lang: en
 ---
 

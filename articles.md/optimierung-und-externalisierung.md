@@ -2,7 +2,7 @@
 title: Optimierung und Externalisierung
 subtitle: 'Gedanken zu Gunter Duecks «Heute schon einen Prozess optimiert»'
 author: Patrick Bucher
-date: 2020-07-04T15:00:00
+date: 2020-07-04T15:00:00+0100
 lang: de
 ---
 

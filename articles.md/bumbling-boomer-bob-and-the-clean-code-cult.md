@@ -2,7 +2,7 @@
 title: Bumbling Boomer Bob and the Clean Code Cult
 subtitle: niladic, monadic, dyadic, triadic, polyadic, shmyadic
 author: Patrick Bucher
-date: 2022-08-27T10:00:00
+date: 2022-08-27T10:00:00+0100
 lang: en
 ---
 
