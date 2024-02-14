@@ -5,43 +5,17 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 	"strings"
-	"time"
 
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
+	"github.com/patrickbucher/paedubucher.ch/gengo"
 	yaml "gopkg.in/yaml.v3"
 )
 
 var staticAssets = []string{"style.css", "favicon.ico", "robots.txt", "key.gpg"}
-
-type FrontMatter struct {
-	Title    string `yaml:"title"`
-	Subtitle string `yaml:"subtitle"`
-	Author   string `yaml:"author"`
-	RawDate  string `yaml:"date"`
-	Language string `yaml:"lang"`
-}
-
-func (fm *FrontMatter) Date() time.Time {
-	t, _ := time.Parse("2006-01-02T15:04:05-0700", fm.RawDate)
-	return t
-}
-
-type Article struct {
-	FrontMatter
-	Content string
-}
-
-func (a Article) PublishedFmt() string {
-	switch a.Language {
-	case "de":
-		return a.Date().Format("01.02.2006 15:04")
-	default:
-		return a.Date().Format("2006-02-01 15:04")
-	}
-}
 
 func main() {
 	if len(os.Args) < 2 {
@@ -76,13 +50,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(articlesMdDir, articlesDir)
-
-	parseArticles(articlesMdDir, articlesDir)
+	articles, err := parseArticles(articlesMdDir, articlesDir)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing articles: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Println(articles)
 }
 
-func parseArticles(sourceDir, targetDir string) ([]*Article, error) {
-	articles := make([]*Article, 0)
+func parseArticles(sourceDir, targetDir string) ([]gengo.Article, error) {
+	articles := make([]gengo.Article, 0)
 	entries, _ := os.ReadDir(sourceDir)
 	for _, entry := range entries {
 		articleSrcPath := joinPath(sourceDir, entry.Name())
@@ -90,13 +67,14 @@ func parseArticles(sourceDir, targetDir string) ([]*Article, error) {
 		if err != nil {
 			return articles, err
 		}
-		articles = append(articles, article)
+		articles = append(articles, *article)
 	}
+	sort.Sort(gengo.Articles(articles))
 
 	return articles, nil
 }
 
-func parseArticle(path string) (*Article, error) {
+func parseArticle(path string) (*gengo.Article, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return nil, fmt.Errorf("open article %s: %v", path, err)
@@ -111,16 +89,17 @@ func parseArticle(path string) (*Article, error) {
 		return nil, fmt.Errorf("parse article %s: %v", path, err)
 	}
 
-	var meta FrontMatter
-	yaml.Unmarshal(yamlData, &meta)
-	fmt.Println(meta.Date().Format("2006-01-02 15:04:05"))
+	var meta gengo.MetaData
+	err = yaml.Unmarshal(yamlData, &meta)
+	if err != nil {
+		return nil, err
+	}
 
 	p := parser.New()
 	r := html.NewRenderer(html.RendererOptions{})
 	htmlContent := string(markdown.ToHTML(mdData, p, r))
-	fmt.Println(htmlContent)
 
-	return nil, nil
+	return &gengo.Article{MetaData: meta, HTML: htmlContent}, nil
 }
 
 func splitParts(content string) ([]byte, []byte, error) {
