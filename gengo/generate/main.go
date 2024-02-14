@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"html/template"
 	"io"
 	"os"
 	"sort"
@@ -55,7 +56,15 @@ func main() {
 		fmt.Fprintf(os.Stderr, "parsing articles: %v\n", err)
 		os.Exit(1)
 	}
-	fmt.Println(articles)
+
+	indexPage, err := template.New("index").Parse(mustRead(joinPath(baseDir, "gengo", "index.html")))
+	if err != nil {
+		panic(fmt.Errorf("parse index template: %v", err))
+	}
+	err = indexPage.Execute(os.Stdout, articles)
+	if err != nil {
+		panic(fmt.Errorf("execute index template: %v", err))
+	}
 }
 
 func parseArticles(sourceDir, targetDir string) ([]gengo.Article, error) {
@@ -167,4 +176,18 @@ func copyFile(from, to string) error {
 	defer dst.Close()
 	_, err = io.Copy(dst, src)
 	return err
+}
+
+func mustRead(path string) string {
+	f, err := os.Open(path)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	buf := bytes.NewBufferString("")
+	_, err = io.Copy(buf, f)
+	if err != nil {
+		panic(err)
+	}
+	return buf.String()
 }

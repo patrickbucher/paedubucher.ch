@@ -2,6 +2,7 @@ package gengo
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"strings"
 	"time"
@@ -35,6 +36,10 @@ func (fm *MetaData) Name() string {
 
 func (fm *MetaData) FileName(extension string) string {
 	return fmt.Sprintf("%s-%s.%s", fm.Date().Format("2006-01-02"), fm.Name(), extension)
+}
+
+func (fm *MetaData) Href(dir string) string {
+	return strings.Join([]string{dir, fm.FileName("html")}, string(os.PathSeparator))
 }
 
 type Article struct {

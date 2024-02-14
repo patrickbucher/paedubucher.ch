@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="author" content="Patrick Bucher">
+        <meta name="description" content="Personal website of Patrick Bucher with articles on various topics in German and English.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Article Feed" />
+    </head>
+    <body>
+        <header class="backlink"><a href="index.html">paedubucher.ch</a></header>
+        <main>
+            <h1>Personal Website of Patrick Bucher</h1>
+            <p class="slogan"><cite>Move slow and try to understand things</cite></p>
+            <p>Check out <a href="https://blog.paedubucher.ch">my new Blog</a> (in English).</p>
+            <section>
+                <h2>Articles</h2>
+                <ul id="articles" class="nav">
+					{{ range . }}
+                    <li lang="{{ .Language }}">
+                        <span class="tt">[{{ .Language }}]</span>
+                        <a href="{{ .Href "articles" }}">{{ .Title }}</a>
+                        <span class="tt">({{ .FormatDate }})</span>
+                    </li>
+					{{ end }}
+                </ul>
+            </section>
+            <section>
+                <h2>Documents</h2>
+                <ul class="nav">
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/docs/master/clean-agile/clean-agile.pdf"
+                           target="_blank">Clean Agile</a>. Back to Basics (Book Summary)
+                    </li>
+                    <li lang="de">
+                        <span class="tt">[de]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/docs/master/clean-agile/clean-agile-de.pdf"
+                           target="_blank">Clean Agile</a>. Back to Basics (Buchzusammenfassung)
+                    </li>
+                    <li lang="de">
+                        <span class="tt">[de]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/books/master/hennrich_cloud-computing-dsgvo.pdf"
+                            target="_blank">Cloud Computing nach der Datenschutz-Grundverordnung</a>. Buchzusammenfassung
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://github.com/patrickbucher/factorizer/releases/download/v0.0.1/Concurrent-Prime-Factorization-in-Elixir.pdf"
+                           target="_blank">Concurrent Prime Factorization</a>. A Go Programmer Learns Elixir Concurrency (Article)
+                    </li>
+                    <li lang="de">
+                        <span class="tt">[de]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/inf-stud-hslu/master/isf/blitzreferat/paper.pdf"
+                           target="_blank">DRM: Encrypted Media Extensions</a>. Einführung (Paper)
+                    </li>
+                    <li lang="de">
+                        <span class="tt">[de]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/inf-stud-hslu/master/bachelorarbeit/doc/document-pdfa.pdf"
+                           target="_blank">DeepXRay</a>. Bachelorarbeit
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/elixir-basics/master/elixir-basics.pdf"
+                           target="_blank">Elixir Basics</a>. Notes for «Elixir in Action» (2nd Edition)
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/learning-clojure/master/getting-clojure.pdf"
+                           target="_blank">Getting Clojure</a>. Book Summary
+                    </li>
+                    <li lang="de">
+                        <span class="tt">[de]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/docs/master/how-to-read-a-book/how-to-read-a-book.pdf"
+                           target="_blank">How to Read a Book</a>. Buchzusammenfassung
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/docs/master/python/funcprog.pdf"
+                           target="_blank">Functional Programming in Python</a>. Concepts and Examples (Book Summary)
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/learning-rust/master/notes/learning-rust-notes.pdf"
+                           target="_blank">Learning Rust</a>. Personal Notes
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/machine-learning/master/summary/summary.pdf"
+                           target="_blank">Machine Learning</a>. Personal Formula Collection
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/inf-stud-hslu/master/infkol/thesis/paper.pdf"
+                           target="_blank">OAuth 2</a>. Introduction (Paper)
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/statistics-with-python/master/notes/notes.pdf"
+                           target="_blank">Python Data Science</a>. Personal Notes on IPython, NumPy, Pandas, and Matplotlib
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="https://raw.githubusercontent.com/patrickbucher/docs/master/tls/tls-mastery.pdf"
+                           target="_blank">TLS Mastery</a>. Notes on TLS (Book Summary)
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Miscellaneous</h2>
+                <ul class="nav">
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="/gol">gol</a>: Conway's <em>Game of Life</em>
+                    </li>
+                    <li lang="en">
+                        <span class="tt">[en]</span>
+                        <a href="/simpi">simpi</a>: Compute Pi by picking random dots
+                    </li>
+                    <li lang="de">
+                        <span class="tt">[de]</span>
+                        <a href="/jassete">jassete</a>: Glückspiel mit Jasskarten und folkloristischen Elementen
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Contact</h2>
+                <ul class="nav">
+                    <li>E-Mail: <a href="mailto:patrick.bucher@mailbox.org">patrick.bucher@mailbox.org</a> (<a href="key.gpg">GPG-Key</a>)</li>
+                    <li>GitHub: <a href="https://github.com/patrickbucher" target="_blank">patrickbucher</a></li>
+                </ul>
+            </section>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</footer>
+    </body>
+</html>
+
