@@ -20,50 +20,68 @@ var staticAssets = []string{"style.css", "favicon.ico", "robots.txt", "key.gpg"}
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Fprintf(os.Stderr, "usage: %s PAGE_DIR\n", os.Args[0])
-		os.Exit(1)
+		panic(fmt.Errorf("usage: %s BASE_DIR", os.Args[0]))
 	}
 
 	baseDir := os.Args[1]
 	stat, err := os.Stat(baseDir)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "stat %s: %v\n", baseDir, err)
-		os.Exit(1)
+		panic(fmt.Errorf("stat %s: %v", baseDir, err))
 	}
 	if !stat.IsDir() {
-		fmt.Fprintf(os.Stderr, "%s is not a directory\n", baseDir)
-		os.Exit(1)
+		panic(fmt.Errorf("%s is not a directory", baseDir))
 	}
 
 	articlesMdDir := joinPath(baseDir, "articles.md")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "stat %s: %v\n", articlesMdDir, err)
-		os.Exit(1)
+		panic(fmt.Errorf("stat %s: %v", articlesMdDir, err))
 	}
 	if !stat.IsDir() {
-		fmt.Fprintf(os.Stderr, "%s is not a directory\n", baseDir)
-		os.Exit(1)
+		panic(fmt.Errorf("%s is not a directory", baseDir))
 	}
 
-	_, articlesDir, err := scaffold(baseDir)
+	publicDir, articlesDir, err := scaffold(baseDir)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "scaffolding: %v\n", err)
-		os.Exit(1)
+		panic(fmt.Errorf("scaffolding: %v", err))
 	}
 
 	articles, err := parseArticles(articlesMdDir, articlesDir)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "parsing articles: %v\n", err)
-		os.Exit(1)
+		panic(fmt.Errorf("parsing articles: %v", err))
 	}
 
-	indexPage, err := template.New("index").Parse(mustRead(joinPath(baseDir, "gengo", "index.html")))
+	indexTemplatePath := joinPath(baseDir, "gengo", "index.html")
+	indexTemplate, err := template.New("index").Parse(mustRead(indexTemplatePath))
 	if err != nil {
 		panic(fmt.Errorf("parse index template: %v", err))
 	}
-	err = indexPage.Execute(os.Stdout, articles)
+	indexFilePath := joinPath(publicDir, "index.html")
+	indexFile, err := os.Create(indexFilePath)
+	if err != nil {
+		panic(fmt.Errorf("open %s: %v", indexFilePath, err))
+	}
+	defer indexFile.Close()
+	err = indexTemplate.Execute(indexFile, articles)
 	if err != nil {
 		panic(fmt.Errorf("execute index template: %v", err))
+	}
+
+	articleTemplatePath := joinPath(baseDir, "gengo", "article.html")
+	articleTemplate, err := template.New("article").Parse(mustRead(articleTemplatePath))
+	if err != nil {
+		panic(fmt.Errorf("parse article template: %v", err))
+	}
+	for _, article := range articles {
+		articleFilePath := joinPath(articlesDir, article.FileName("html"))
+		articleFile, err := os.Create(articleFilePath)
+		if err != nil {
+			panic(fmt.Errorf("open %s: %v", indexFilePath, err))
+		}
+		defer articleFile.Close()
+		err = articleTemplate.Execute(articleFile, article)
+		if err != nil {
+			panic(fmt.Errorf("execute article template on %s: %v", article.Title, err))
+		}
 	}
 }
 
@@ -78,7 +96,7 @@ func parseArticles(sourceDir, targetDir string) ([]gengo.Article, error) {
 		}
 		articles = append(articles, *article)
 	}
-	sort.Sort(gengo.Articles(articles))
+	sort.Sort(sort.Reverse(gengo.Articles(articles)))
 
 	return articles, nil
 }
@@ -146,7 +164,7 @@ func scaffold(baseDir string) (string, string, error) {
 	if err == nil && stat.IsDir() {
 		os.RemoveAll(articleDir)
 	}
-	os.Mkdir(publicDir, 0750)
+	os.Mkdir(articleDir, 0750)
 
 	staticDir := strings.Join([]string{baseDir, "static"}, string(os.PathSeparator))
 	for _, entry := range staticAssets {

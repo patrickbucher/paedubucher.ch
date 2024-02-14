@@ -2,6 +2,7 @@ package gengo
 
 import (
 	"fmt"
+	"html/template"
 	"os"
 	"regexp"
 	"strings"
@@ -16,12 +17,12 @@ type MetaData struct {
 	Language string `yaml:"lang"`
 }
 
-func (fm *MetaData) Date() time.Time {
+func (fm MetaData) Date() time.Time {
 	t, _ := time.Parse("2006-01-02T15:04:05-0700", fm.RawDate)
 	return t
 }
 
-func (fm *MetaData) FormatDate() string {
+func (fm MetaData) FormatDate() string {
 	switch fm.Language {
 	case "de":
 		return fm.Date().Format("02.01.2006")
@@ -30,21 +31,25 @@ func (fm *MetaData) FormatDate() string {
 	}
 }
 
-func (fm *MetaData) Name() string {
+func (fm MetaData) Name() string {
 	return normalize(fm.Title)
 }
 
-func (fm *MetaData) FileName(extension string) string {
+func (fm MetaData) FileName(extension string) string {
 	return fmt.Sprintf("%s-%s.%s", fm.Date().Format("2006-01-02"), fm.Name(), extension)
 }
 
-func (fm *MetaData) Href(dir string) string {
+func (fm MetaData) Href(dir string) string {
 	return strings.Join([]string{dir, fm.FileName("html")}, string(os.PathSeparator))
 }
 
 type Article struct {
 	MetaData
 	HTML string
+}
+
+func (a Article) Content() template.HTML {
+	return template.HTML(a.HTML)
 }
 
 func (a Article) PublishedFmt() string {

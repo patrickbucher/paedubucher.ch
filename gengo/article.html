@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ .Language }}">
+    <head>
+        <title>{{ .Title }} ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="{{ .Author }}">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">{{ .Title }}</h1>
+            {{ if .Subtitle }}
+            <h2 class="subtitle">{{ .Subtitle }}</h2>
+            {{ end }}
+            <p class="author-date">{{ .Author }}, {{ .FormatDate }}</p>
+            <div class="content">{{ .Content }}</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+
