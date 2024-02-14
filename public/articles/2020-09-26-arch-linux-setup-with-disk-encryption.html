@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Arch Linux Setup with Disk Encryption ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">Arch Linux Setup with Disk Encryption</h1>
+            
+            <h2 class="subtitle">Using dm-crypt, LUKS, and the systemd Boot Loader</h2>
+            
+            <p class="author-date">Patrick Bucher, 2020-09-26</p>
+            <div class="content"><p>I've been using Arch Linux since 2016. I got to understand the system better
+since then, and installing Arch nowadays is rather a strain on my fingers than
+on my brain. I automated my personal setup procedure to some extent with a
+couple of shell scripts, which I'm adjusting as time goes and hardware changes.
+I collect those scripts and setup instructions in a <a href="https://github.com/patrickbucher/docs/tree/master/arch-setup">GitHub
+repo</a>.</p>
+
+<p>Even though I've often taken my laptop with me, especially for
+university, I never made the effort to encrypt my disk or a single partition
+thereon. Sensitive data, such as passwords, are stored encrypted using GPG. And
+my GPG private key is protected with a strong passphrase; so strong, that I
+mistype it once in a while.</p>
+
+<p>Having stored SSH keys on my laptop, however, is a risk in terms of data
+protection. I do not protect most of my SSH keys with passwords. (<em>Not</em> having
+to use passwords is one of the conveniences SSH gives you, after all.) But some
+of those SSH keys are gateways to quite some important data, and therefore I
+need to re-consider my security practices.</p>
+
+<p>Protecting SSH keys with a passphrase is very inconvenient, especially if you do
+a lot of <code>git push</code> operations via SSH. It's possible to use a password
+protected SSH key for <code>git</code> only, but having to deal with multiple SSH keys is
+inconvenient, too. (My rule is to use one SSH key per client machine.) So
+encrypting the hard disk or at least some partitions of it might be the better
+solution, because it only requires me to enter an additional password once
+during startup, which is once or twice a day.</p>
+
+<h1>dm-crypt and LUKS</h1>
+
+<p>The Arch wiki provides an article on <a href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system">how to encrypt an entire
+system</a>.
+Such a setup is based on LUKS (Linux Unified Key Setup), a disk encryption
+specification, and dm-crypt, the Linux kernel's device mapper for encrypted
+devices.</p>
+
+<p>The wiki mentions different
+<a href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#Overview">scenarios</a>
+for disk encryption. The first option, <a href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition">LUKS on a
+partition</a>,
+is very simple, but not ideal for me, because I'm not just using one giant root
+partition, but separate partitions for <code>/var</code>, <code>/tmp</code> and <code>/home</code>. With this
+setup, a process filling up my <code>/var/log</code> directory won't prevent me from
+writing to <code>/home</code> or the root partition, which might be necessary to deal with
+the issue.</p>
+
+<p>One could argue that it's sufficient to just encrypt the <code>/home</code> partition,
+which contains the most sensitive data, after all. However, it's possible that
+some program logs sensitive data to <code>/var/log</code> or stores it under <code>/opt</code>, so
+that an encrypted <code>/home</code> partition won't prevent sensitive data from being
+leaked. An unencrypted root partition also makes it possible to tamper
+programs, so that data is leaked later.</p>
+
+<p>It's also possible to encrypt the partitions mentioned seperately, which would
+require me to enter my password upon booting for every single partition. This is
+highly impractical, and therefore I won't do it that way.</p>
+
+<p>The second option, <a href="https://wiki.archlinux.org/index.php/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS">LVM on
+LUKS</a>,
+is a better fit for my purpose. Here, LUKS provides one single block device, on
+top of which the encrypted partitions are created. The other, arguably more
+sophisticated scenarios, are mostly useful when dealing with multiple disks, or
+if an encrypted boot partition is required. So let's stick to scenario two: LVM
+on LUKS.</p>
+
+<h1>Partitioning</h1>
+
+<p>My Lenovo Thinkpad X1 has a SSD with roughly 475 GB and 16 GB memory. This is
+important when considering partition sizes. I usually create my partitions as
+follows:</p>
+
+<ol>
+<li>A 256 MB <code>/boot</code> partition for the bootloader (FAT 32).</li>
+<li>A 16 GB (the size of my memory) swap partition.</li>
+<li>A 128 GB <code>/</code> (root) partition (ext4).</li>
+<li>A 64 GB <code>/var</code> partition (ext4).</li>
+<li>A 8 GB <code>/tmp</code> partition (ext4).</li>
+<li>And a <code>/home</code> partition with the remainder of the space, i.e. roughly 260 GB
+in my case (ext4).</li>
+</ol>
+
+<p>The choice of partition sizes is subject to debate. Some prefer to have a swap
+partition with twice the size of the physical memory. Some prefer to make the
+root, <code>/var/</code>, and <code>/tmp</code> partitions smaller or bigger. But the above
+partitioning scheme was never the cause of any trouble for me, so far.</p>
+
+<p>With those decisions taken, let's proceed to the setup.</p>
+
+<h1>Setup Procedure</h1>
+
+<p>So let's go through the setup step by step.</p>
+
+<h2>Prepare the Installation Medium</h2>
+
+<p>First, I download the latest Arch amd64 image via BitTorrent <a href="magnet:?xt=urn:btih:db56a13a6555179990837759ca27274d0be49aca&amp;dn=archlinux-2020.09.01-x86_64.iso">Magnet
+link</a>
+from the <a href="https://www.archlinux.org/download/">download</a> page and verify its
+checksum against the one on the website:</p>
+
+<pre><code>$ sha1sum archlinux-2020.09.01-x86_64.iso
+95ebacd83098b190e8f30cc28d8c57af0d0088a0
+</code></pre>
+
+<p>Then I copy the image on a USB dongle with a capacity of at least 700 MB:</p>
+
+<pre><code>$ sudo dd if=archlinux-2020.09.01-x86_64.iso of=/dev/sda bs=4M
+$ sync
+</code></pre>
+
+<p>Then I unplug my USB dongle and plug it into the Thinkpad X1 I'd like to setup,
+and boot from it (UEFI boot). Once the installation environment is loaded, let's
+continue with the setup.</p>
+
+<p>My Thinkpad X1 has a US keyboard, which I <a href="https://paedubucher.ch/articles/2020-09-16-compose-key-on-x.html">prefer to
+use</a> nowadays.
+However, it's possible to change the keyboard layout as follows (for Swiss
+German), if wanted:</p>
+
+<pre><code># loadkeys de_CH-latin1
+</code></pre>
+
+<p>Next, I establish a WiFi connection with <code>frzbxpdb5</code> being my network SSID,
+<code>wlan0</code> being my WiFi device, and <code>[topsecret]</code> being my password:</p>
+
+<pre><code># iwctl --passphrase '[topsecret]' station wlan0 connect frzbxpdb5
+</code></pre>
+
+<p>Let's continue with the partitioning of the disk.</p>
+
+<h2>Partitioning</h2>
+
+<p>In order to partition the hard disk, one first needs to know the device name,
+which can be found using <code>lsblk</code>:</p>
+
+<pre><code># lsblk
+</code></pre>
+
+<p>This lists <code>sda</code>, the USB dongle, and <code>nvme0n1</code>, the 475 GB solid state drive
+aforementioned.</p>
+
+<h3>Filling the Disk with Junk Data</h3>
+
+<p>As a first step, the disk shall be overwritten with random data.  Even though I
+haven't used this laptop productively yet, and so there's no sensitive data
+stored on it, it is still a good practice to fill it up once with random data.
+This makes it harder for an attacker to distinguish between encrypted data and
+random junk.</p>
+
+<pre><code># shred --random-source=/dev/urandom --iterations=1 /dev/nvme0n1
+</code></pre>
+
+<p>In my case, using only one single iteration is sufficient. If there was actual
+data stored on the disk, multiple iterations should be considered.</p>
+
+<h3>Creating a Boot Partition</h3>
+
+<p>Next, I create a new GPT partition scheme on that disk:</p>
+
+<pre><code># parted -s /dev/nvme0n1 mklabel gpt
+</code></pre>
+
+<p>I'm not going to encrypt my boot partition, so I create it as I do for a regular
+setup without encryption (as a FAT 32 boot partition, that is):</p>
+
+<pre><code># parted -s /dev/nvme0n1 mkpart boot fat32 1MiB 257MiB
+# parted -s /dev/nvme0n1 set 1 esp on
+# mkfs.fat -F 32 /dev/nvme0n1p1
+</code></pre>
+
+<p>I leave a gap of 1 MB at the beginning, so no matter what block size my SSD
+uses, the boot partition will always be properly aligned. The <code>esp</code> flag
+identifies the partition as a UEFI system partition.</p>
+
+<h3>Creating a Partition for Encryption</h3>
+
+<p>Now comes the crucial part. All the encrypted data is put into a single big
+partition (<code>nvmen1p2</code>), taking up all of the remaining disk space, which is then
+partitioned using a volume manager:</p>
+
+<pre><code># parted -s /dev/nvme0n1 mkpart cryptlvm 257MiB '100%'
+</code></pre>
+
+<p>The encryption is set up on this partition:</p>
+
+<pre><code># cryptsetup luksFormat /dev/nvme0n1p2
+</code></pre>
+
+<p>Enter &quot;YES&quot; if asked for confirmation, and pick a strong passphrase to be
+entered twice. (At this point, remember exactly which keyboard layout you're
+on!).</p>
+
+<p>To further work with the encrypted partition, let's open it, which requires to
+enter the password chosen before:</p>
+
+<pre><code># cryptsestup open /dev/nvme0n1p2 cryptlvm
+</code></pre>
+
+<p>Now a physical volume for the volume mapping needs to be created:</p>
+
+<pre><code># pvcreate /dev/mapper/cryptlvm
+</code></pre>
+
+<p>The partitions are going to be managed in a volume group, which I simply call
+<code>volgrp</code> for the sake of brevity:</p>
+
+<pre><code># vgcreate volgrp /dev/mapper/cryptlvm
+</code></pre>
+
+<p>Now everything is set up to create the remaining, i.e. the encrypted partitions.</p>
+
+<h3>Creating the Remaining Partitions</h3>
+
+<p>Those are created using <code>lvcreate</code> by setting a size (<code>-L</code>/<code>-l</code> parameter) and a
+name (<code>-n</code> parameter):</p>
+
+<pre><code># lvcreate -L 16G volgrp -n swap
+# lvcreate -L 128G volgrp -n root
+# lvcreate -L 64G volgrp -n var
+# lvcreate -L 8G volgrp -n tmp
+# lvcreate -l '100%FREE' volgrp -n home
+</code></pre>
+
+<p><strong>Update</strong>: As the user <em>fra-san</em> <a href="https://unix.stackexchange.com/questions/611421/arch-linux-setup-with-encryption-lvm-on-luks">pointed
+out</a>
+in a comment on StackExchange, leaving some space open rather than using <code>-l
+'100%FREE'</code> for the <code>/home</code> partition is useful when partition sizes should be
+increased later.  Shrinking partitions requires to unmount them, whereas growing
+them can happen with the affected partition still being mounted. (Check out
+<code>lvresize</code> for details.)</p>
+
+<p>The partitions are going to be formatted using the <code>swap</code> and <code>ext4</code> format,
+respectively:</p>
+
+<pre><code># mkswap /dev/volgrp/swap
+# mkfs.ext4 -F /dev/volgrp/root
+# mkfs.ext4 -F /dev/volgrp/var
+# mkfs.ext4 -F /dev/volgrp/tmp
+# mkfs.ext4 -F /dev/volgrp/home
+</code></pre>
+
+<p>For the actual setup, those partitions (and the <code>/boot</code> partition created
+before) need to be mounted to <code>/mnt</code>:</p>
+
+<pre><code># mount /dev/volgrp/root /mnt
+
+# mkdir /mnt/boot
+# mount /dev/nvme0n1p1 /mnt/boot
+
+# swapon /dev/volgrp/swap
+
+# mkdir /mnt/var
+# mount /dev/volgrp/var /mnt/var
+
+# mkdir /mnt/tmp
+# mount /dev/volgrp/tmp /mnt/tmp
+
+# mkdir /mnt/home
+# mount /dev/volgrp/home /mnt/home
+</code></pre>
+
+<p>Now the partitions are ready for a regular bootstrap installation. (Setting up
+the boot loader will require some more specific instructions to disk encryption
+later on.)</p>
+
+<h2>Bootstrap Installation</h2>
+
+<p>Now let's install the base system, together with the <code>lvm2</code> package:</p>
+
+<pre><code># pacstrap /mnt base linux linux-firmware lvm2
+</code></pre>
+
+<p>In order to get the mounting done automatically upon restart, let's save it in
+the <code>fstab</code> file:</p>
+
+<pre><code># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</code></pre>
+
+<p>When this is done, let's switch into the installed environment:</p>
+
+<pre><code># arch-chroot /mnt
+</code></pre>
+
+<p>A password needs to be set for the <code>root</code> user:</p>
+
+<pre><code># passwd
+</code></pre>
+
+<p>In order to have a WiFi connection after rebooting, let's install a couple of
+networking packages (some of those specific to my Intel hardware):</p>
+
+<pre><code># pacman -S iw wpa_supplicant dialog intel-ucode netctl dhcpcd
+</code></pre>
+
+<p>I set the time zone to Zurich (Europe), update and save the system time:</p>
+
+<pre><code># ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
+# timedatectl set-ntp true
+# hwclock --systohc
+</code></pre>
+
+<p>For language and locale, I simply use <code>en_US.UTF-8</code> and <code>en_US-UTF-8 UTF-8</code>,
+respectively:</p>
+
+<pre><code># echo 'en_US.UTF-8 UTF-8' &gt;&gt; /etc/locale.gen
+# locale-gen
+# echo 'LANG=en_US.UTF-8' &gt; /etc/locale.conf
+</code></pre>
+
+<p>Due to the lack of imagination, I call my laptop simply <em>carbon</em>:</p>
+
+<pre><code># echo carbon &gt; /etc/hostname
+</code></pre>
+
+<p>This is a very basic setup. Now let's make sure it can be booted by installing
+the boot loader:</p>
+
+<h2>Configuring the Boot Loader</h2>
+
+<p>I've always been using the systemd boot loader on Arch Linux, which is quite
+simple to configure. First, the computer needs to get a unique id, then the boot
+loader can be installed into the <code>/boot</code> partition:</p>
+
+<pre><code># systemd-machine-id-setup
+# bootctl --path=/boot install
+</code></pre>
+
+<p>Now comes the tricky part: The UUID of the boot partition needs to be figured
+out. <code>blkid</code> lists various partitions, but which one to choose? It's the
+LUKS partition containing the encrypted volume: <code>/dev/nvme0n1p2</code>. Its UUID can
+be extracted as follows, and shall be saved into a variable for later use:</p>
+
+<pre><code># uuid=$(blkid | grep 'crypto_LUKS' | egrep -o ' UUID=&quot;[^&quot;]+&quot;')
+# uuid=$(echo $uuid | awk -F '=' '{ print $2 }' | tr -d '&quot;')
+</code></pre>
+
+<p>The first line lists the partitions (<code>blkid</code>), extracts the line with the
+encrypted partition (<code>grep</code>), and further extracts the part of the line defining
+the UUID (<code>egrep</code>). Don't forget the space in front of <code>UUID</code>, otherwise the
+<code>PARTUUID</code> is extracted, too. In the second line, the definition
+(<code>UUID=&quot;abc...&quot;</code>) is split at the equal sign, of which the second part
+(<code>&quot;abc...&quot;</code>) is taken using <code>awk</code>. Then the surrounding double quotes are
+removed with <code>tr</code>. The variable <code>$uuid</code> now contains the UUID of the encrypted
+partition.</p>
+
+<p><strong>Update</strong>: As the user <em>fra-san</em> <a href="https://unix.stackexchange.com/a/611507/223188">pointed
+out</a>, there's an easier way to
+extract the UUID:</p>
+
+<pre><code># uuid=$(blkid --match-tag UUID -o value /dev/nvme0n1p2)
+</code></pre>
+
+<p>Having this information, the entry for the boot loader can be created as
+follows:</p>
+
+<pre><code># cat &lt;&lt;EOF &gt;/boot/loader/entries/arch.conf
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /initramfs-linux.img
+options cryptdevice=UUID=${uuid}:cryptlvm root=/dev/volgrp/root
+EOF
+</code></pre>
+
+<p>Now a simple bootloader configuration needs to be created:</p>
+
+<pre><code># cat &lt;&lt;EOF &gt;/boot/loader/loader.conf
+default arch
+timeout 0
+editor  0
+EOF
+</code></pre>
+
+<h2>Creating the Ramdisk Environment</h2>
+
+<p>As mentioned earlier, there are some further adjustments for disk encryptions to
+be made. Let's open <code>/etc/mkinitcpio.conf</code> and go to the <code>HOOKS</code> definition:</p>
+
+<pre><code>HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)
+</code></pre>
+
+<p>Which needs to be extended with <code>encrypt</code> and <code>lvm2</code>:</p>
+
+<pre><code>HOOKS=(base udev autodetect modconf block filesystems keyboard fsck encrypt lvm2)
+</code></pre>
+
+<p>Then the ramdisk environment can be created:</p>
+
+<pre><code># mkinitcpio -P
+</code></pre>
+
+<p>Which generated the <code>initramfs-linux.img</code> file referred to from the boot loader
+entry created before, as well as a fallback <code>initramfs-linux-fallback.img</code>.</p>
+
+<h2>Finishing</h2>
+
+<p>Now that everything is set up, leave the <code>chroot</code> environment, unmount the new
+system's partitions, and shut down the computer:</p>
+
+<pre><code># exit
+# umount -R /mnt
+# shutdown -h now
+</code></pre>
+
+<p>After removing the USB dongle, start the system again.</p>
+
+<p>Early in the boot process, you'll be asked to enter the passphrase for
+<code>/dev/nvme0n1p2</code>. After doing so, the system will boot. If not, you did
+something wrong in the process, because it's working just fine on my Thinkpad X1
+Carbon.</p>
+
+<p>I also had issues getting everything right in the first place, but fortunately
+got help on the <a href="https://unix.stackexchange.com/q/611421/223188">Linux &amp; Unix
+StackExchange</a>. Thanks to the
+user <em>frostschutz</em> for pointing out the core issue. The user <em>Cbhihe</em> pointed
+out that my partition sizes weren't sustainable, so that I adjusted it
+accordingly for this article.</p>
+
+<h1>Conclusion</h1>
+
+<p>We set up Arch Linux with encrypted partitions using the variant LUKS on LVM.
+The system is split up into multiple partitions, which are all encrypted using
+the same password over one common encrypted volume.</p>
+
+<p>The <code>/boot</code> partition remains unencrypted, which would allow an attacker to
+tamper with my system boot, and, potentially, with my entire setup. So if my
+laptop gets lost, there is no 100% guarantee that my system hasn't been
+manipulated. However, having all the other partitions encrypted makes
+manipulation or data leaks extremely unlikely.</p>
+
+<p>When my laptop gets stolen or lost for an extended period of time, it is still a
+good idea to revoke all the SSH and GPG keys. But thanks to encryption, that
+procedure won't be an act of emergency, but one that could be carefully planned
+for and executed at a convenient time.</p>
+
+<p>The system set up so far is really just a base installation. In order to work on
+this computer, further tasks have to be performed, as roughly described in my
+<a href="https://github.com/patrickbucher/docs/blob/master/arch-setup/arch-setup.md">Arch
+Setup Notes</a>
+on GitHub. Maybe I'll write a follow-up article in the future to cover those
+steps more in detail.</p>
+</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+

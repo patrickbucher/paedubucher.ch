@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Cargo Cult ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">Cargo Cult</h1>
+            
+            <h2 class="subtitle">Getting it Wrong by Wanting it Right</h2>
+            
+            <p class="author-date">Patrick Bucher, 2018-10-05</p>
+            <div class="content"><p>Accepting interfaces instead of requiring specific implementation is a good
+practice. Take Java collections as an example. A method accepting an <code>ArrayList</code>
+argument will only be useful if the caller is already using an <code>ArrayList</code>.
+Otherwise he’d need to convert the implementation he’s using, say, <code>LinkedList</code>,
+to an <code>ArrayList</code> first. A method accepting the <code>List</code> or even the <code>Collection</code>
+interface is far more likely to accept what the caller already has.</p>
+
+<p>Many programmers recite this practice as “program on interfaces, not on
+implementations”. However, this rule is misleading, because the somewhat blurry
+notion of “programming on interfaces” does not mean the same as “accepting
+interfaces”.</p>
+
+<p>Once in a while, a unexperienced Java programmer tries to follow the “program
+on interfaces” rule and stumbles upon a problem. He wrote:</p>
+
+<pre><code>List&lt;String&gt; names = new ArrayList&lt;&gt;();
+</code></pre>
+
+<p>Where’s the problem? The unexperienced Java programmer objects that he’s not
+“programming on an interface”, because he wrote <code>new ArrayList&lt;&gt;()</code> and hence
+has a reference to a specific implementation.</p>
+
+<p>Maybe he’ll try to write a <code>ListFactory</code> (he’s a Java Programmer, after all)
+that provides a method with the signature <code>List&lt;T&gt; createList()</code> that will do
+the “dirty work” for him.  But guess what: this method will contain the
+instantiation of <code>ArrayList</code> as well. The problem is not solved, but wrapped in
+an additional layer of pointlessnes.</p>
+
+<p>What will the unexperienced Java programmer do now? He might search the issue
+on the web. Maybe he finds an article about dependency injection.  But then
+he’ll be wondering where to get that dependency injected from. So he’ll either
+give up and stick to his original solution, or post the “issue” on a chat or
+forum.</p>
+
+<p>What’s wrong with the original code? Nothing. Interfaces are for references,
+classes are for instances. At one point, somebody has to decide on an
+implementation. One could wonder, if the compiler or a framework might figure
+out the right implementation, optimized for performance according to what the
+programmer uses the collection for. A linked list is faster than an array list
+if items have to be inserted at the beginning. An array list is faster than a
+linked list for random access. But the compiler is unable to figure that out,
+at least at this point.</p>
+
+<p>The issue is not only about performance, it’s also about semantics. Whereas the
+programmer doesn’t have to care about whether a list is implemented using a
+linked list or an array, semantics matter a lot to him in other cases. Take
+maps for example. The Java interface <code>Map&lt;K, V&gt;</code> has the implementations
+<code>TreeMap&lt;K, V&gt;</code> and <code>LinkedHashMap&lt;K, V&gt;</code>, among others.  When adding an
+element to a <code>TreeMap</code>, the element will be inserted at a specific position, so
+that the map’s element will be sorted in their natural order. A
+<code>LinkedHashMap</code>, however, preserves the insertion order of the elements.</p>
+
+<p>Of course, methods dealing with maps should still use the <code>Map</code> interface. It’s
+entirely up to the caller, if and how the elements of the map passed in are
+sorted. Maybe he doesn’t care, maybe he cares a lot. But he has to take the
+decision. Such decisions not only affect the runtime properties of a program
+(performance, memory consumption), but possibly also its semantics and
+therefore its results.</p>
+
+<p>So why the misunderstanding of the unexperienced Java programmer that insisted
+on “programming on interfaces”? He’s guilty of <em>Cargo Cult Programming</em>. He
+heard the general rule to “accept interfaces instead of implementations” and
+understood it as “use interfaces instead of implementations” or even
+interpreted it as “replace class names with interface names” (because he only
+used the former in his code). He translated the rule “use A instead of B in
+context C” and forgot about the context. He just remembered the “A instead of
+B” part.</p>
+
+<p>So how could the unexperienced programmer avoid such misunderstandings? Instead
+of literally following some rules he heard of, or following the part of the
+rule he understood, he should ask himself, if there’s an actual problem in his
+code. If he’s unable to explain that problem in a couple of sentences, he
+either doesn’t understand the problem―or maybe there is no problem at all.</p>
+</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Basic Printing on OpenBSD ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">Basic Printing on OpenBSD</h1>
+            
+            <h2 class="subtitle">Brother Network Printer with PostScript</h2>
+            
+            <p class="author-date">Patrick Bucher, 2020-09-20</p>
+            <div class="content"><p>I have a roughly ten year old Brother HL-5370DW printer on the shelf next to me.
+This printer is mostly used by my wife to print sewing patterns. When I was
+studying computer science, I sometimes printed documents I've written for
+proofreading. I often was able to find typos that I didn't see on the screen
+even after proofreading the document two or three times. However, I didn't
+bother to print out my bachelor thesis. Printing 120 pages just for proofreading
+just seemed a waste to me. I did my proofreading on the screen extra carefully,
+and nobody complained about typos. (Which doesn't mean that there were none.)</p>
+
+<p>Having finished my studies, I hardly ever print out documents. However, I still
+prefer to read long texts on paper rather than on the screen. Therefore I often
+buy technical books as paperbacks or hardcovers rather than ebooks. And if I buy
+an ebook with demanding content, I print out those sections for offline reading.</p>
+
+<p>Having switched to OpenBSD for my private computing shifted my reading habits
+more towards manpages. When I need to figure out how something works on
+OpenBSD, <code>apropos(1)</code> beats Google as a starting point in many cases. Some
+manpages are really long, for example <code>ksh(1)</code>. I have a book on the Korn Shell
+in my basement, which covers <code>ksh93</code>.  However, there are some differences
+between <code>ksh93</code> and OpenBSD's <code>pdksh</code>. So reading the manpage not only gives me
+more accurate information, but also <em>less</em> to read.</p>
+
+<p>So why not printing out the manpage <code>ksh(1)</code>? I can do so even nicely formatted
+using PostScript:</p>
+
+<pre><code>$ man -T ps -O paper=a4 ksh &gt;ksh.1.ps
+</code></pre>
+
+<p>Now <code>ksh.1.ps</code> can be read with <code>zathura(1)</code>, given that the package
+<code>zathura-ps</code> is installed:</p>
+
+<pre><code># pkg_add zathura zathura-ps
+$ zathura ksh.1.ps
+</code></pre>
+
+<p>But why using PostScript and not PDF like anybody else for the last twenty five
+years? Because PostScript is the least common denominator and, thus, supported
+out of the box by OpenBSD. (For fancier printing options, check out <code>cups</code>, but
+I'd like to keep it minimalistic for the moment.)</p>
+
+<h1>Printer Setup</h1>
+
+<p>I figured out how to configure my printer by reading the section <em>The lpd
+Printing Daemon</em> in the 16th chapter of <a href="https://nostarch.com/obenbsd2e">Absolute OpenBSD (2nd
+Edition)</a> (p. 306-307) by <a href="https://mwl.io/">Michael W
+Lucas</a>. This is how I applied the configuration to my local
+setup.</p>
+
+<p>First, I created the file <code>/etc/printcap</code> with the following content:</p>
+
+<pre><code>lp|brother:\
+    :sh=:\
+    :rm=192.168.178.52:\
+    :sd=/var/spool/output/brother:\
+    :lf=/var/log/lpd-errs:\
+    :rp=brother
+</code></pre>
+
+<p>There must be a newline at the end of the file. The line breaks are escaped
+using backslashes, except for the last line. The options are defined as follows:</p>
+
+<ul>
+<li>The first line defines two names for my printer: <code>lp</code>, which should always be
+there, and <code>brother</code>, which is my arbitrary name for the printer.</li>
+<li>The second line (<code>sh</code>) defines that no <em>burst page</em> (summarizing the last
+print job on a special page) should be printed.</li>
+<li>The third line (<code>rm</code>) refers to the printer on the network. My FritzBox always
+gives the same IP to my printer. It's also possible to use the printer's
+hostname.</li>
+<li>The fourth line (<code>sd</code>) defines the spooler directory for this printer. Print
+jobs are written into that directory.</li>
+<li>The fifth line (<code>lf</code>) defines a log file for error messages, which you hopefully
+never need to check.</li>
+<li>The sixth line (<code>rp</code>) defines the remote printer name.</li>
+</ul>
+
+<p>Next, the spooler directory needs to be created. It must be owned by the user
+<code>root</code> and the group <code>daemon</code>. Regular users need write access to this directory
+in order to print documents:</p>
+
+<pre><code># mkdir /var/spool/output/brother
+# chown -R root:daemon /var/spool/output/brother
+# chmod 770 /var/spool/output/brother
+</code></pre>
+
+<p>Now the printer daemon <code>lpd</code> needs to be activated. To do so on system startup,
+add the following line to <code>/etc/rc.conf/local</code>:</p>
+
+<pre><code>lpd_flags=&quot;&quot;
+</code></pre>
+
+<p>Then start the service:</p>
+
+<pre><code># /etc/rc.d/lpd restart
+</code></pre>
+
+<p><strong>Update (2020-09-21)</strong>: As one reader on
+<a href="https://news.ycombinator.com/item?id=24535357#24538879">Hacker News</a> pointed
+out, the last two steps can be performed using <code>rcctl(8)</code>:</p>
+
+<pre><code># rcctl enable lpd
+# rcctl restart lpd
+</code></pre>
+
+<p>The manpage says that <code>rcctl(8)</code> was introduced in OpenBSD 5.7 back in 2015.
+<em>Absolute OpenBSD (2nd Edition)</em> is from 2013 and, thus, older than that. (At
+the time of this writing, I'm using Version 6.7.)</p>
+
+<p>Another reader pointed out that setting the access rights to <code>777</code> is a bad
+practice. That's true, and I actually got the reasoning behind this wrong: I
+thought any user must be able to write to the spooler, because any user is
+supposed to print. However, it's <code>lpd</code> that is writing to the spooler, which of
+course runs under the <code>daemon</code> group. Therefore, the access rights for
+<code>/var/spool/output/brother</code> should be set to <code>770</code>, not to <code>777</code> (as corrected
+above).</p>
+
+<h1>Printing Documents</h1>
+
+<p>Now the printer is ready to accept jobs. In order to print the PostScript file
+generated before, just run <code>lpr</code> on the file:</p>
+
+<pre><code>$ lpr ksh.1.ps
+</code></pre>
+
+<p>It's also possible to send the PostScript output directly to the printer (this
+is Unix, after all), if no preview is needed:</p>
+
+<pre><code>$ man -T ps -O paper=a4 ksh | lpr
+</code></pre>
+
+<p>Printing plain text files behaved strange on my setup, but it worked well using
+the <code>pr</code> formatter with <code>lpr</code> as follows:</p>
+
+<pre><code>$ lpr -p plain.txt
+</code></pre>
+
+<p>Instead, I also convert plain text files to PostScript, which looks quite nice
+on paper. I use <code>enscript(1)</code> for this task:</p>
+
+<pre><code># pkg_add enscript
+$ enscript plain.txt -o plain.ps
+$ lpr plain.ps
+</code></pre>
+
+<p>PDFs can also be converted to PostScript using <code>pdf2ps(1)</code>, which comes with
+GhostScript, i.e. the <code>ghostscript</code> package:</p>
+
+<pre><code>$ pdf2ps document.pdf document.ps
+</code></pre>
+
+<p>Unfortunately, this doesn't work with all PDFs. But for the time being, I have
+enough manpages to read. Printing PostScript works extremely fast, by the way.
+When I press return at the end of a <code>lpr</code> command, I can see the status LED on
+my printer start blinking almost immediately.</p>
+</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Git with Multiple E-Mail Addresses ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">Git with Multiple E-Mail Addresses</h1>
+            
+            <h2 class="subtitle">And How I Make Sure to Commit with the Right One</h2>
+            
+            <p class="author-date">Patrick Bucher, 2022-07-26</p>
+            <div class="content"><h1>Different Git Server, Different E-Mail Address</h1>
+
+<p>When you use Git on a daily basis, chances are that you use it with multiple
+remote servers—and do so with different email addresses. I personally use:</p>
+
+<ul>
+<li>My work email address (let's say <code>patrick@work.xy</code> for the sake of brevity)
+for my employer's Git server (<code>git.work.xy</code> to keep it short).</li>
+<li>My private email address (<code>patrick@home.xy</code>) for GitHub (<code>github.com</code>).</li>
+<li>The school's email address (<code>patrick@school.xy</code>) for the Git server used for
+teaching (<code>git.school.xy</code>).</li>
+</ul>
+
+<p>Only using each Git server on a computer dedicated for some line of work
+(company, private, school) is impractical for different reasons. I keep personal
+notes on discoveries I make when working for my job or for school, which I store
+in a private repository. Changing laptops just to write down that command line I
+already googled seven times is not practical, and just would make me to google
+it for the eighth time.</p>
+
+<p>Furthermore, I prefer to work on my stationary PC running Arch Linux (which I
+use as a daily driver, <a href="https://knowyourmeme.com/memes/btw-i-use-arch">by the
+way</a>) for school-related work,
+especially when it comes to making up programming examples; I'm just less
+efficient working on my Windows laptop.</p>
+
+<h1>Two Problems, One Solution</h1>
+
+<p>So private, work- and school-related repositories will end up on the same
+computer, which requires solving two problems:</p>
+
+<ol>
+<li>How shall the repositories be organized on the file system?</li>
+<li>How to make sure to commit using the right email address for every repository
+based on its area of origin (work, school, private)?</li>
+</ol>
+
+<p>Many developers I know just use a folder <code>~/projects</code> or <code>~/repos</code>, wherein they
+store <em>all</em> of their repositories. This not only causes issues when storing
+multiple repositories of the same name (e.g. different <code>dotfiles</code> or <code>meta</code>
+repositories for each area, which can be solved using prefixes like <code>work-</code> or
+<code>school-</code>), but also makes it harder to solve the second issue, as you'll see
+shortly.</p>
+
+<p>Therefore I organize my repository folders in a different way, a lot like those
+Git servers's URLs are organized:</p>
+
+<ul>
+<li><code>~/git.work.xy</code> for my work-related repositories,</li>
+<li><code>~/github.com</code> for my private repositories, and</li>
+<li><code>~/git.school.xy</code> for my school-related repositories.</li>
+</ul>
+
+<p>I also use a second folder level, emulating the repositories actual URLs:</p>
+
+<ul>
+<li><code>~/git.work.xy/[customer]</code> for the repositories of the same customer at work,</li>
+<li><code>~/github.com/[username]</code> for the repositories of different users and
+organizations, and</li>
+<li><code>~/git.school.xy/[course]</code> for the repositories of different courses I teach.</li>
+</ul>
+
+<p>If you think that this messes up your home directory (following some Freedesktop
+standard enforced by <code>xdg-user-dirs(1)</code> with folders like <code>~/Documents</code> and
+<code>~/Videos</code>), feel free to add another level on top, such as <code>~/Repositories</code> or
+<code>~/Projects</code>.</p>
+
+<p>This leads to deeper file system hierarchies, but makes finding repositories
+very easy and straightforward. It also helps solving the email address issue,
+which I tackle using <a href="https://git-scm.com/docs/git-config#_conditional_includes">conditional
+includes</a> in my
+<code>~/.gitconfig</code>.</p>
+
+<h1>Conditionally Overwriting the E-Mail Address</h1>
+
+<p>For every computer I use, there's some main email address, e.g.
+<code>patrick@work.xy</code> on my employer's laptop, or <code>patrick@home.xy</code> on my PC at
+home. For the latter case, my <code>~/.gitconfig</code> starts as follows:</p>
+
+<pre><code>[user]
+    name = Patrick Bucher
+    email = patrick@home.xy
+</code></pre>
+
+<p>(I also use the <code>signinkey</code> option to sign my commits with the proper GPG key,
+but using different ones for each E-Mail address is straightforward, so I won't
+list those options here.)</p>
+
+<p>What I need to do for every area of work is to overwrite my email address. So I
+create additional Git config files in my home folder: <code>~/.gitconfig-work</code> and
+<code>~/.gitconfig-school</code> (<code>~/.gitconfig</code> is for private GitHub repos on this
+particular computer, i.e. the default shown above).</p>
+
+<p>Then each config is included depending on its path from the <code>~/.gitconfig</code> file:</p>
+
+<pre><code>[includeIf &quot;gitdir:~/git.work.xy/&quot;]
+    path = ~/.gitconfig-work
+[includeIf &quot;gitdir:~/git.school.xy/&quot;]
+    path = ~/.gitconfig-school
+</code></pre>
+
+<p>Those files referenced then just need to overwrite the <code>email</code> option of the
+<code>[user]</code> section, e.g. for <code>~/.gitconfig-work</code>:</p>
+
+<pre><code>[user]
+    email = patrick@work.xy
+</code></pre>
+
+<p>Or for <code>~/.gitconfig-school</code>:</p>
+
+<pre><code>[user]
+    email = patrick@school.xy
+</code></pre>
+
+<h2>Another Problem, Same Solution</h2>
+
+<p>Now consider that your employer also has some repositories on GitHub
+(<code>github.com/employer</code>). In this case, you can further overwrite your email
+using an additional conditional include in <code>~/.gitconfig</code>:</p>
+
+<pre><code>[includeIf &quot;gitdir:~/github.com/employer/&quot;]
+    path = ~/.gitconfig-work
+</code></pre>
+
+<p>This works as intended, as this demonstration shows:</p>
+
+<pre><code>$ cd ~/git.school.xy/cs-101/intro
+$ git config user.email
+patrick@school.xy
+
+$ cd ~/git.work.xy/acme/config
+$ git config user.email
+patrick@work.xy
+
+$ cd ~/github.com/patrick/dotfiles
+$ git config user.email
+patrick@home.xy
+
+$ cd ~/github.com/employer/dotfiles
+$ git config user.email
+patrick@work.xy
+</code></pre>
+
+<p>I won't do any demo commits, proving my point; the <code>user.email</code> setting <em>will</em>
+be used for each commit.</p>
+
+<p>So you no longer have to remember running <code>git config user.email [wh@ev.er]</code>
+after cloning a repo (which you will forget) or commit with the wrong E-Mail
+address (which you'll regret).</p>
+</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+

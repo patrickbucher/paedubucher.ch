@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>FreeBSD on the Desktop ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">FreeBSD on the Desktop</h1>
+            
+            <h2 class="subtitle">Basic Setup with Xorg and dwm</h2>
+            
+            <p class="author-date">Patrick Bucher, 2020-08-11</p>
+            <div class="content"><p>I'm a happy user of <a href="https://www.archlinux.org/">Arch Linux</a> both on my private
+computers and on my work laptop. I even managed to get through four years of
+university with my setup, and only had to bring a Windows machine on some rare
+occasions, even though some professors are openly hostile towards a Linux setup.
+(It doesn't run Microsoft Project and the real Excel, after all…)</p>
+
+<p>Recently, I got interested in the BSDs, especially in
+<a href="https://www.openbsd.org/">OpenBSD</a> and in <a href="https://www.freebsd.org/">FreeBSD</a>.
+Even though OpenBSD with its minimalistic appeal is better suited to my taste,
+I'm currently looking at FreeBSD for a couple of reasons. First, I have to
+maintain a storage server (a FreeBSD box using ZFS) at work. Second, I've also
+built up a storage server at home. FreeBSD gives me the things I need mostly out
+of the box: ZFS with redundancy on really cheap hardware. And third, I just like
+to learn new things.</p>
+
+<h1>Why FreeBSD?</h1>
+
+<p>However, when it comes to learning new things in my spare time, I'd rather spend
+my time on something that will be useful in the long run. I use the <a href="https://en.wikipedia.org/wiki/Lindy_effect">Lindy
+Effect</a> as a guide: Technologies
+like Kubernetes, the latest JavaScript framework, or Web Assembly have only been
+around for a couple of years, and it's possible that those will undergo major
+changes or vanish alltogether as fast as they came. Older technologies <em>that are
+still around nowadays</em>, on the other hand, can be expected to be around for many
+more years. Examples are the C programming language, various Unix shells, and ‒
+FreeBSD. (I also make exceptions to this rule now and then. For example, I
+learned Go and Rust in the summers of 2018 and 2019, respectively. Go, which had
+its 1.0 release earlier than Rust, proofed to be the more stable choice.)</p>
+
+<p>FreeBSD is now more than 25 years old. Its roots, however, go back to AT&amp;T's
+original Unix from the 1970s. (All the code has been replaced or rewritten
+since.) Being old is not enough, of course; a technology is only worthwhile
+learning if it is still alive. Even though FreeBSD is rarely on the front page
+of <a href="https://news.ycombinator.com/">Hacker News</a>, it is still widely used.
+<a href="https://papers.freebsd.org/2019/fosdem/looney-netflix_and_freebsd/">Netflix</a>
+streams videos through FreeBSD systems, and the operating system of the
+PlayStation 4, <a href="https://en.wikipedia.org/wiki/PlayStation_4_system_software">Orbis
+OS</a>, is based on
+FreeBSD.</p>
+
+<p>FreeBSD is not only likely to stay around for a long time, it probably also
+won't undergo fundmental changes very soon or very often. One example is the
+startup system of FreeBSD, which is still based on <code>init</code> and <code>rc</code> scripts.
+Ubuntu, on the other side, switched from SysVinit to Upstart in 2006, and again
+from Upstart to systemd in 2015. That is one init system to learn for a lifetime
+(FreeBSD) vs. three in less than a decade (Ubuntu).</p>
+
+<p>Documentation is another advantage of FreeBSD. Having a system that rarely
+introduces breaking changes makes it easier and more worthwile to provide good
+documentation. The FreeBSD team not only provides good <a href="https://www.freebsd.org/cgi/man.cgi">manual
+pages</a>, but also a well curated
+<a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/faq/">FAQs</a>, a
+<a href="https://wiki.freebsd.org/">Wiki</a>, and the very useful
+<a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/">Handbook</a>.
+FreeBSD material has such a long shelf life so that it is even worthwhile to
+print books about that operating system. I'm reading <a href="https://nostarch.com/absfreebsd3">Absolute
+FreeBSD</a> now (from front to back, that is).
+Michael Warren Lucas, the author of this book, has written <a href="https://www.tiltedwindmillpress.com/product-category/tech/">even more
+books</a> on FreeBSD
+(and OpenBSD), which are not only useful and of high-quality, but also
+well-written and fun to read.</p>
+
+<p>As I started to work with FreeBSD, I suddenly realized what the term
+«distribution» is probably supposed to mean: Not just a bunch of software
+cobbled together with more or less frequent upgrades, but an entire operating
+system that not only provides working software, but also the means to build that
+very software on a standard installation. (Such a system is technically
+described as <em>self hosting</em>.) A kernel can be compiled and installed with a
+single command. Thanks to the ports tree, the packages can be compiled easily
+and in a consistent way. I haven't tried <em>all</em> Linux distributions, of course,
+but quality standards that high are certainly not the rule in the GNU/Linux
+world. (Debian and Arch, the Linux distributions I use the most and know the
+best, are still absolutely great operating systems.)</p>
+
+<h1>FreeBSD on the Desktop?</h1>
+
+<p>It's safe to say that FreeBSD is a good choice for servers in a Unix
+environment. But does it also work well on a desktop computer? And is it even an
+option for the kind of desktop I like to run: not GNOE, KDE, or Xfce, but a
+minimalistic setup based on <a href="http://dwm.suckless.org/">dwm</a>, which probably
+isn't used by many. Since dwm can only be configured by modifying the <code>config.h</code>
+file, I won't be able to use the version from the ports tree. I use my desktop
+computer mainly for work (programming, reading, writing, researching information
+on the internet) and some entertainment mostly provided through the web browser
+(reading, videos).</p>
+
+<p>I generally use mid-range commodity hardware with on-board graphics, so hardware
+compatibility should not be an issue. My desktop computer is a small-form Dell
+OptiPlex 7040 from 2016 with an Intel Core i5 CPU. I replaced the original 128
+TB SSD with a 500 GB model last year, and upgraded the original 8 GB of memory
+with a ridiculous amount of 24 GB. (Some RAM bars just happened to lay around
+here…) The computer has a WiFi card, of course, but since my router is just next
+to my desk, I rather use a stable ethernet connection.</p>
+
+<p>I already tried out OpenBSD once on that computer, and didn't have any issues
+getting it to run. So FreeBSD having access to the same code base under a
+compatible license is likely to suppport this hardware as well. Let's just try
+it out!</p>
+
+<h1>Preparations</h1>
+
+<p>FreeBSD supports multiple versions at any given point in time. At the time of
+this writing, 12.1 and 11.4 are the current versions intended for production.
+Let's pick the most recent version 12.1. The <a href="https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/12.1/">download
+page</a>
+for the <code>amd64</code> architecture offers various options. The compressed
+<code>mini-memstick</code> archive weighs the least and provides everything that is needed
+for an installation on a computer with internet connection. I download it to my
+laptop running Arch Linux, and then verify the checksum:</p>
+
+<pre><code>$ wget https://download.freebsd.org/ftp/releases/amd64/amd64\
+/ISO-IMAGES/12.1/FreeBSD-12.1-RELEASE-amd64-mini-memstick.img.xz
+$ wget https://download.freebsd.org/ftp/releases/amd64/amd64/\
+ISO-IMAGES/12.1/CHECKSUM.SHA512-FreeBSD-12.1-RELEASE-amd64
+$ sha512sum -c CHECKSUM.SHA512-FreeBSD-12.1-RELEASE-amd64 --ignore-missing
+FreeBSD-12.1-RELEASE-amd64-mini-memstick.img.xz: OK
+</code></pre>
+
+<p>The archive (389 MBs) needs to be unpacked and is then copied to a USB dongle
+(<code>/dev/sda</code>):</p>
+
+<pre><code>$ unxz FreeBSD-12.1-RELEASE-amd64-mini-memstick.img.xz
+# dd if=FreeBSD-12.1-RELEASE-amd64-mini-memstick.img of=/dev/sda bs=1M
+$ sync
+</code></pre>
+
+<h1>Initial Setup</h1>
+
+<p>The BIOS is setup to use UEFI rather than legacy boot. I plug in the USB dongle
+and start the FreeBSD installer. These are the settings I use during setup:</p>
+
+<ul>
+<li>Keymap: Swiss-German (<code>ch.kdb</code>)</li>
+<li>Hostname: <code>optiplex</code> (I'm not very imaginative when it comes to naming
+things.)</li>
+<li>Components: just <code>lib32</code>, <code>ports</code>, and <code>src</code></li>
+<li>Network: interface <code>em0</code> with DHCP and IPv4</li>
+<li>Mirror: Main Site</li>
+<li>Partitioning: Auto (UFS, I'm going to learn about ZFS later) on the entire
+disk <code>ada0</code> using GPT and the following partitions (device, space, type,
+label, mount point):
+
+<ul>
+<li><code>ada0p1</code>: 200 MB <code>efi</code> boot (no mount point)</li>
+<li><code>ada0p2</code>: 24 GB <code>freebsd-swap</code> swap0 (no mount point, size of physical memory)</li>
+<li><code>ada0p3</code>: 16 GB <code>freebsd-ufs</code> root <code>/</code></li>
+<li><code>ada0p4</code>: 4 GB <code>freebsd-ufs</code> temp <code>/tmp</code></li>
+<li><code>ada0p5</code>: 4 GB <code>freebsd-ufs</code> var <code>/var</code></li>
+<li><code>ada0p6</code>: 32 GB <code>freebsd-ufs</code> usr <code>/usr</code></li>
+<li><code>ada0p7</code>: 386 GB <code>freebsd-ufs</code> home <code>/home</code> (remainder of the space)</li>
+</ul></li>
+<li>Root password: I won't tell you, but a strong one!</li>
+<li>CMOS clock: UTC</li>
+<li>Time Zone: Europe/Switzerland (<code>CEST</code>)</li>
+<li>Services: <code>sshd</code>, <code>moused</code>, <code>ntpd</code>, <code>powerd</code>, and <code>dumpdev</code></li>
+<li>Security Hardening Options: everything</li>
+<li>User: <code>patrick</code> with additional group <code>wheel</code> (to become root), the <code>tcsh</code>
+shell, a strong password, and, otherwise, suggested settings</li>
+</ul>
+
+<p>It can be argued if the chosen partition sizes are reasonable. However, it is
+always a good idea to use separate <code>/tmp</code> and <code>/var</code> partitions to make sure
+that no process can fill up the entire disk. (Using a separate <code>/usr</code> partition
+is an issue on Linux nowadays, since the widely used init system systemd
+requires access to <code>/usr</code>. On FreeBSD, it is still possible to do so without any
+issues.)</p>
+
+<p>Make sure to use <code>efi</code> as the type for the boot partition, not <code>freebsd-boot</code> as
+suggested in <em>Absolute FreeBSD</em> (3rd Edition on page 36).</p>
+
+<h1>First Boot, First Issues</h1>
+
+<p>After the installation, I choose to shutdown the system. I unplug my USB dongle
+as soon as the screen turns black.</p>
+
+<p>Before the first boot, I have to change my boot options in the BIOS so that the
+computer boots from the SSD on which FreeBSD was just installed.</p>
+
+<p>The system boots and even shows my mouse on the terminal! The network is up and
+running. However, there is a message warning me that the leapsecond file is
+expired. The
+<a href="https://forums.FreeBSD.org/threads/leapseconds-file-expired.56645/post-322290">solution</a> suggested in the FreeBSD Forum</p>
+
+<pre><code># service ntpd onefetch
+</code></pre>
+
+<p>fails with a certificate verification error. A <a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=230017">bug
+report</a> suggest to
+install the package <code>ca_root_nss</code>:</p>
+
+<pre><code># pkg install ca_root_nss
+</code></pre>
+
+<p>Which not only installs the package management software, but also solves the
+issue above: The warning concerning the leapsecond file doesn't appear after the
+next boot. Now that the basic system is up and running, let's tackle the GUI!</p>
+
+<h1>Installing the GUI</h1>
+
+<p>Since <em>Absolute FreeBSD</em> doesn't cover graphical user interfaces, I have to
+resort to the handbook. In <a href="https://www.freebsd.org/doc/handbook/x-install.html">Chapter
+5.3</a> it says that the
+easiest way to setup the X Window System is to install the <code>xorg</code> package. Since
+I prefer a minimalistic setup, I opt for the <code>x11/xorg-minimal</code> package instead:</p>
+
+<pre><code># pkg install x11/xorg-minimal
+</code></pre>
+
+<p>This package depends on Python 3.7, Perl 5, and Wayland, among others, and
+weighs roughly 1 GB, which is not exactly minimalistic in my opinion. On the
+other hand, it is notable that the base setup works without Perl or Python.
+(Which <em>is</em> minimalistic.)</p>
+
+<h2>Compiling <code>dwm</code></h2>
+
+<p>Since I like to keep my <code>dwm</code> version up to date, I fetch the sources using
+<code>git</code>, which first needs to be installed:</p>
+
+<pre><code># pkg install git
+# git clone https://git.suckless.org/dwm
+</code></pre>
+
+<p>A first naive compilation attempt fails:</p>
+
+<pre><code># cd dwm
+# make
+drw.c:5:10: fatal error: 'X11/Xlib.h' file not found
+#include &lt;X11/Xlib.h&gt;
+</code></pre>
+
+<p>The <code>config.mk</code> file expects the header files to be located under
+<code>/usr/X11R6/include</code>. However, FreeBSD has those files stored under a different
+location:</p>
+
+<pre><code># find / -type f -name Xlib.h
+/usr/local/include/X11/Xlib.h
+</code></pre>
+
+<p>So in <code>config.mk</code>, the lines</p>
+
+<pre><code>X11INC = /usr/X11R6/include
+X11LIB = /usr/X11R6/lib
+</code></pre>
+
+<p>need to be replaced with</p>
+
+<pre><code>X11INC = /usr/local/include
+X11LIB = /usr/local/lib
+</code></pre>
+
+<p>The next compilation fails with another error (different error message, yay!):</p>
+
+<pre><code># make
+drw.c:6:10: fatal error: 'X11/Xft/Xft.h' file not found
+</code></pre>
+
+<p>That's the price I have to pay for minimalism, I guess. Executing <code>pkg search
+Xft</code> reveals the package <code>libXft</code>, which I install:</p>
+
+<pre><code># pkg install libXft
+</code></pre>
+
+<p>This shows to be a good idea, because now I'm getting a different error message:</p>
+
+<pre><code># make
+Xft.h:39:10: fatal error: 'ft2build.h' file not found
+</code></pre>
+
+<p>It turns out that the file is on the system, but cannot be found:</p>
+
+<pre><code># find / -type f -name ft2build.h
+/usr/local/include/freetype2/ft2build.h
+</code></pre>
+
+<p>Again, the <code>local</code> path segment is missing in <code>config.mk</code>:</p>
+
+<pre><code>FREETYPEINC = /usr/include/freetype2
+</code></pre>
+
+<p>Which is changed as follows:</p>
+
+<pre><code>FREETYPEINC = /usr/local/include/freetype2
+</code></pre>
+
+<p>Retry, fresh error again:</p>
+
+<pre><code># make
+dwm.c:40:10: fatal error: 'X11/extensions/Xinerama.h' file not found
+</code></pre>
+
+<p>The <code>config.mk</code> contains the following section:</p>
+
+<pre><code># Xinerama, comment if you don't want it
+XINERAMALIBS  = -lXinerama
+XINERAMAFLAGS = -DXINERAMA
+</code></pre>
+
+<p>So what is <em>Xinerama</em>, after all? According to
+<a href="https://en.wikipedia.org/wiki/Xinerama">Wikipedia</a>:</p>
+
+<blockquote>
+<p>Xinerama is an extension to the X Window System that enables X
+applications and window managers to use two or more physical displays as
+one large virtual display.</p>
+</blockquote>
+
+<p>Since I have only one screen, I can do without Xinerama, so I comment out those
+lines:</p>
+
+<pre><code># Xinerama, comment if you don't want it
+# XINERAMALIBS  = -lXinerama
+# XINERAMAFLAGS = -DXINERAMA
+</code></pre>
+
+<p>Now <code>dwm</code> compiles, and I can install it:</p>
+
+<pre><code># make dwm
+# make install
+</code></pre>
+
+<h2>Starting Xorg with <code>dwm</code></h2>
+
+<p>I switch to my personal account and create the file <code>/home/patrick/.xinitrc</code>
+with the following content:</p>
+
+<pre><code>exec dwm
+</code></pre>
+
+<p>Now I run <code>startx</code>, which unfortunately fails:</p>
+
+<pre><code>Fatal server error:
+(EE) no screens found(EE)
+</code></pre>
+
+<p>The error log <code>/var/log/Xorg.0.log</code> does not offer any additional information
+that seems helpful to me. It turns out that <code>/etc/X11</code> is empty. <a href="https://www.freebsd.org/doc/handbook/x-config.html">Section
+5.4</a> of the handbook is
+about Xorg configuration. I create a minimalistic configuration for my graphics
+card (onboard Intel GPU) in <code>/etc/X11/xorg.conf</code>:</p>
+
+<pre><code>Section &quot;Device&quot;
+    Identifier &quot;Card0&quot;
+    Driver     &quot;intel&quot;
+EndSection
+</code></pre>
+
+<p>I also need to install the display driver with the matching kernel module,
+because my choice of <code>xorg-minimal</code> from before.</p>
+
+<pre><code># pkg install xf86-video-intel drm-kmod
+</code></pre>
+
+<p>(Note that «drm» doesn't stand for «digital rights management» in this context,
+but for «direct rendering modules».) The kernel module can be activated on
+startup by adding it to the <code>rc.conf</code> as follows:</p>
+
+<pre><code># echo 'lkd_list=&quot;/boot/modules/i915kms.ko&quot;' &gt;&gt; /etc/rc.conf
+</code></pre>
+
+<p>After a restart, the console is shown in a much higher resolution. However,
+<code>startx</code> now complains about a missing font. Let's install the <code>xorg-fonts</code> meta
+package, which should provide a monospace font needed for <code>dwm</code>:</p>
+
+<pre><code># pkg install xorg-fonts
+</code></pre>
+
+<p>Now, finally, <code>dwm</code> works! Since <code>startx</code> is long to type, I define the alias
+<code>x</code> for it in <code>~/.cshrc</code>:</p>
+
+<pre><code>alias x startx
+</code></pre>
+
+<p>And start <code>dwm</code>:</p>
+
+<pre><code>$ x
+</code></pre>
+
+<h2>Configure <code>dwm</code></h2>
+
+<p>By default, <code>dwm</code> uses the Alt key as the modifier key (<code>MODKEY</code>). I prefer to
+use the «Windows» or «Super» Key, for it has no other purpose on my system.
+(<code>Alt</code> is useful for some emacs-style readline commands.) To do this, the
+<code>MODKEY</code> variable has to be changed in <code>config.h</code> as follows:</p>
+
+<pre><code>#define MODKEY Mod4Mask
+</code></pre>
+
+<p>The default rules make Firefox appear on the last tag, and Gimp to be used with
+floating layout, which makes no sense with more recent versions of Gimp. Let's
+just undefine those rules:</p>
+
+<pre><code>static const Rule rules[] = {
+    {NULL, NULL, NULL, 0, 0, -1},
+};
+</code></pre>
+
+<p>I also like my windows to be split evenly:</p>
+
+<pre><code>static const float mact = 0.50;
+</code></pre>
+
+<p>As a terminal, let's use <code>qterminal</code> instead of <code>st</code>, for the latter does not
+support scrollback buffers:</p>
+
+<pre><code>static const char *termcmd[] = {&quot;qterminal&quot;, NULL};
+</code></pre>
+
+<p><code>qterminal</code> and <code>dmenu</code> need to be installed:</p>
+
+<pre><code># pkg install qterminal dmenu
+</code></pre>
+
+<h2>Status Line</h2>
+
+<p><code>dwm</code> can display status information using the <code>xsetroot</code> command. The text to
+be displayed is computed in a background task that can be defined in <code>.xinitrc</code>.
+On laptops, I usually print the battery status. On desktops, the current date
+and time suffices. Here's the <code>.xinitrc</code> that displays this information
+(surrounded by spaces) in five second intervals:</p>
+
+<pre><code>while true
+do
+    xsetroot -name &quot; $(date +'%Y-%m-%d %H:%M') &quot;
+done &amp;
+setxkbmap ch
+exec dwm
+</code></pre>
+
+<p>The keymap is also set to the <code>ch</code> (i.e. Swiss German) variant just before
+executing <code>dwm</code>. The <code>xsetroot</code> and <code>setxkbmap</code> utilities need to be installed
+for this:</p>
+
+<pre><code># pkg install xsetroot setxkbmap
+</code></pre>
+
+<h2>Volume Control</h2>
+
+<p>In order to test audio, let's download the Free Software Song:</p>
+
+<pre><code>$ curl https://www.gnu.org/music/free-software-song.ogg &gt; fss.ogg
+</code></pre>
+
+<p>I prefer <code>mplayer</code>, which needs to be installed:</p>
+
+<pre><code># pkg install mplayer
+</code></pre>
+
+<p>Make sure to include <code>/usr/local/bin</code> in your <code>$PATH</code> variable in order to run
+<code>mplayer</code> without further path specification (<code>.cshrc</code>):</p>
+
+<pre><code>export PATH=&quot;$PATH:/usr/local/bin&quot;
+</code></pre>
+
+<p>Playing the song as follows works if I plug in a headphone into one of the front
+audio sockets:</p>
+
+<pre><code>$ mplayer fss.ogg
+</code></pre>
+
+<p>The devices are listed in <code>/dev/sndstat</code> and switched by setting the respective
+device number:</p>
+
+<pre><code># sysctl hw.snd.dfault_unit=1
+</code></pre>
+
+<p>The default volume is set to 85, which is quite loud for Richard Stallman's
+singing voice. The volume can be changed relatively or absolutely using the
+<code>mixer</code> command:</p>
+
+<pre><code>$ mixer vol -10
+Setting the mixer from 85:85 to 75:75
+$ mixer vol 50
+Setting the mixer from 75:75 to 50:50
+</code></pre>
+
+<p>I don't always want to type that command, but rather use the volume keys on my
+keyboard. So let's add a couple of commands to the <code>dwm</code> config (<code>config.h</code>,
+just before the <code>keys[]</code> section):</p>
+
+<pre><code>static const char *upvol[] = {&quot;mixer&quot;, &quot;vol&quot;, &quot;+5&quot;});
+static const char *downvol[] = {&quot;mixer&quot;, &quot;vol&quot;, &quot;-5&quot;});
+</code></pre>
+
+<p>For the key mapping, I first need to figure out the key codes for my volume
+keys, which can be done using <code>xev</code>:</p>
+
+<pre><code># pkg install xev
+$ xev &gt; xev.out
+</code></pre>
+
+<p>Just press the volume up and volume up button in that order. Then close the
+<code>xev</code> window and inspect <code>xev.out</code>.</p>
+
+<p><strong>Unfortunately, the volume keys do not trigger an event.</strong> There must be
+something wrong with the keyboard configuration. So let's use Page Up and Page
+Down to increase and decrese the volume (<code>keys[]</code> array in <code>config.h</code>):</p>
+
+<pre><code>static Key keys[] = {
+    // lines omitted
+    { MODKEY, XK_Page_Up,   spawn, {.v = upvol}   },
+    { MODKEY, XK_Page_Down, spawn, {.v = downvol} },
+};
+</code></pre>
+
+<p>Then simply re-compile, re-install, and re-start <code>dwm</code>:</p>
+
+<pre><code># make install
+$ x
+</code></pre>
+
+<p>Now Richard Stallman can be made to sing louder or quieter by pressing
+Super+PgUp and Super+PgDown, respectively, <em>which is goood, hackers, which is,
+goo-oo-ood!</em></p>
+
+<h1>Conclusion</h1>
+
+<p>Setting up the FreeBSD base system was rather easy. I made the mistake of using
+<code>freebsd-boot</code> and not <code>efi</code> as the partition type for the boot partition, which
+seems to be a mistake in the otherwise amazing book <em>Absolute FreeBSD</em>.</p>
+
+<p>Installing the <code>x11/xorg-minimal</code> package instead of the full <code>xorg</code> package
+caused some additional trouble, but helped me to better understand which
+components are actually required to compile and run <code>dwm</code>. Instead of just
+installing Xinerama, as I always did on Linux, the extra pain of libraries not
+found made me investigate if I actually need that component. It turned out, I
+don't.</p>
+
+<p>I also needed to install the graphics driver and according kernel module
+manually. Doing so, I realized that FreeBSD offers a nice graphical console,
+which is a good fit for a <code>tmux</code> environment I use once in a while to work
+absolutely focused.</p>
+
+<p>Having audio running (almost) out of the box was a positive surprise. The
+<code>mixer</code> interface is very simplistic. Switching audio devices, however, requires
+an option to be changed using <code>sysctl</code>. This calls for some additional <code>dwm</code>
+shortcuts!</p>
+
+<p>My keyboard (a Cherry board with MX Brown switches) doesn't work properly out of
+the box. I read about <code>uhidd</code>, which could be used to fix my issue with the
+volume keys. But for the moment, I have a working setup.</p>
+
+<p>I'll come back to the open issues in a later article. But first, I'd like to
+work with my new FreeBSD desktop as much as possible to gain more experience.</p>
+</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+

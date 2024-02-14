@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bumbling Boomer Bob and the Clean Code Cult ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">Bumbling Boomer Bob and the Clean Code Cult</h1>
+            
+            <h2 class="subtitle">niladic, monadic, dyadic, triadic, polyadic, shmyadic</h2>
+            
+            <p class="author-date">Patrick Bucher, 2022-08-27</p>
+            <div class="content"><p>If you are around my age, work as a programmer, and took some classes on the
+subject since 2009, you probably were subjected to Robert C. Martin's book
+<em>Clean Code: A Handbook of Agile Software Craftsmanship</em>. (As of this day, the
+<a href="https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884">first
+edition</a>
+from 2008 hasn't been updated. Clearly, <em>Clean Code</em> must be a—nay,
+_the_—perfect book, which does not require improvements or adjustments after all
+those years).</p>
+
+<p>I bought the book out of personal interest, probably in 2009. As many others, I
+first was fascinated by it, but never managed to read more than one or two
+chapters. I also rarely bothered to read specific sections offering solutions to
+problems I faced on a daily basis. Probably the solutions offered weren't too
+helpful, even though I worked as a Java programmer during that time, and <em>Clean
+Code</em> is very much about the kind of Java we wrote back then. So <em>Clean Code</em>
+collected dust on my bookshelf.</p>
+
+<h1>Clean Code and the Clean Code Cult</h1>
+
+<p>When I studied computer science at the local technical college, I was exposed to
+<em>Clean Code</em> again. Or rather it was shoved down the students throats as a
+gospel by disciples of the <em>Clean Code Cult</em>, as I like to call them.</p>
+
+<p>The members of the <em>Clean Code Cult</em> strengthen their belief by joining up for a
+ritual called <em>Clean Code Shaming</em>, where they superficially look at a piece of
+code they don't understand on first sight, and then just yell <em>«Clean Code!!!1»</em>
+at its author in order to give proof of their superiority and sophistication.</p>
+
+<p>Remember: Code you initially don't understand is <em>always</em> just bad code and
+certainly not a chance to improve your understanding of programming, especially
+if pointless techniques like <em>Memoization</em> or <em>Lexical Closures</em> are used, i.e.
+techniques you haven't been exposed to yet.</p>
+
+<p>My friend <a href="http://marmaro.de/">meillo</a> pointed out the <a href="http://marmaro.de/apov/txt/2016-04-27_schaedlicher-kult.txt">cult-like nature of
+<em>Clean Code</em></a>
+roughly at that time when its disciples came after me. A leader being called
+«Uncle Bob», a scripture that doesn't require a second edition after many years
+(but spawns sequels such as <em>The Clean Coder</em>, <em>Clean Architecture</em>, <em>Clean Agile</em>,
+and <em>Clean Craftsmanship</em>), disciples willing to align themselves into
+<a href="https://clean-code-developer.com/grades/">grades</a> and wear
+<a href="https://clean-code-developer.com/die-initiative/bracelets/">bracelets</a> for self
+castigation: If you still don't think that <em>Clean Code</em> is a cult, just talk to
+one of its disciples, point out a contradiction in the <em>Clean Code</em> book, and
+witness the angry reaction caused by your blasphemous remark.</p>
+
+<p>But wait, a contradiction in <em>Clean Code</em>? That's impossible! Or maybe not?</p>
+
+<h1>Bumbling Boomer Bob on Function Arguments</h1>
+
+<p>Working as a programmer for almost twenty years, I am still a layperson when it
+comes to the exegesis of <em>Clean Code</em>, because I obviously still haven't been
+englightened by this masterpiece yet. Trying to slay a straw man—and failing to
+do so!—will hopefully bring me back to the Right Path, so that I can finally
+abondon my wrongthink and give up on my hellish ends.</p>
+
+<p>Let's hear what The Englightened has to say about function arguments (<em>Clean
+Code</em>, Chapter 3, p. 40):</p>
+
+<blockquote>
+<p>The ideal number of arguments for a function is zero (niladic). Next comes one
+(monadic), followed closely by two (dyadic). Three arguments (triadic) should
+be avoided where possible. More than three (polyadic) requires very special
+justification—and then shouldn’t be used anyway.</p>
+</blockquote>
+
+<p>This is misleading on so many levels that I need to dissect it in multiple
+paragraphs.</p>
+
+<p>Uncle Bob™ uses the terms <em>niladic</em>, <em>monadic</em>, <em>dyadic</em>, <em>triadic</em>, and
+<em>polyadic</em> for functions with arities of 0, 1, 2, 3, and n, respectively. There
+certainly is a <em>qualitative</em> difference betweeen 0, 1, and n (nothing,
+something, and many things), the difference between, 2, 3, and n is only of a
+<em>quantitative</em> nature. But judging by the terms being used, the author sees a
+<em>qualitative</em> difference between all those arities, to wit (<em>Clean Code</em>, p.
+42):</p>
+
+<blockquote>
+<p>A function with two arguments is harder to understand than a monadic function.</p>
+</blockquote>
+
+<p>And:</p>
+
+<blockquote>
+<p>Functions that take three arguments are significantly harder to understand
+than dyads.</p>
+</blockquote>
+
+<p>This difference is clearly just of a <em>quantitative</em>, not of a <em>qualitative</em>
+nature, because adding another argument only makes the function «harder to
+understand», no matter if you go from one to two, or from two to three
+arguments. You just move up one step on a continuum.</p>
+
+<p>Having been exposed to Haskell for a couple of hours, I'd expect to read about
+<em>Curried Functions</em> here: functions of arity <code>n</code> that return a function of arity
+<code>n-1</code> when being invoked with a single argument. But obviously those Haskell
+guys must be stupid, because they also bother with <em>Partial Function
+Application</em>, which only makes sense when you have multiple arguments, i.e.
+<em>diadic</em>, <em>triadic</em>, or even—Bob forbid—<em>polyadic</em> functions!</p>
+
+<p>This must also the reason why
+<a href="https://mitpress.mit.edu/9780262510875/structure-and-interpretation-of-computer-programs/">SICP</a>
+makes for such a bad introductory textbook, because the Professors Abelson and
+Sussman clearly haven't read <em>Clean Code</em> when coming up with this abomination
+(<em>Structure and Interpretation of Computer Programs</em>, Exercise 1.32, Chapter 1,
+p. 61):</p>
+
+<pre><code>(accumulate combiner null-value term a next b)
+</code></pre>
+
+<p>Six arguments, are you kidding me? Polyadic <em>ad nauseam</em>! Bob hates it.</p>
+
+<p>SICP is such a horrible book that it even required a second edition. It even was
+<a href="https://mitpress.mit.edu/9780262543231/structure-and-interpretation-of-computer-programs/">adapted</a>
+from MIT Scheme to JavaScript recently, whereas <em>Clean Code</em> clearly would
+withstand such blasphemous attempts, being firmly grounded in the Java culture
+of the mid-2000s.</p>
+
+<p>(If you didn't figure out where my exegesis went from serious to sarcastic, stop
+reading this text and just forget about it. Put on the <em>Clean Code</em> bracelet of
+the day and refactor that cryptic <code>this.x += 3;</code> statement to a <em>clean</em>
+<code>increaseXByThree();</code> niladic method instead.)</p>
+
+<p>But Bumbler Bob is here to help (<em>Clean Code</em>, p. 43):</p>
+
+<blockquote>
+<p>When a function seems to need more than two or three arguments, it is likely
+that some of those arguments ought to be wrapped into a class of their own.
+(p. 43)</p>
+</blockquote>
+
+<p>I wonder how many arguments a constructor for such a class might require.
+Certainly, the introduction of the Builder Pattern would be The Right Solution™
+for this issue. Much clearer than having a function with four arguments.
+(Behold, the englightment is kicking in!)</p>
+
+<h2>Niladic (Im)purity</h2>
+
+<p>Boomer Bob is clearly familiar with the concept of <em>Pure Functions</em>, otherwise
+he wouldn't object so strongly against side effects (<em>Clean Code</em>, p. 44):</p>
+
+<blockquote>
+<p>Side effects are lies. Your function promises to do one thing, but it also
+does other hidden things. Sometimes it will make unexpected changes to the
+variables of its own class. Sometimes it will make them to the parameters
+passed into the function or to system globals. In either case they are devious
+and damaging mistruths that often result in strange temporal couplings and
+order dependencies.</p>
+</blockquote>
+
+<p>Unless Bobby-O considers lies good, he clearly speaks out <em>against</em> side effects
+here, as he spoke out <em>in favour</em> of functions without arguments before. So we
+should all be writing side-effect free functions without arguments. But what can
+such a function return?</p>
+
+<ul>
+<li>Nothing</li>
+<li>A constant value</li>
+<li>A random value</li>
+</ul>
+
+<p><em>Unless</em> the function also operates on global variables or on the properties of
+an object. But then those functions (or methods) are <em>not</em> really side-effect
+free, because their semantics is influenced by side-effects of other
+functions/methods.</p>
+
+<p>In order for a function to do something useful without side-effects, function
+arguments are needed. The amount of arguments needed is determined by the
+<em>domain</em> of the function, i.e. by what the function is actually supposed to
+do. Shall a function compute the solutions to a quadratic equation, the
+arguments <code>a</code>, <code>b</code>, and <code>c</code> are needed. Shall a function draw an arc on a
+canvas? You need to define the coordinates of the circle's center (<code>x</code> and <code>y</code>),
+its radius (<code>r</code>), start and end angle, and whether or not the arc shall be drawn
+clockwise or counter-clockwise.</p>
+
+<h3>Complexity: Inherent and Accidental</h3>
+
+<p>Admittedly, <em>Clean Code</em> offers some useful advice to make such APIs easier to
+understand, e.g.:</p>
+
+<ul>
+<li>Instead of having two paramters <code>x</code> and <code>y</code>, a <code>Point</code> abstraction might come
+in handy. (see <em>Argument Objects</em> on p. 43)</li>
+<li>Instead of passing flag arguments (clockwise/counter-clockwise), provide two
+functions. (see <em>Flag Arguments</em>, p. 41)</li>
+</ul>
+
+<p>But Boomer Bob entirely misses the point: The difference between <em>inherent</em> and
+<em>accidental</em> complexity. Solving a square equation <em>requires</em> three arguments.
+An arc is <em>defined</em> by its mid-point, radius, angles, and curve orientation.
+This is complexity <em>inherent</em> to the problem at hand.</p>
+
+<p>The thickness, colour, and opacity of an arc being drawn on a canvas all have to
+do with a specific application of the concept. So while I consider it good
+advice to wrap drawing details (thickness, colour, opacity) into an argument
+object, or to use a <code>Point</code> abstraction instead of two loose <code>x</code> and <code>y</code>
+arguments, there's no reasonable way to deal with arcs using <em>niladic</em> or
+<em>monadic</em> functions, save for <em>Curried Functions</em>, which clearly aren't on
+Babbling Bob's mind here.</p>
+
+<p>You might also separate the computation of an arc from actually drawing it.
+Here, the computation returns the coordinates to be drawn, which you can pass
+into the <code>draw</code> method of the canvas object, maybe together with the drawing
+details. A pair of <em>monadic</em> methods for setting coordinates and drawing details
+on that object won't make anything clearer, but only introduce more side
+effects: <em>accidental</em> side effects this time, which change the state of the
+object without any palpable benefit. Calling the <code>draw</code> method to actually draw
+on the canvas is the only <em>desired</em> side-effect: the complexity introduced
+thereby being of an <em>inherent</em> nature.</p>
+
+<h3>More Arguments Can Make For Better Abstractions</h3>
+
+<p>Another example: Consider a <code>reduce</code> function. (This is a higher-order function,
+but obviously not at the height of <em>Clean Code</em>, for such concepts are not
+mentioned in The Masterpiece.) Consider the following interfaces:</p>
+
+<pre><code>reduce(combine, values)
+</code></pre>
+
+<p>and</p>
+
+<pre><code>reduce(combine, values, initialValue)
+</code></pre>
+
+<p>Where <code>combine</code> is itself a function with the following interface:</p>
+
+<pre><code>combine(accumulator, x)
+</code></pre>
+
+<p>The <em>dyadic</em> <code>reduce</code> function must assume a value out of the given <code>values</code>
+(usually its first element) as the initial value to be used for the
+<code>accumulator</code>. So the <em>dyadic</em> <code>reduce</code> can only return something of the same
+type as the elements of <code>values</code> have. E.g. <code>values</code> is the integer array
+<code>[1,2,3]</code>, and <code>combine</code> sums up the <code>accumulator</code> with the current value
+argument <code>x</code>, then <code>reduce</code> must return an integer.</p>
+
+<p>The <em>triadic</em> <code>reduce</code> function can accept any initial value, as long as the
+<code>combine</code> function is capable of dealing properly with that type of value. E.g.
+<code>reduce</code> can be used to partition the integer array of <code>[1,2,3,4]</code> into two
+arrays of odd and even numbers. The <code>initialValue</code> then could be a tuple of two
+empty arrays: <code>([],[])</code>. Those arrays are filled by the <code>combine</code> function: odd
+numbers in the first array, even numbers in the second array: <code>([1,3],[2,4])</code>.</p>
+
+<p>Not only is a <em>triadic</em> <code>reduce</code> function more powerful than the <em>dyadic</em> one,
+it is also more <em>general</em>, i.e. a higher abstraction. If you want to do repeated
+modifications to a vector in Clojure, you need something like a triadic reduce
+function! But I guess that <em>Clean Coder</em> Bob figured this out in recent years,
+judging by his <a href="https://blog.cleancoder.com/uncle-bob/2019/08/22/WhyClojure.html">delight in
+Clojure</a>.</p>
+
+<h1>Conclusion</h1>
+
+<p>I ranted away half of my Saturday morning on roughly half a page of Bob's
+Timeless Wisdom. The problem is not that <em>Clean Code</em> is a book with advice
+that aged poorly, because it was written from a mid 2000s-Java perspective. The
+problem is its uncritical fellowship taking this advice at face value, because
+their perspective is too narrow.</p>
+
+<p>I'm convinced that Robert C. Martin would write a totally different book on the
+subject nowadays than he did back in 2008. But a second edition of <em>Clean Code</em>
+would have very little in common with the first edition still being in print.
+Rewriting the entire book probably would be less work than re-editing it. And
+its fellowship would feel cheated by reading a book full of advice contrary to
+its original.</p>
+
+<p>If you feel offended by this text, please take an hour to watch Brian
+Kernighan's lecture on <a href="https://www.youtube.com/watch?v=8SUkrR7ZfTA">The Elements of Programming
+Style</a> and let his advice sink in.
+A former professor of mine once «improved» Kernighan's code from <em>The C
+Programming Language</em> (second edition, again…), for the reason you might guess:
+<em>Clean Code!!!1</em></p>
+
+<p>So reconsider your habit of yelling <em>«Clean Code!!!1»</em>, <em>«Train Wreck!!!1»</em>,
+or <em>«SOLID!!!1»</em> (what does the «L» stand for, again?) at other programmers
+without first having tried to understand their code and familiarized yourself
+with the concepts being used therein. Try out a functional programming language
+or two, e.g. Haskell and Scheme, and consider their up- and downsides compared
+to, say, Java or C#. Then read <em>Clean Code</em> again (or: <em>actually</em> read it), but
+with the grain of salt extracted from your recent encounters with different
+ideas and concepts. Read it critically, not as a gospel, and you'll extract some
+real value out of it: by carefully considering each advice and its proper area
+of application—as limited as that might be.</p>
+</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+

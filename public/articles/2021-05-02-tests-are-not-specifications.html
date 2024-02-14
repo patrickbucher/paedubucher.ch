@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Tests Are Not Specifications ‒ paedubucher.ch</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Patrick Bucher">
+        <link rel="stylesheet" type="text/css" href="../style.css">
+    </head>
+    <body>
+        <header class="backlink"><a href="../index.html">paedubucher.ch</a></header>
+        <main>
+            <h1 class="title">Tests Are Not Specifications</h1>
+            
+            <h2 class="subtitle">Boomers vs. the (All Too) Silent Generation</h2>
+            
+            <p class="author-date">Patrick Bucher, 2021-05-02</p>
+            <div class="content"><p>In <em>The Clean Coder</em>, Chapter 7 (<em>Acceptance Tests</em>), Robert C. Martin writes
+(p. 109):</p>
+
+<blockquote>
+<p>But the real reason these tests aren't redundant is that their primary
+function <em>is not testing</em>. The fact that they are tests is incidental. […]
+The fact that they automatically verify the design, structure, and behaviour
+that they specify is wildly useful, <strong>but the specification is their true
+purpose</strong>. [Bold emphasis mine.]</p>
+</blockquote>
+
+<p>OK, boomer, here's your spec:</p>
+
+<pre><code>assert f(0) == 1
+assert f(-1) == -2
+assert f(+1) == 4
+assert f(+4) == 13
+assert f(-9) == -26
+</code></pre>
+
+<p>Now implement <code>f(x)</code>. The requirements are clear, aren't they?</p>
+
+<p>You're still here? Where's the implementation!? I told you everything you need.
+You got test cases! They <em>are</em> the specification; you just told me this, and of
+course, <em>Uncle Bob is always right</em>, they told me in school.</p>
+
+<p>Still not done? OK, you're fired. Here's the Python implementation. Easy, isn't
+it?</p>
+
+<pre><code>def f(x):
+    return (x + 2) * 3 - 5
+</code></pre>
+
+<p>Those young developers are no good, after all. Let's hire one of those old
+programmers, please bring in that old, more-arrogant-than-Uncle-Bob, grumpy
+Dijkstra guy (<a href="https://www.cs.utexas.edu/users/EWD/transcriptions/EWD09xx/EWD981.html">EWD
+981</a>):</p>
+
+<blockquote>
+<p>At this stage I can give you some behavioural advice. Contrary to what
+misguided—and misguiding—educationists may have told you, don't waste your
+time looking at specific examples. Trying to come to grips with a large set by
+looking at a few—hopefully representative—elements of that set is one of the
+most ineffective ways of spending one's time. Go immediately for the general
+case, or, in other words, <strong>attack the set not by looking at specific elements
+but by analysing the definition of the set.</strong> [Bold emphasis mine.]</p>
+</blockquote>
+
+<p>So you're not interested in some randomly picked elements of both the problem
+and solution set, but in those set's definition? Is that all you need? Well,
+here's that definition:</p>
+
+<pre><code>y = f(x) = (x + 2) * 3 - 5
+</code></pre>
+
+<p>But I can also provide you with a set of test cases, or <em>specs</em>, as they are
+called by some developers. Oh, you don't need them? But what is QA supposed to
+do all day long then? You mean we can fire them? Wow, that sounds great. You're
+hired, Mr. Dijkstra!</p>
+
+<p>Did I hear this right, Mr. Dijkstra, <em>tests are not specifications</em>? Now you're
+talking…</p>
+</div>
+        </main>
+        <footer class="backlink"><a href="index.html">© 2023 by Patrick Bucher</a></footer>
+    </body>
+</html>
+
