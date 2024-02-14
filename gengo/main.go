@@ -7,26 +7,36 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	yaml "gopkg.in/yaml.v3"
 )
 
 var staticAssets = []string{"style.css", "favicon.ico", "robots.txt", "key.gpg"}
 
+type FrontMatter struct {
+	Title    string `yaml:"title"`
+	Subtitle string `yaml:"subtitle"`
+	Author   string `yaml:"author"`
+	RawDate  string `yaml:"date"`
+	Language string `yaml:"lang"`
+}
+
+func (fm *FrontMatter) Date() time.Time {
+	t, _ := time.Parse("2006-01-02T15:04:05-0700", fm.RawDate)
+	return t
+}
+
 type Article struct {
-	Title     string
-	Subtitle  string
-	Author    string
-	Published time.Time
-	Language  string
-	Content   string
-	// TODO: markdown, name, href
+	FrontMatter
+	Content string
 }
 
 func (a Article) PublishedFmt() string {
 	switch a.Language {
 	case "de":
-		return a.Published.Format("01.02.2006 15:04")
+		return a.Date().Format("01.02.2006 15:04")
 	default:
-		return a.Published.Format("2006-02-01 15:04")
+		return a.Date().Format("2006-02-01 15:04")
 	}
 }
 
@@ -93,16 +103,19 @@ func parseArticle(path string) (*Article, error) {
 		return nil, fmt.Errorf("read from %s: %v", path, err)
 	}
 	content := string(data)
-	yaml, md, err := splitParts(content)
+	yamlData, _, err := splitParts(content)
 	if err != nil {
 		return nil, fmt.Errorf("parse article %s: %v", path, err)
 	}
-	fmt.Println(yaml, md[:100])
+
+	var meta FrontMatter
+	yaml.Unmarshal(yamlData, &meta)
+	fmt.Println(meta.Date().Format("2006-01-02 15:04:05"))
 
 	return nil, nil
 }
 
-func splitParts(content string) (string, string, error) {
+func splitParts(content string) ([]byte, []byte, error) {
 	const sep = "---"
 	var yaml, md bytes.Buffer
 	inYaml, inMd := false, false
@@ -121,7 +134,7 @@ func splitParts(content string) (string, string, error) {
 			md.WriteString(line + "\n")
 		}
 	}
-	return yaml.String(), md.String(), nil
+	return yaml.Bytes(), md.Bytes(), nil
 }
 
 func scaffold(baseDir string) (string, string, error) {
